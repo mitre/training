@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="/training/css/training.css">
+
+<div id="training" class="section-profile">
+    <div class="row">
+        <div class="topleft duk-icon"><img onclick="removeSection('training')" src="/gui/img/x.png"></div>
+        <div class="column" style="flex:100%;">
+            <center>
+                <div class="certification-header">
+                    <h1>CALDERA Certification</h1>
+                    <h4>Getting certified means you have proven your ability to utilize this framework</h4>
+                    <hr>
+                    <p>
+                        Below you will find virtual flags, similar to a capture-the-flag event. As you work through
+                        each one, more flags will be displayed. Complete all the flags and you will receive a printable
+                        CALDERA certification. The flags will automatically update (within 15 seconds)
+                        as you work through the challenges.
+                    </p>
+                </div>
+            </center>
+            <br><br>
+            <ul id="certification-modules" class="profile-tests"></ul>
+        </div>
+    </div>
+</div>
+
+<li id="flag-template" class="flag-box" style="display: none">
+    <h3 id="flag-number"></h3>
+    <h4 id="flag-name"></h4>
+    <p id="flag-description"></p>
+    <center>
+        <h1 id="flag-status"></h1>
+    </center>
+</li>
+
+<script>
+    let refresher = setInterval(refresh, 15000);
+    $('.section-profile').bind('destroyed', function() {
+        clearInterval(refresher);
+    });
+    $(document).ready(function () {
+        refresh();
+    });
+    function refresh(){
+        function updateFlags(data){
+            let flags = $('#certification-modules');
+            flags.empty();
+            data.flags.forEach(function(flag) {
+                let template = $("#flag-template").clone();
+                template.find('#flag-number').text(flag.number);
+                template.find('#flag-name').text(flag.name);
+                template.find('#flag-description').text(flag.description);
+                if(flag.completed) {
+                    template.find('#flag-status').html('&#x2705;');
+                } else {
+                    template.find('#flag-status').html('&#10060;');
+                }
+                template.show();
+                $('#certification-modules').append(template);
+            });
+        }
+        restRequest('POST', null, updateFlags, '/plugin/training/flags')
+    }
+</script>

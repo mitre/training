@@ -1,0 +1,33 @@
+.certification-header {
+    width: 50%;
+}
+.certification-header h1 {
+    margin: 0;
+    font-size: 50px;
+}
+.certification-header p {
+    text-align: left;
+}
+.flag-box {
+    width: 22%;
+    background-color: var(--primary-background);
+    border-radius: 25px;
+    color: white;
+    padding: 20px;
+}
+.flag-box h1 {
+    margin: 0;
+    font-size: 50px;
+}
+.flag-box p {
+    font-size:13px;
+    opacity:0.7;
+}
+.flag-box h3 {
+    margin: 0;
+    opacity: 0.5;
+}
+.flag-box h4 {
+    text-transform: uppercase;
+    opacity: 0.8;
+}
