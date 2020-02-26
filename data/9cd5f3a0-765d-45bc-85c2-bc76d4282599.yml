@@ -6,3 +6,29 @@ flags:
   3: app.flags.agents.flag_2
   4: app.flags.agents.flag_3
   5: app.flags.agents.flag_4
+  6: app.flags.agents.flag_5
+  7: app.flags.adversaries.flag_0
+  8: app.flags.adversaries.flag_1
+  9: app.flags.adversaries.flag_2
+  10: app.flags.operations.flag_0
+  11: app.flags.operations.flag_1
+  12: app.flags.operations.flag_2
+  13: app.flags.operations.flag_3
+  14: app.flags.plugins.flag_0
+  15: app.flags.plugins.flag_1
+  16: app.flags.plugins.flag_2
+  17: app.flags.plugins.flag_3
+  18: app.flags.plugins.flag_4
+  19: app.flags.plugins.flag_5
+  20: app.flags.plugins.flag_6
+  21: app.flags.advanced.flag_0
+  22: app.flags.advanced.flag_1
+  23: app.flags.advanced.flag_2
+  24: app.flags.developers.flag_0
+  25: app.flags.developers.flag_1
+  26: app.flags.developers.flag_2
+  27: app.flags.developers.flag_3
+  28: app.flags.developers.flag_4
+  29: app.flags.developers.flag_5
+  30: app.flags.developers.flag_6
+  31: app.flags.developers.flag_7
