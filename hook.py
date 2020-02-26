@@ -1,7 +1,6 @@
 import glob
 from importlib import import_module
 
-from app.utility.base_world import BaseWorld
 from plugins.training.app.c_flag import Flag
 from plugins.training.app.training_api import TrainingApi
 

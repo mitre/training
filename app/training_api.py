@@ -19,7 +19,7 @@ class TrainingApi(BaseService):
 
     @check_authorization
     async def retrieve_flags(self, request):
-        complete = await self.data_svc.locate('flags')
+        complete = await self.data_svc.locate('flags', dict(completed=True))
         for incomplete in sorted(await self.data_svc.locate('flags', dict(completed=False)), key=lambda x: x.number):
             try:
                 verified = await incomplete.verify(self.services)
