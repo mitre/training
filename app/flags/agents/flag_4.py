@@ -1,5 +1,5 @@
 name = 'Add new agent filename'
-description = 'Ensure that new agents could potentially get named "super_scary.exe" when downloaded on any host. ' \
+challenge = 'Ensure that new agents could potentially get named "super_scary.exe" when downloaded on any host. ' \
               'Deploy new agents until one downloads with this name.'
 
 

@@ -1,0 +1,8 @@
+id: 9cd5f3a0-765d-45bc-85c2-bc76d4282599
+name: basic
+flags:
+  1: app.flags.agents.flag_0
+  2: app.flags.agents.flag_1
+  3: app.flags.agents.flag_2
+  4: app.flags.agents.flag_3
+  5: app.flags.agents.flag_4

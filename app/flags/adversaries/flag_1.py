@@ -1,5 +1,5 @@
 name = 'Add a pack'
-description = 'Add the Nosy Neighbor adversary pack to the Super Spy adversary and save it'
+challenge = 'Add the Nosy Neighbor adversary pack to the Super Spy adversary and save it'
 
 
 async def verify(services):

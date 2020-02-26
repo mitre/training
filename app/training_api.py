@@ -1,3 +1,5 @@
+import logging
+
 from aiohttp import web
 from aiohttp_jinja2 import template
 
@@ -19,16 +21,13 @@ class TrainingApi(BaseService):
 
     @check_authorization
     async def retrieve_flags(self, request):
-        complete = await self.data_svc.locate('flags', dict(completed=True))
-        for incomplete in sorted(await self.data_svc.locate('flags', dict(completed=False)), key=lambda x: x.number):
+        flags = [flag for c in await self.data_svc.locate('certification') for flag in c.flags]
+        for flag in flags:
             try:
-                verified = await incomplete.verify(self.services)
-                if verified:
-                    incomplete.completed = True
-                    complete.append(incomplete)
-                else:
-                    complete.append(incomplete)
+                if not flag.completed:
+                    if await flag.verify(self.services):
+                        flag.completed = True
                     break
             except Exception as e:
-                print(e)
-        return web.json_response(dict(flags=[f.display for f in complete]))
+                logging.error(e)
+        return web.json_response(dict(flags=[f.display for f in flags]))

@@ -1,5 +1,5 @@
 name = 'Run another operation'
-description = 'Run a new operation, using any adversary profile - except Hunter - and run the operation requiring ' \
+challenge = 'Run a new operation, using any adversary profile - except Hunter - and run the operation requiring ' \
               'manual approval. Approve and discard links as desired.'
 
 

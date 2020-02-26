@@ -9,14 +9,20 @@
     text-align: left;
 }
 .flag-box {
-    width: 22%;
+    width: 20%;
     background-color: var(--primary-background);
     border-radius: 25px;
     color: white;
     padding: 20px;
+    margin: 5px;
+    min-height:300px;
+    position: relative;
 }
 .flag-box h1 {
-    margin: 0;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    position:absolute;
     font-size: 50px;
 }
 .flag-box p {

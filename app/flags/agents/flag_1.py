@@ -1,7 +1,7 @@
 import sys
 
 name = 'Remote 54ndc47 agent'
-description = 'Demonstrate your ability to deploy a 54ndc47 agent on a remote host. The agent should successfully ' \
+challenge = 'Demonstrate your ability to deploy a 54ndc47 agent on a remote host. The agent should successfully ' \
               'beacon back to this server instance. This agent should be run on an operating system that is NOT the ' \
               'same as what is hosting the server. It is OK to use a virtual box to complete this challenge.'
 
