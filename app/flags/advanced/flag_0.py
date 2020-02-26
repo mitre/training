@@ -1,5 +1,5 @@
 name = 'Update configurations'
-description = 'Update the app.contact.http configuration property to http://127.0.0.1:8888 and start a new local agent.'
+challenge = 'Update the app.contact.http configuration property to http://127.0.0.1:8888 and start a new local agent.'
 
 
 async def verify(services):

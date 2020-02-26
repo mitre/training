@@ -1,5 +1,5 @@
 name = 'Create an adversary'
-description = 'Create a new adversary named "Certifiable" with at least 3 phases'
+challenge = 'Create a new adversary named "Certifiable" with at least 3 phases'
 
 
 async def verify(services):

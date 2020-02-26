@@ -1,5 +1,5 @@
 name = 'Run another operation'
-description = 'Run a new operation, using any adversary profile - except Hunter - and change the jitter to 10/20 ' \
+challenge = 'Run a new operation, using any adversary profile - except Hunter - and change the jitter to 10/20 ' \
               'and the obfuscation to base64'
 
 

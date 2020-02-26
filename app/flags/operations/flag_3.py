@@ -1,5 +1,5 @@
 name = 'Run empty operation'
-description = 'Run a new operation, this time not selecting any profiles or groups. Add at least 5 potential links ' \
+challenge = 'Run a new operation, this time not selecting any profiles or groups. Add at least 5 potential links ' \
               'to the operation.'
 
 

@@ -1,5 +1,5 @@
 name = 'Create an ability'
-description = 'Create a new ability named "My test ability". Put it under the discovery tactic and include a payload ' \
+challenge = 'Create a new ability named "My test ability". Put it under the discovery tactic and include a payload ' \
               'and a cleanup command.'
 
 
