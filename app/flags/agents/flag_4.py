@@ -4,4 +4,7 @@ challenge = 'Ensure that new agents could potentially get named "super_scary.exe
 
 
 async def verify(services):
+    for agent in await services.get('data_svc').locate('agents'):
+        if agent.exe_name == 'super_scary.exe':
+            return True
     return False
