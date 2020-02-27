@@ -1,6 +1,16 @@
 name = 'Adjust sources'
-challenge = 'Add a new trait and rule to the basic fact source. Then create a new fact source with at least 1 trait.'
+challenge = 'Add a new trait "training" with any value and a new rule to the basic fact source. ' \
+            'Then create an entirely new fact source called "better_basic" with at least 1 trait.'
 
 
 async def verify(services):
-    return False
+    check1, check2, check3 = False, False, False
+    source = await services.get('data_svc').locate('sources', dict(name='basic'))
+    for fact in source.facts:
+        if fact.trait == 'training':
+            check1 = True
+    if len(source.rules) > 4:
+        check2 = True
+    for _ in await services.get('data_svc').locate('sources', dict(name='better_basic')):
+        check3 = True
+    return all([check1, check2, check3])

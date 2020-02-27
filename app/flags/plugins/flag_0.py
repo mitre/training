@@ -4,4 +4,14 @@ challenge = 'Start a new Manx agent on your localhost. Then send at least 2 comm
 
 
 async def verify(services):
-    return False
+    check1, check2 = False, False
+    for agent in services.get('data_svc').locate('agents', dict(contact='tcp')):
+        history = [entry for entry in services.get('contact_svc').report['websocket'] if entry['paw'] == agent.paw]
+        if len(history) > 1:
+            check1 = True
+        for op in await services.get('data_svc').locate('operations', dict(adversary_id='de07f52d-9928-4071-9142-cb1d3bd851e8')):
+            for op_agent in op.agents:
+                if op_agent.paw == agent.paw and op.finish:
+                    check2 = True
+                    break
+    return all([check1, check2])
