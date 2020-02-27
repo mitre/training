@@ -1,7 +1,6 @@
-name = 'Build a new agent'
-challenge = 'Write a new agent in either bash or PowerShell, using the HTTP contact. Then run a new operation ' \
-              'against the agent, selecting no profile, and sending at least 5 potential links to it.'
+name = 'Bypass authentication'
+challenge = 'Ensure that logging in to CALDERA is not required if the browser address is 127.0.0.1'
 
 
 async def verify(services):
-    return False
+    return '127.0.0.1' in services.get('auth_svc').bypass
