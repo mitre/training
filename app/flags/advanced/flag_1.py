@@ -6,10 +6,10 @@ challenge = 'Add a new trait "training" with any value and a new rule to the bas
 async def verify(services):
     check1, check2, check3 = False, False, False
     source = await services.get('data_svc').locate('sources', dict(name='basic'))
-    for fact in source.facts:
+    for fact in source[0].facts:
         if fact.trait == 'training':
             check1 = True
-    if len(source.rules) > 4:
+    if len(source[0].rules) > 4:
         check2 = True
     for _ in await services.get('data_svc').locate('sources', dict(name='better_basic')):
         check3 = True

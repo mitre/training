@@ -5,6 +5,6 @@ challenge = 'Change the access of the GameBoard plugin so only blue-team users c
 
 
 async def verify(services):
-    for plugin in await services.get('data_svc').locate('plugins', dict(name='GameBoard')):
+    for plugin in await services.get('data_svc').locate('plugins', dict(name='gameboard')):
         return plugin.access == BaseWorld.Access.BLUE
     return False
