@@ -42,6 +42,7 @@
     });
     function refresh(){
         function updateFlags(data){
+            let complete = 0;
             let flags = $('#certification-modules');
             flags.empty();
             try {
@@ -52,6 +53,7 @@
                     template.find("#flag-challenge").text(flag.challenge);
                     if(flag.completed) {
                         template.find('#flag-status').html('&#x2705;');
+                        complete += 1;
                     } else {
                         template.find('#flag-status').html('&#10060;');
                         template.show();
@@ -62,6 +64,7 @@
                     flags.append(template);
                 });
             } catch(e) { }
+            stream(complete+' of '+ data.flags.length + ' flags found!');
         }
         restRequest('POST', null, updateFlags, '/plugin/training/flags')
     }
