@@ -1,6 +1,6 @@
 name = 'Create an ability'
 challenge = 'Create a new ability named "My test ability". Put it under the discovery tactic and include a payload ' \
-              'and a cleanup command. Have the command print out the network interfaces and IP addresses on the host.' \
+              'and a cleanup command. Have the command print out the network interfaces and IP addresses on the host. ' \
             'Hint: this would be "ifconfig" on a MacOS.'
 
 

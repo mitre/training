@@ -9,7 +9,7 @@ class Certification(BaseObject):
 
     @property
     def display(self):
-        return dict(name=self.name, flags=[f.display for f in flags])
+        return dict(name=self.name, flags=[f.display for f in self.flags])
 
     def __init__(self, name):
         super().__init__()

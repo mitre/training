@@ -1,5 +1,5 @@
 name = 'Update agent'
-challenge = 'Pick any agent and change the group and sleep values it associated to'
+challenge = 'Pick any agent and change the group and sleep (min and max) values associated to it'
 
 
 async def verify(services):
