@@ -1,5 +1,5 @@
 name = 'Run a basic operation'
-challenge = 'Run a new operation, using the Hunter profile and selecting any group of agents'
+challenge = 'Run a new operation, using the Hunter profile and select any group of agents'
 
 
 async def verify(services):
