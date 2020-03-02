@@ -7,4 +7,3 @@ async def verify(services):
     if http_contact != 'http://127.0.0.1:8888':
         return True
     return False
-
