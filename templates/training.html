@@ -40,6 +40,11 @@
     $(document).ready(function () {
         refresh();
     });
+
+    function requestCertificate() {
+        restRequest('POST', {'name':$('#cert-name').val()}, downloadCertData, '/plugin/training/certificate')
+    }
+
     function refresh(){
         function updateFlags(data){
             let complete = 0;
@@ -64,6 +69,17 @@
                     flags.append(template);
                 });
             } catch(e) { }
+            if (complete === data.flags.length){
+            	let template = $("#flag-template").clone();
+                template.find('#flag-number').html('Certificate');
+                template.find('#flag-name').text('Download your Proof');
+                template.find("#flag-challenge").html('You have successfully completed all flags, your certificate is now available.\n' +
+                    '<input id="cert-name" type="text" placeholder="Your Name"/>\n' +
+                    '<a href="" type="button" onclick="requestCertificate();"/>');
+                template.find('#flag-status').html('&#11015;');
+                template.show();
+                flags.append(template);
+            }
             stream(complete+' of '+ data.flags.length + ' flags found!');
         }
         restRequest('POST', null, updateFlags, '/plugin/training/flags')
