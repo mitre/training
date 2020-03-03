@@ -1,19 +1,13 @@
-import os
-
-name = 'Encoded payloads'
-challenge = 'Using the same payload as the previous step, encode the payload and ensure that downloading it ' \
-              'through the REST API still works, with the text reversed'
+name = 'Build an agent'
+challenge = 'Create a new Linux/MacOS agent, using the HTTP contact. This agent should use a new executor - zsh. ' \
+            'You will need to add at least 1 matching zsh ability. Run a new operation against this agent, running ' \
+            'the new ability.'
 
 
 async def verify(services):
-    check1, check2 = False, False
-    if os.path.isfile('plugins/stockpile/payloads/train.txt.xored'):
-        with open('plugins/stockpile/payloads/train.txt.xored', 'r') as train:
-            if 'i am a test' in train.read():
-                _, contents, _ = await services.get('file_svc').get_file(dict(file='train.txt'))
-                if contents == reversed('i am a test'):
-                    check1 = True
-                _, contents, _ = await services.get('file_svc').get_file(dict(file='train.txt'))
-                if contents == 'i am a test':
-                    check2 = True
-    return all([check1, check2])
+    for op in await services.get('data_svc').locate('operations'):
+        if len(op.chain) > 0:
+            for agent in op.agents:
+                if agent.executors == ['zsh']:
+                    return True
+    return False
