@@ -45,8 +45,8 @@ class TrainingApi(BaseService):
         data = await request.json()
         if len(self.certify_key) == 30 and data.get('name'):
             name, payload = await self._build_certificate(name=data.get('name'))
-            headers = dict([('CONTENT-DISPOSITION', 'attachment; filename="%s"' % name)])
-            return web.Response(body=payload, headers=headers)
+            data = dict(img=base64.encodebytes(payload).decode('utf-8'))
+            return web.json_response(data)
         return web.json_response(dict())
 
     async def load_key_for_existing_solves(self):
