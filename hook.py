@@ -16,10 +16,12 @@ async def enable(services):
     await _load_flags(data_svc)
 
     training_api = TrainingApi(services)
+    await training_api.load_key_for_existing_solves()
     app = services.get('app_svc').application
     app.router.add_static('/training', 'plugins/training/static/', append_version=True)
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
+    app.router.add_route('POST', '/plugin/training/certificate', training_api.generate_certificate)
 
 
 async def _load_flags(data_svc):
