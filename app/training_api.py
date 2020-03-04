@@ -55,6 +55,16 @@ class TrainingApi(BaseService):
             if flag.completed:
                 await self._A(flag)
 
+    async def decode_cert(self):
+        xor_file(input_file='plugins/training/static/img/cert-img.encoded',
+                 output_file='plugins/training/static/img/cert-img.decoded.jpg',
+                 key=[ord(elem) for v in self.certify_key.values() for elem in v])
+
+    async def encode_cert(self):
+        xor_file(output_file='plugins/training/static/img/cert-img.encoded',
+                 input_file='plugins/training/static/img/cert-img.decoded.jpg',
+                 key=[ord(elem) for v in self.certify_key.values() for elem in v])
+
     """ PRIVATE """
 
     async def _A(self, f):
