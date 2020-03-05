@@ -17,12 +17,13 @@ class TrainingApi(BaseService):
     @check_authorization
     @template('training.html')
     async def splash(self, request):
-        return dict()
+        return dict(certificates=[cert.display for cert in await self.data_svc.locate('certifications')])
 
     @check_authorization
     async def retrieve_flags(self, request):
-        flags = [flag for c in await self.data_svc.locate('certification') for flag in c.flags]
-        for flag in flags:
+        data = dict(await request.json())
+        badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
+        for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
                     if await flag.verify(self.services):
@@ -30,4 +31,4 @@ class TrainingApi(BaseService):
                     break
             except Exception as e:
                 logging.error(e)
-        return web.json_response(dict(flags=[f.display for f in flags]))
+        return web.json_response(dict(badges=[b.display for b in badges]))

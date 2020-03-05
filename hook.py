@@ -1,6 +1,7 @@
 from importlib import import_module
 
 from app.utility.base_world import BaseWorld
+from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
 from plugins.training.app.c_flag import Flag
 from plugins.training.app.training_api import TrainingApi
@@ -12,7 +13,7 @@ address = '/plugin/training/gui'
 
 async def enable(services):
     data_svc = services.get('data_svc')
-    await data_svc.apply('certification')
+    await data_svc.apply('certifications')
     await _load_flags(data_svc)
 
     training_api = TrainingApi(services)
@@ -25,10 +26,13 @@ async def enable(services):
 async def _load_flags(data_svc):
     cert = BaseWorld.strip_yml('plugins/training/data/9cd5f3a0-765d-45bc-85c2-bc76d4282599.yml')[0]
     certification = Certification(name=cert['name'])
-    for number, module in cert['flags'].items():
-        loaded_module = import_module('plugins.training.%s' % module)
-        certification.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
-                                        number=number,
-                                        name=getattr(loaded_module, 'name'),
-                                        challenge=getattr(loaded_module, 'challenge')))
+    for badge, data in cert['badges'].items():
+        badge = Badge(name=badge)
+        for number, module in data['flags'].items():
+            loaded_module = import_module('plugins.training.%s' % module)
+            badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
+                                    number=number,
+                                    name=getattr(loaded_module, 'name'),
+                                    challenge=getattr(loaded_module, 'challenge')))
+        certification.badges.append(badge)
     await data_svc.store(certification)

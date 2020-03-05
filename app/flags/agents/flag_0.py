@@ -1,5 +1,5 @@
-name = 'Local 54ndc47 agent'
-challenge = 'Demonstrate your ability to deploy a 54ndc47 agent on local host. The agent should successfully ' \
+name = 'Deploy local agent'
+challenge = 'Demonstrate your ability to deploy an agent on local host. The agent should successfully ' \
               'beacon back to this server instance.'
 
 
