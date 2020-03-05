@@ -9,16 +9,16 @@ class Certification(BaseObject):
 
     @property
     def display(self):
-        return dict(name=self.name, flags=[f.display for f in self.flags])
+        return dict(name=self.name, badges=[b.display for b in self.badges])
 
     def __init__(self, name):
         super().__init__()
         self.name = name
-        self.flags = []
+        self.badges = []
 
     def store(self, ram):
-        existing = self.retrieve(ram['certification'], self.unique)
+        existing = self.retrieve(ram['certifications'], self.unique)
         if not existing:
-            ram['certification'].append(self)
-            return self.retrieve(ram['certification'], self.unique)
+            ram['certifications'].append(self)
+            return self.retrieve(ram['certifications'], self.unique)
         return existing

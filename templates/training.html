@@ -3,23 +3,28 @@
 <div id="training" class="section-profile">
     <div class="row">
         <div class="topleft duk-icon"><img onclick="removeSection('training')" src="/gui/img/x.png"></div>
-            <center>
-                <div class="column" style="flex:100%;">
-                        <div class="certification-header">
-                            <h1>CALDERA Certification</h1>
-                            <h4>Getting certified means you have a proven ability to utilize this framework</h4>
-                            <hr>
-                            <p>
-                                Below you will find virtual flags, similar to a capture-the-flag event. As you work through
-                                each one, more flags will be displayed. Complete all the flags and you will receive a printable
-                                CALDERA certification. The flags will automatically update (within 15 seconds)
-                                as you work through the challenges.
-                            </p>
-                        </div>
-                    <br><br>
-                    <ul id="certification-modules" class="profile-tests"></ul>
-                </div>
-        </center>
+        <div class="bottomright duk-icon"><img onclick="toggleSidebar('training-sidebar')" src="/gui/img/expand.png"></div>
+        <div id="training-sidebar" class="column section-border" style="flex:25%;">
+            <img src="/training/img/certification.png">
+            <h4>Certification</h4>
+            <p class="section-description">
+                Below you will find virtual flags, similar to a capture-the-flag event. As you work through
+                each one, more flags will be displayed. Complete all the flags and you will receive a printable
+                CALDERA certification. The flags will automatically update (within 15 seconds)
+                as you work through the challenges. Each time you complete a section, a badge will be activated.
+            </p>
+            <br>
+            <select id="certification-name" style="margin-top:-15px" onchange="loadCertification();">
+                <option value="" disabled selected>Select a certificate</option>
+                {% for cert in certificates %}
+                    <option value="{{ cert.name }}">{{ cert.name }}</option>
+                {% endfor %}}
+            </select>
+        </div>
+        <div class="column" style="flex:75%;">
+            <ul id="badges" class="profile-tests"></ul>
+            <ul id="flags" class="profile-tests"></ul>
+        </div>
     </div>
 </div>
 
@@ -32,6 +37,13 @@
     </center>
 </li>
 
+<li id="badge-template" style="display:none">
+    <div class="badge-icon">
+        <b><p id="badge-name"></p></b>
+        <img id="badge-icon"/>
+    </div>
+</li>
+
 <script>
     let refresher = setInterval(refresh, 15000);
     $('.section-profile').bind('destroyed', function() {
@@ -40,32 +52,62 @@
     $(document).ready(function () {
         refresh();
     });
+    
+    function loadCertification(){
+        function loadCert(data){
+            data[0].badges.forEach(function(badge) {
+                let template = $("#badge-template").clone();
+                template.attr("id", "badge-" + badge.name);
+                template.find('#badge-name').text(badge.name);
+                template.find('#badge-icon').attr('src', '/training/img/badges/'+badge.name+'.png');
+                template.show();
+                $('#badges').append(template);
+            });
+            refresh();
+        }
+        let selectedCert = $('#certification-name option:selected').attr('value');
+        restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
+    }
+    
     function refresh(){
         function updateFlags(data){
             let complete = 0;
-            let flags = $('#certification-modules');
+            let flags = $('#flags');
             flags.empty();
             try {
-                data.flags.forEach(function(flag) {
-                    let template = $("#flag-template").clone();
-                    template.find('#flag-number').html('&#127937 ' + flag.number);
-                    template.find('#flag-name').text(flag.name);
-                    template.find("#flag-challenge").text(flag.challenge);
-                    if(flag.completed) {
-                        template.find('#flag-status').html('&#x2705;');
-                        complete += 1;
-                    } else {
-                        template.find('#flag-status').html('&#10060;');
+                data.badges.forEach(function(badge) {
+                    let badgeComplete = 0;
+                    badge.flags.forEach(function(flag) {
+                        let template = $("#flag-template").clone();
+                        template.find('#flag-number').html('&#127937 ' + flag.number);
+                        template.find('#flag-name').text(flag.name);
+                        template.find("#flag-challenge").text(flag.challenge);
+                        if(flag.completed) {
+                            template.find('#flag-status').html('&#x2705;');
+                            complete += 1;
+                            badgeComplete += 1;
+                        } else {
+                            template.find('#flag-status').html('&#10060;');
+                            template.show();
+                            flags.append(template);
+                            throw Exception; //show only the next incomplete flag
+                        }
                         template.show();
                         flags.append(template);
-                        throw Exception; //show only the next incomplete flag
+                    });
+                    if(badgeComplete === badge.flags.length) {
+                        let b = $('#badge-'+badge.name);
+                        b.find('.badge-icon').css('opacity', 1.0);
+                        b.find('.badge-icon').css('background-color', 'goldenrod');
                     }
-                    template.show();
-                    flags.append(template);
                 });
             } catch(e) { }
-            stream(complete+' of '+ data.flags.length + ' flags found!');
+            stream(complete+' flags found!');
         }
-        restRequest('POST', null, updateFlags, '/plugin/training/flags')
+        let selectedCert = $('#certification-name option:selected').attr('value');
+        if(!selectedCert){
+            return;
+        }
+        restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
     }
 </script>
