@@ -53,7 +53,7 @@ class TrainingApi(BaseService):
         return web.json_response(dict())
 
     async def load_key_for_existing_solves(self):
-        flags = [flag for c in await self.data_svc.locate('certification') for flag in c.flags]
+        flags = await self._get_all_flags()
         for flag in flags:
             if flag.completed:
                 await self._A(flag)
