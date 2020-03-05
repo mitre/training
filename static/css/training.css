@@ -18,7 +18,7 @@
     min-height:300px;
     position: relative;
 }
-.flag-box h1, .completed-training {
+.flag-box h1 {
     bottom: 0;
     right: 0;
     margin: 20px;
@@ -37,3 +37,4 @@
     text-transform: uppercase;
     opacity: 0.8;
 }
+
