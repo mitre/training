@@ -56,8 +56,7 @@
         	let binLen = binStr.length;
         	let bytes = new Uint8Array(binLen);
         	for (let i = 0; i < binLen; i++) {
-        		let ascii = binStr.charCodeAt(i);
-        		bytes[i] = ascii;
+        		bytes[i] = binStr.charCodeAt(i);
             }
         	return bytes;
         }
