@@ -25,7 +25,7 @@ async def enable(services):
 
 async def _load_flags(data_svc):
     cert = BaseWorld.strip_yml('plugins/training/data/9cd5f3a0-765d-45bc-85c2-bc76d4282599.yml')[0]
-    certification = Certification(name=cert['name'])
+    certification = Certification(name=cert['name'], access=BaseWorld.Access.RED)
     for badge, data in cert['badges'].items():
         badge = Badge(name=badge)
         for number, module in enumerate(data['flags']):
