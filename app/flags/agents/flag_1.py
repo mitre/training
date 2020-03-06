@@ -7,7 +7,8 @@ challenge = 'Demonstrate your ability to deploy an agent on a remote host. The a
 extra_info = """
 Adversaries will most likely deploy their command-and-control (C2) server somewhere Internet accessible. 
 This means their agents will need to have access to the C2 IP address. Computers often have unrestricted outbound
-Internet connectivity, which is why it's usually best to have an agent connect to you, not vice-versa.
+Internet connectivity but heavily restricted inbound connectivity, which is why it's usually best to have an agent 
+connect to you, not vice-versa.
 """
 
 
