@@ -1,10 +1,10 @@
+from app.utility.base_world import BaseWorld
+
 name = 'Add new agent filename'
-challenge = 'Ensure that new agents could potentially get named "super_scary.exe" when downloaded on any host. ' \
-              'Deploy new agents until one downloads with this name.'
+challenge = 'Ensure that new agents will be named "super_scary.txt" when downloaded on any host.'
 
 
 async def verify(services):
-    for agent in await services.get('data_svc').locate('agents'):
-        if agent.exe_name == 'super_scary.exe':
-            return True
+    if BaseWorld.get_config(name='agents', prop='implant_name') == 'super_scary.txt':
+        return True
     return False

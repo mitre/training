@@ -1,6 +1,6 @@
 from app.utility.base_world import BaseWorld
 
-name = 'Understanding untrusted'
+name = 'Understanding trust'
 challenge = 'Change the untrusted agent timer to 90 seconds.'
 
 

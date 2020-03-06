@@ -31,17 +31,18 @@
     padding: 2px;
     background-color: grey;
     border-radius: 25px;
-    width: 110px;
-    margin: 8px;
+    width: 75px;
+    margin: 3px;
     text-align: center;
     opacity: 0.3;
 }
 .badge-icon p {
     text-align: center;
     text-transform: uppercase;
+    font-size: 10px;
 }
 .badge-icon img {
-    height: 75px;
+    height: 40px;
     border-radius: 50%;
     border: 3px solid black;
 }
