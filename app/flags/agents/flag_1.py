@@ -4,9 +4,9 @@ name = 'Deploy remote agent'
 challenge = 'Demonstrate your ability to deploy an agent on a remote host. The agent should successfully ' \
               'beacon back to this server instance. This agent should be run on an operating system that is NOT the ' \
               'same as what is hosting the server. It is OK to use a virtual box to complete this challenge.'
-extra_info = """Adversaries will most likely deploy their command-and-control (C2) server somewhere Internet accessible. 
+extra_info = """Adversaries will most likely deploy their command-and-control (C2) server somewhere Internet accessible.
 This means their agents will need to have access to the C2 IP address. Computers often have unrestricted outbound
-Internet connectivity but heavily restricted inbound connectivity, which is why it's usually best to have an agent 
+Internet connectivity but heavily restricted inbound connectivity, which is why it's usually best to have an agent
 connect to you, not vice-versa."""
 
 
