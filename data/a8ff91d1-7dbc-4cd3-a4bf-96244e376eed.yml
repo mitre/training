@@ -1,0 +1,12 @@
+id: a8ff91d1-7dbc-4cd3-a4bf-96244e376eed
+name: Developer
+badges:
+  developer:
+    flags:
+      1: app.flags.developers.flag_0
+      2: app.flags.developers.flag_1
+      3: app.flags.developers.flag_2
+      4: app.flags.developers.flag_3
+      5: app.flags.developers.flag_4
+      6: app.flags.developers.flag_5
+      7: app.flags.developers.flag_6
