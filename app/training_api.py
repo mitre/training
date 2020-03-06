@@ -17,7 +17,9 @@ class TrainingApi(BaseService):
     @check_authorization
     @template('training.html')
     async def splash(self, request):
-        return dict(certificates=[cert.display for cert in await self.data_svc.locate('certifications')])
+        access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
+        certifications = await self.data_svc.locate('certifications', match=access)
+        return dict(certificates=[cert.display for cert in certifications])
 
     @check_authorization
     async def retrieve_flags(self, request):

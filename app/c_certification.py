@@ -11,9 +11,10 @@ class Certification(BaseObject):
     def display(self):
         return dict(name=self.name, badges=[b.display for b in self.badges])
 
-    def __init__(self, name):
+    def __init__(self, name, access):
         super().__init__()
         self.name = name
+        self.access = access
         self.badges = []
 
     def store(self, ram):
