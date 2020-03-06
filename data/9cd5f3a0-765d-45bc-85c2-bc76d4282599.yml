@@ -3,43 +3,43 @@ name: Red Operator Certificate
 badges:
   agents:
     flags:
-      1: flags.agents.flag_0
-      2: flags.agents.flag_1
-      3: flags.agents.flag_2
-      4: flags.agents.flag_3
-      5: flags.agents.flag_4
-      6: flags.agents.flag_5
-      7: flags.agents.flag_6
+      - flags.agents.flag_0
+      - flags.agents.flag_1
+      - flags.agents.flag_2
+      - flags.agents.flag_3
+      - flags.agents.flag_4
+      - flags.agents.flag_5
+      - flags.agents.flag_6
   adversaries:
     flags:
-      8: flags.adversaries.flag_0
-      9: flags.adversaries.flag_1
-      10: flags.adversaries.flag_2
+      - flags.adversaries.flag_0
+      - flags.adversaries.flag_1
+      - flags.adversaries.flag_2
   operations:
     flags:
-      11: flags.operations.flag_0
-      12: flags.operations.flag_1
-      13: flags.operations.flag_2
-      14: flags.operations.flag_3
+      - flags.operations.flag_0
+      - flags.operations.flag_1
+      - flags.operations.flag_2
+      - flags.operations.flag_3
   advanced:
     flags:
-      15: flags.advanced.flag_0
-      16: flags.advanced.flag_1
-      17: flags.advanced.flag_2
+      - flags.advanced.flag_0
+      - flags.advanced.flag_1
+      - flags.advanced.flag_2
   manx:
     flags:
-      18: flags.plugins.manx.flag_0
-      19: flags.plugins.manx.flag_1
+      - flags.plugins.manx.flag_0
+      - flags.plugins.manx.flag_1
   mock:
     flags:
-      20: flags.plugins.mock.flag_0
+      - flags.plugins.mock.flag_0
   compass:
     flags:
-      21: flags.plugins.compass.flag_0
+      - flags.plugins.compass.flag_0
   gameboard:
     flags:
-      22: flags.plugins.gameboard.flag_0
-      23: flags.plugins.gameboard.flag_1
+      - flags.plugins.gameboard.flag_0
+      - flags.plugins.gameboard.flag_1
   atomic:
     flags:
-      24: flags.plugins.atomic.flag_0
+      - flags.plugins.atomic.flag_0
