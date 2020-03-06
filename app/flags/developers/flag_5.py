@@ -4,8 +4,7 @@ name = 'Special payloads'
 challenge = 'Add a new Stockpile payload called train.txt with the contents "i am a test". Mark it as a ' \
               'special payload, so when downloaded through the REST api, the payload should return the file with ' \
               'the text inside reversed each time it is downloaded.'
-extra_info = """
-"""
+extra_info = ''
 
 
 async def verify(services):

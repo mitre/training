@@ -2,12 +2,10 @@ from app.utility.base_world import BaseWorld
 
 name = 'Bootstrap abilities'
 challenge = 'Using a Stockpile ability, ensure new agents automatically run "whoami" on their first beacon'
-extra_info = """
-Depending on the defensive tools installed on a compromised machine, an adversary may need to execute their mission 
+extra_info = """Depending on the defensive tools installed on a compromised machine, an adversary may need to execute their mission 
 quickly before getting detected and shut down. One common tactic is to give each new agent a set of instructions to 
 run immediately after sending the first beacon in. These instructions may determine what software is installed on 
-the host, to gain persistence or any another tactic.
-"""
+the host, to gain persistence or any another tactic."""
 
 
 async def verify(services):

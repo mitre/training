@@ -6,8 +6,7 @@ name = 'Add new blue ability'
 challenge = 'Add a new detection ability - manually - to the Response plugin which displays all user names on a host.' \
               'Ensure this ability will run more than once if used in an operation, then ensure it is ' \
               'loaded into the database. The ability ID should be abc123.'
-extra_info = """
-"""
+extra_info = ''
 
 
 async def verify(services):

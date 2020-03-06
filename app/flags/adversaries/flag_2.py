@@ -2,8 +2,7 @@ name = 'Create an ability'
 challenge = 'Create a new ability from the UI named "My test ability". Put it under the discovery tactic and include ' \
             'a payload and a cleanup command. Have the command print out the network interfaces and IP addresses on ' \
             'the host. Hint: this would be "ifconfig" on a MacOS.'
-extra_info = """
-"""
+extra_info = """ """
 
 
 async def verify(services):

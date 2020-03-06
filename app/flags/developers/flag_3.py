@@ -4,8 +4,7 @@ name = 'Write new parser'
 challenge = 'Add a new parser which parses IPV6 addresses with the trait, "host.ip.ipv6". ' \
               'Then run an adversary which correctly parses out matching facts. Hint: use the ability you created ' \
             'in an earlier flag.'
-extra_info = """
-"""
+extra_info = ''
 
 
 async def verify(services):

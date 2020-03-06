@@ -1,7 +1,6 @@
 name = 'Bypass authentication'
 challenge = 'Ensure that logging in to CALDERA is not required if the browser address is 127.0.0.1'
-extra_info = """
-"""
+extra_info = ''
 
 
 async def verify(services):

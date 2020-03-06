@@ -2,8 +2,7 @@ name = 'Build an agent'
 challenge = 'Create a new Linux/MacOS agent, using the HTTP contact. This agent should use a new executor - zsh. ' \
             'You will need to add at least 1 matching zsh ability. Run a new operation against this agent, running ' \
             'the new ability.'
-extra_info = """
-"""
+extra_info = ''
 
 
 async def verify(services):
