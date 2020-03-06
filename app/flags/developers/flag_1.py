@@ -2,6 +2,8 @@ name = 'Write a new planner'
 challenge = 'Write a planner called "think_hard" that runs each ability in alphabetical order, ' \
               'by the ability name. Then run a new operation using this planner, ' \
             'any group of agents and any profile. At least 10 abilities should run in the operation.'
+extra_info = """
+"""
 
 
 async def verify(services):

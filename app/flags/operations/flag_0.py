@@ -1,5 +1,10 @@
 name = 'Run a basic operation'
 challenge = 'Run a new operation, using the Hunter profile and select any group of agents'
+extra_info = """
+An autonomous operation is where an adversary pre-configures their attack and let's their agent and C2 operate 
+without their interference. From a red-team perspective, this is an invaluable way to run repeatable adversary 
+emulation exercises, ensuring that each one is identical to the last.
+"""
 
 
 async def verify(services):

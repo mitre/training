@@ -29,10 +29,11 @@ async def _load_flags(data_svc):
     for badge, data in cert['badges'].items():
         badge = Badge(name=badge)
         for number, module in data['flags'].items():
-            loaded_module = import_module('plugins.training.%s' % module)
+            loaded_module = import_module('plugins.training.app.%s' % module)
             badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
                                     number=number,
                                     name=getattr(loaded_module, 'name'),
-                                    challenge=getattr(loaded_module, 'challenge')))
+                                    challenge=getattr(loaded_module, 'challenge'),
+                                    extra_info=getattr(loaded_module, 'extra_info')))
         certification.badges.append(badge)
     await data_svc.store(certification)

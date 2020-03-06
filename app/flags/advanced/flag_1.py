@@ -1,6 +1,11 @@
 name = 'Adjust sources'
 challenge = 'Add a new trait "training" with any value and a new rule to the basic fact source. ' \
             'Then create an entirely new fact source called "better_basic" with at least 1 trait.'
+extra_info = """
+As an adversary runs TTPs on a host, they look at the output and pick out indicators of interest. These may be 
+things like user names or passwords, locations of other computers in the network or other useful information. An 
+adversary makes note of these indicators to use in future TTPs.
+"""
 
 
 async def verify(services):
