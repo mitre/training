@@ -7,7 +7,6 @@ challenge = 'Demonstrate your ability to deploy an agent on a remote host. The a
 
 
 async def verify(services):
-    return True
     agents = await services.get('data_svc').locate('agents')
     check1 = len(agents) > 1
     check2, check3 = False, False
