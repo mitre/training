@@ -3,5 +3,4 @@ python:
   - "3.6.1"
 install:
   - pip install flake8
-script:
-  - flake8 --max-line-length 180
+
