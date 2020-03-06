@@ -1,5 +1,8 @@
 name = 'Add a pack'
 challenge = 'Add the Nosy Neighbor adversary pack to the Super Spy adversary and save it'
+extra_info = """A TTP is often connected to a series of other TTPs to form an attack. For example, an adversary may have a procedure
+for locating all PDF files on a host. This may be followed by a procedure to exfiltrate all the found files. In  
+CALDERA, this chain of TTPs being used is considered a pack."""
 
 
 async def verify(services):

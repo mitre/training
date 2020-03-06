@@ -3,6 +3,7 @@ import glob
 name = 'Create a new plugin'
 challenge = 'Build a new plugin named "abilities" where a GUI page displays all the abilities which are ' \
               'in the database.'
+extra_info = ''
 
 
 async def verify(services):

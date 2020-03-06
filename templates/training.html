@@ -28,13 +28,20 @@
     </div>
 </div>
 
-<li id="flag-template" class="flag-box" style="display: none">
-    <h3 id="flag-number"></h3>
-    <h4 id="flag-name"></h4>
-    <p id="flag-challenge" class="flag-challenge"></p>
-    <center>
-        <h1 id="flag-status"></h1>
-    </center>
+<li id="flag-template" class="flag-box flip-card" style="display: none">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <h3 id="flag-number"></h3>
+            <h4 id="flag-name"></h4>
+            <p id="flag-challenge" class="flag-challenge"></p>
+            <center>
+                <h1 id="flag-status"></h1>
+            </center>
+        </div>
+        <div class="flip-card-back">
+            <p id="flag-info"></p>
+        </div>
+    </div>
 </li>
 
 <li id="badge-template" style="margin:10px;display:none">
@@ -66,12 +73,12 @@
             refresh();
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
+        stream('Hover over each flag to get adversary emulation tips & tricks!');
         restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
     }
     
     function refresh(){
         function updateFlags(data){
-            let complete = 0;
             let flags = $('#flags');
             flags.empty();
             try {
@@ -82,9 +89,9 @@
                         template.find('#flag-number').html('&#127937 ' + flag.number);
                         template.find('#flag-name').text(flag.name);
                         template.find("#flag-challenge").text(flag.challenge);
+                        template.find("#flag-info").text(flag.extra_info);
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
-                            complete += 1;
                             badgeComplete += 1;
                         } else {
                             template.find('#flag-status').html('&#10060;');
@@ -102,7 +109,6 @@
                     }
                 });
             } catch(e) { }
-            stream(complete+' flags found!');
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
         if(!selectedCert){

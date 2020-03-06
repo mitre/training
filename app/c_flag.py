@@ -9,13 +9,15 @@ class Flag(BaseObject):
 
     @property
     def display(self):
-        return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed)
+        return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
+                    extra_info=self.extra_info)
 
-    def __init__(self, number, name, challenge, verify):
+    def __init__(self, number, name, challenge, extra_info, verify):
         super().__init__()
         self.number = number
         self.name = name
         self.challenge = challenge
+        self.extra_info = extra_info
         self.verify = verify
         self.completed = False
 
