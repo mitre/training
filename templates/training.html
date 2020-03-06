@@ -11,7 +11,7 @@
                 Below you will find virtual flags, similar to a capture-the-flag event. As you work through
                 each one, more flags will be displayed. Complete all the flags and you will receive a printable
                 CALDERA certification. The flags will automatically update (within 15 seconds)
-                as you work through the challenges. Each time you complete a section, a badge will be activated.
+                as you work through the challenges. Each time you complete a section, a badge (below) will be activated.
             </p>
             <br>
             <select id="certification-name" style="margin-top:-15px" onchange="loadCertification();">
@@ -20,9 +20,9 @@
                     <option value="{{ cert.name }}">{{ cert.name }}</option>
                 {% endfor %}}
             </select>
+            <ul id="badges"></ul>
         </div>
         <div class="column" style="flex:75%;">
-            <ul id="badges" class="profile-tests"></ul>
             <ul id="flags" class="profile-tests"></ul>
         </div>
     </div>
