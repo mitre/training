@@ -71,6 +71,10 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+.flip-card-front h3, .flip-card-front h4, .flip-card-front p, .flip-card-front h1 {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .flip-card-front {
     background-color: black;
 }
