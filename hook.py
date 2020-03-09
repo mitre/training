@@ -5,6 +5,7 @@ from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
 from plugins.training.app.c_flag import Flag
 from plugins.training.app.training_api import TrainingApi
+from plugins.training.app.training_svc import TrainingService
 
 name = 'Training'
 description = 'A certification course to become a CALDERA SME'
@@ -15,12 +16,14 @@ async def enable(services):
     data_svc = services.get('data_svc')
     await data_svc.apply('certifications')
     await _load_flags(data_svc)
-
+    training_svc = TrainingService(services)
+    await training_svc.load_key_for_existing_solves()
     training_api = TrainingApi(services)
     app = services.get('app_svc').application
     app.router.add_static('/training', 'plugins/training/static/', append_version=True)
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
+    app.router.add_route('POST', '/plugin/training/certificate', training_api.generate_certificate)
 
 
 async def _load_flags(data_svc):

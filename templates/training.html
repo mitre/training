@@ -1,3 +1,4 @@
+<script src="/training/js/certificate.js"></script>
 <link rel="stylesheet" href="/training/css/training.css">
 
 <div id="training" class="section-profile">
@@ -81,6 +82,8 @@
         function updateFlags(data){
             let flags = $('#flags');
             flags.empty();
+            let totalFlagCount = getFlagCount(data);
+            let totalCompleted = 0;
             try {
                 data.badges.forEach(function(badge) {
                     let badgeComplete = 0;
@@ -93,6 +96,7 @@
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
                             badgeComplete += 1;
+                            totalCompleted++;
                         } else {
                             template.find('#flag-status').html('&#10060;');
                             template.show();
@@ -109,6 +113,9 @@
                     }
                 });
             } catch(e) { }
+            if (totalCompleted === totalFlagCount) {
+                downloadBlock();
+            }
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
         if(!selectedCert){
@@ -116,4 +123,5 @@
         }
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
     }
+    //# sourceURL=training.js
 </script>
