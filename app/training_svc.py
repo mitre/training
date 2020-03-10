@@ -1,5 +1,6 @@
 import textwrap
 
+from importlib import import_module
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
@@ -25,7 +26,7 @@ class TrainingService(BaseService):
         for badge in badges:
             for flag in badge.flags:
                 if flag.completed:
-                    self.certify_key['%s-%s' % (badge.name, flag.number)] = await A(flag)
+                    await self._check_valid_load(badge, flag)
 
     async def get_all_flags_and_badges(self, data=None):
         badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
@@ -61,4 +62,9 @@ class TrainingService(BaseService):
             im.save(out_buff, format='JPEG')
             return out_buff.getvalue()
         except Exception as e:
-            print(e)
+            self.log.error(e)
+            return 'Cheater'
+
+    async def _check_valid_load(self, badge, flag):
+        cls = getattr(import_module('plugins.training.app.c_flag'), 'Flag')
+        self.certify_key['%s-%s' % (badge.name, flag.number)] = await A(flag, cls)
