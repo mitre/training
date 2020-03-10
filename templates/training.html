@@ -1,4 +1,3 @@
-<script src="/training/js/certificate.js"></script>
 <link rel="stylesheet" href="/training/css/training.css">
 
 <div id="training" class="section-profile">
@@ -21,6 +20,7 @@
                     <option value="{{ cert.name }}">{{ cert.name }}</option>
                 {% endfor %}}
             </select>
+            <button id="get-proof-key" class="button-success" style="display: none;margin-left: auto;margin-right: auto;" onclick="getKeyProof();">Get Proof</button>
             <ul id="badges" class="profile-tests"></ul>
         </div>
         <div class="column" style="flex:75%;">
@@ -114,7 +114,7 @@
                 });
             } catch(e) { }
             if (totalCompleted === totalFlagCount) {
-                downloadBlock();
+                $('#get-proof-key').css('display','block');
             }
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
@@ -123,5 +123,22 @@
         }
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
     }
+    function getFlagCount(data) {
+		let count = 0;
+		data.badges.forEach(function (badge) {
+			for (let f in badge.flags) {
+				count++;
+			}
+		});
+		return count;
+	}
+	function getKeyProof() {
+		function promptKey(data) {
+
+			warn('Email your hostname and this hash to caldera@mitre.org for your certificate of completion:<br/><br/>' +
+                'Hostname: ' + data['hostname'] + '<br/>' + 'Hash: ' + data['hash']);
+		}
+		restRequest('POST', {"name":$('#certification-name option:selected').attr('value')}, promptKey, '/plugin/training/proof');
+	}
     //# sourceURL=training.js
 </script>
