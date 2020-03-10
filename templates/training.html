@@ -79,6 +79,7 @@
     
     function refresh(){
         function updateFlags(data){
+            let completedBadges = 0;
             let flags = $('#flags');
             flags.empty();
             try {
@@ -106,8 +107,12 @@
                         let b = $('#badge-'+badge.name);
                         b.find('.badge-icon').css('opacity', 1.0);
                         b.find('.badge-icon').css('background-color', 'goldenrod');
+                        completedBadges += 1
                     }
                 });
+                if(completedBadges === data.badges.length) {
+                    stream('Congrats, you have gained the '+selectedCert+'!')
+                }
             } catch(e) { }
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
