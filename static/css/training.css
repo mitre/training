@@ -1,3 +1,6 @@
+.flag-box {
+    position: relative;
+}
 .flag-box h1 {
     bottom: 0;
     right: 0;
@@ -21,6 +24,10 @@
     text-transform: uppercase;
     padding-top: 10px;
     opacity: 0.8;
+}
+.flag-bottom {
+    bottom: 0;
+    position: absolute;
 }
 .badge-icon {
     padding: 2px;
