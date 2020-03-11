@@ -37,6 +37,8 @@
             <center>
                 <h1 id="flag-status"></h1>
             </center>
+            <br>
+            <b><p id="flag-completed-ts" class="flag-bottom"></p></b>
         </div>
         <div class="flip-card-back">
             <p id="flag-info"></p>
@@ -91,6 +93,7 @@
                         template.find('#flag-name').text(flag.name);
                         template.find("#flag-challenge").text(flag.challenge);
                         template.find("#flag-info").text(flag.extra_info);
+                        template.find("#flag-completed-ts").text(flag.completed_ts);
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
                             badgeComplete += 1;
