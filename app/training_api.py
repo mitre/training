@@ -27,7 +27,9 @@ class TrainingApi(BaseService):
         badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
         for flag in [flag for b in badges for flag in b.flags]:
             try:
+                print(flag.calculate_code())
                 if not flag.completed:
+                    flag.activate()
                     if await flag.verify(self.services):
                         flag.completed = True
                     break
