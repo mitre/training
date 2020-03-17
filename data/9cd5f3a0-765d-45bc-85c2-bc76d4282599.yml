@@ -1,5 +1,5 @@
 id: 9cd5f3a0-765d-45bc-85c2-bc76d4282599
-name: Red Operator Certificate
+name: User Certificate
 badges:
   agents:
     flags:
@@ -10,6 +10,7 @@ badges:
       - flags.agents.flag_4
       - flags.agents.flag_5
       - flags.agents.flag_6
+      - flags.agents.flag_7
   adversaries:
     flags:
       - flags.adversaries.flag_0
@@ -39,7 +40,6 @@ badges:
   gameboard:
     flags:
       - flags.plugins.gameboard.flag_0
-      - flags.plugins.gameboard.flag_1
   atomic:
     flags:
       - flags.plugins.atomic.flag_0

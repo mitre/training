@@ -1,4 +1,4 @@
-name = 'Update configurations'
+name = 'Update configs'
 challenge = 'Update the app.contact.http configuration property to the local ipv4 address'
 extra_info = """Adversaries will often make their C2 server available behind a proxy. Doing this allows them to hide their own IP
 address while maintaining local control of the server on their local machine."""
