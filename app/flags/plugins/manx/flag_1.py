@@ -1,4 +1,4 @@
-name = 'Start a UDP agent'
+name = 'Manx UDP'
 challenge = 'Start a new Manx agent in UDP mode'
 extra_info = """If an adversary is having trouble getting an agent to connect outbound over popular protocols, like HTTP or TCP, they
 will often fallback to UDP. Because DNS goes over UDP, this protocol is usually more accessible than others. In

@@ -1,4 +1,4 @@
-name = 'New contact point'
+name = 'Contact points'
 challenge = 'Deploy a new agent, using a different contact point then your first agent'
 extra_info = """If an adversary deploys all of their agents on a host using the same protocol, say HTTP, then when their agent is
 detected and shut down, the defenders will likely close access to the C2 over that protocol. Therefore, an adversary
