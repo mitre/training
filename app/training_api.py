@@ -28,6 +28,7 @@ class TrainingApi(BaseService):
         for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
+                    flag.activate()
                     if await flag.verify(self.services):
                         flag.completed = True
                     break

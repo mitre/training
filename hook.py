@@ -1,3 +1,4 @@
+import glob
 from importlib import import_module
 
 from app.utility.base_world import BaseWorld
@@ -24,18 +25,19 @@ async def enable(services):
 
 
 async def _load_flags(data_svc):
-    cert = BaseWorld.strip_yml('plugins/training/data/9cd5f3a0-765d-45bc-85c2-bc76d4282599.yml')[0]
-    certification = Certification(name=cert['name'], access=BaseWorld.Access.RED)
-    flag_number = 0
-    for badge, data in cert['badges'].items():
-        badge = Badge(name=badge)
-        for number, module in enumerate(data['flags']):
-            flag_number += 1
-            loaded_module = import_module('plugins.training.app.%s' % module)
-            badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
-                                    number=flag_number,
-                                    name=getattr(loaded_module, 'name'),
-                                    challenge=getattr(loaded_module, 'challenge'),
-                                    extra_info=getattr(loaded_module, 'extra_info')))
-        certification.badges.append(badge)
-    await data_svc.store(certification)
+    for filename in glob.iglob('plugins/training/data/**/*.yml', recursive=True):
+        for cert in BaseWorld.strip_yml(filename):
+            certification = Certification(identifier=cert['id'], name=cert['name'], access=BaseWorld.Access.RED)
+            flag_number = 0
+            for badge, data in cert['badges'].items():
+                badge = Badge(name=badge)
+                for number, module in enumerate(data['flags']):
+                    flag_number += 1
+                    loaded_module = import_module('plugins.training.app.%s' % module)
+                    badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
+                                            number=flag_number,
+                                            name=getattr(loaded_module, 'name'),
+                                            challenge=getattr(loaded_module, 'challenge'),
+                                            extra_info=getattr(loaded_module, 'extra_info')))
+                certification.badges.append(badge)
+            await data_svc.store(certification)
