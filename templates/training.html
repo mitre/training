@@ -82,6 +82,7 @@
     function refresh(){
         function updateFlags(data){
             let completedBadges = 0;
+            let code = '';
             let flags = $('#flags');
             flags.empty();
             try {
@@ -97,6 +98,7 @@
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
                             badgeComplete += 1;
+                            code += flag.code;
                         } else {
                             template.find('#flag-status').html('&#10060;');
                             template.show();
@@ -114,7 +116,9 @@
                     }
                 });
                 if(completedBadges === data.badges.length) {
-                    stream('Congrats, you have gained the '+selectedCert+'!')
+                    document.getElementById("duk-modal").style.display="block";
+                    $('#duk-text').text('Email the following certificate code to caldera@mitre.org for validation: '+code);
+                    clearInterval(refresher);
                 }
             } catch(e) { }
         }
