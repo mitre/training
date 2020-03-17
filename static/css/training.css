@@ -84,9 +84,12 @@
 }
 .flip-card-front {
     background-color: black;
+    border: 2px solid var(--navbar-color);
+    border-radius: 10px;
 }
 .flip-card-back {
   background-color: var(--navbar-color);
   color: white;
   transform: rotateY(180deg);
+  border-radius: 10px;
 }
