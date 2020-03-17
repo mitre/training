@@ -1,6 +1,6 @@
 from app.utility.base_world import BaseWorld
 
-name = 'Add new agent filename'
+name = 'Agent filename'
 challenge = 'Ensure that new agents will be named "super_scary.txt" when downloaded on any host.'
 extra_info = """Adversaries try to blend in when they compromise a host. One common tactic is to name
 their agent after a program that is already running on the host. When defenders check process lists

@@ -39,7 +39,7 @@ class Flag(BaseObject):
         self.challenge = challenge
         self.extra_info = extra_info
         self.verify = verify
-        self._completed = False
+        self._completed = True
         self._completed_ts = None
         self._started_ts = None
         self._ticks = 0
