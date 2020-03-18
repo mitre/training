@@ -54,20 +54,6 @@
     </div>
 </li>
 
-<div id="cert-modal" class="modal">
-    <form class="modal-content">
-        <div class="container modal-box">
-            <div class="row duk-modal">
-                <span onclick="document.getElementById('cert-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <div class="column" style="flex:92%;word-break: break-all">
-                    <img src="/training/img/certification.png"/>
-                    <p id="cert-text" style="color: white"></p>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
 <script>
     let refresher = setInterval(refresh, 15000);
     $('.section-profile').bind('destroyed', function() {
@@ -132,8 +118,9 @@
                     }
                 });
                 if(completedBadges === data.badges.length) {
-                    document.getElementById("cert-modal").style.display="block";
-                    $('#cert-text').text(code);
+                    document.getElementById("duk-modal").style.display="block";
+                    $('#duk-img').attr('src', '/training/img/certification.png');
+                    $('#duk-text').text(code);
                     clearInterval(refresher);
                 }
             } catch(e) { }
