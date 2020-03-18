@@ -9,7 +9,7 @@
             <h4>Certification</h4>
             <p class="section-description">
                 To the right you will find virtual flags, similar to a capture-the-flag event. As you work through
-                each one, more flags will be displayed. Complete all the flags and you will receive a
+                each one, more flags will be displayed. Complete all the flags and you will receive an (unofficial)
                 certificate. The flags will automatically update (within 15 seconds)
                 as you work through the challenges. Each time you complete a section, a badge (below) will be activated.
             </p>
@@ -53,6 +53,20 @@
         <img id="badge-icon"/>
     </div>
 </li>
+
+<div id="cert-modal" class="modal">
+    <form class="modal-content">
+        <div class="container modal-box">
+            <div class="row duk-modal">
+                <span onclick="document.getElementById('cert-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <div class="column" style="flex:92%;word-break: break-all">
+                    <img src="/training/img/certification.png"/>
+                    <p id="cert-text" style="color: white"></p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 <script>
     let refresher = setInterval(refresh, 15000);
@@ -118,8 +132,8 @@
                     }
                 });
                 if(completedBadges === data.badges.length) {
-                    document.getElementById("duk-modal").style.display="block";
-                    $('#duk-text').text('Email the following certificate code to caldera@mitre.org for validation:'+code);
+                    document.getElementById("cert-modal").style.display="block";
+                    $('#cert-text').text(code);
                     clearInterval(refresher);
                 }
             } catch(e) { }
