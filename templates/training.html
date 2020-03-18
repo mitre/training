@@ -23,7 +23,13 @@
             <ul id="badges" class="profile-tests"></ul>
         </div>
         <div class="column" style="flex:75%;">
-            <b><p>ONLY DO THE CERTIFICATION COURSE AGAINST A TAGGED RELEASE</p></b>
+            <div id="training-disclaimers">
+                <b><p>ONLY DO THE CERTIFICATION COURSE AGAINST A TAGGED RELEASE</p></b>
+                <p>
+                    If you earn a certificate, send it to caldera@mitre.org. We will validate it and send back an
+                    authenticated code as proof of completion.
+                </p>
+            </div>
             <ul id="flags" class="profile-tests"></ul>
         </div>
     </div>
@@ -127,6 +133,7 @@
         if(!selectedCert){
             return;
         }
+        $('#training-disclaimers').hide();
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
     }
 
