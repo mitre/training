@@ -84,7 +84,7 @@
     function refresh(){
         function updateFlags(data){
             let completedBadges = 0;
-            let code = '';
+            let code = [];
             let flags = $('#flags');
             flags.empty();
             try {
@@ -100,7 +100,7 @@
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
                             badgeComplete += 1;
-                            code += flag.code;
+                            code.push(flag.code);
                         } else {
                             template.find('#flag-status').html('&#10060;');
                             template.show();
@@ -118,6 +118,10 @@
                     }
                 });
                 if(completedBadges === data.badges.length) {
+                    code = code.sort(function(a,b) {
+                        return a.split('+')[1] - b.split('+')[1];
+                    });
+                    code = code.join(' ');
                     document.getElementById("duk-modal").style.display="block";
                     $('#duk-img').attr('src', '/training/img/certification.png');
                     $('#duk-text').text(code);
@@ -130,18 +134,5 @@
             return;
         }
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
-    }
-
-    function check(code){
-        let invalid = 0;
-        code.split('@').forEach(function(flag) {
-            let components = flag.split('+');
-            let duration = parseInt(components[1]);
-            let ticks = parseInt(components[2]);
-            if(duration === 0 || ((ticks * 15) > duration)) {
-                invalid += 1;
-            }
-        });
-        return invalid;
     }
 </script>
