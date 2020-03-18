@@ -23,7 +23,7 @@
             <ul id="badges" class="profile-tests"></ul>
         </div>
         <div class="column" style="flex:75%;">
-            <b><p>* ONLY DO THE CERTIFICATION COURSE AGAINST A TAGGED RELEASE</p></b>
+            <b><p>ONLY DO THE CERTIFICATION COURSE AGAINST A TAGGED RELEASE</p></b>
             <ul id="flags" class="profile-tests"></ul>
         </div>
     </div>
@@ -84,6 +84,7 @@
     function refresh(){
         function updateFlags(data){
             let completedBadges = 0;
+            let realityCheck = 0;
             let code = [];
             let flags = $('#flags');
             flags.empty();
@@ -105,6 +106,7 @@
                             template.find('#flag-status').html('&#10060;');
                             template.show();
                             flags.append(template);
+                            realityCheck = 1;
                             throw Exception; //show only the next incomplete flag
                         }
                         template.show();
@@ -117,16 +119,8 @@
                         completedBadges += 1
                     }
                 });
-                if(completedBadges === data.badges.length) {
-                    code = code.sort(function(a,b) {
-                        return a.split('+')[1] - b.split('+')[1];
-                    });
-                    code = code.join(' ');
-                    document.getElementById("duk-modal").style.display="block";
-                    $('#duk-img').attr('src', '/training/img/certification.png');
-                    $('#duk-text').text(code);
-                    clearInterval(refresher);
-                }
+                displayCert(code, completedBadges, data.badges.length, realityCheck);
+
             } catch(e) { }
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
@@ -134,5 +128,18 @@
             return;
         }
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
+    }
+
+    function displayCert(code, completedBadges, totalBadges, realityCheck) {
+        if(realityCheck && completedBadges === totalBadges) {
+            code = code.sort(function(a,b) {
+                return a.split('+')[1] - b.split('+')[1];
+            });
+            code = code.join(' ');
+            document.getElementById("duk-modal").style.display="block";
+            $('#duk-img').attr('src', '/training/img/certification.png');
+            $('#duk-text').text(btoa(code));
+            clearInterval(refresher);
+        }
     }
 </script>
