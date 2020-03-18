@@ -93,11 +93,3 @@
   transform: rotateY(180deg);
   border-radius: 10px;
 }
-#cert-modal img {
-    border-radius: 50%;
-    height:65px;
-    width: auto;
-    background-color: white;
-    border: 5px solid var(--theme-color);
-    margin-bottom:10px;
-}
