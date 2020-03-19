@@ -85,11 +85,10 @@
         $('#badges').empty();
         restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
     }
-    
+
     function refresh(){
         function updateFlags(data){
             let completedBadges = 0;
-            let realityCheck = 0;
             let code = [];
             let flags = $('#flags');
             flags.empty();
@@ -111,7 +110,6 @@
                             template.find('#flag-status').html('&#10060;');
                             template.show();
                             flags.append(template);
-                            realityCheck = 1;
                             throw Exception; //show only the next incomplete flag
                         }
                         template.show();
@@ -124,7 +122,7 @@
                         completedBadges += 1
                     }
                 });
-                displayCert(code, completedBadges, data.badges.length, realityCheck);
+                displayCert(code, completedBadges, data.badges.length);
 
             } catch(e) { }
         }
@@ -136,10 +134,10 @@
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
     }
 
-    function displayCert(code, completedBadges, totalBadges, realityCheck) {
-        if(realityCheck && completedBadges === totalBadges) {
-            code = code.sort(function(a,b) {
-                return a.split('+')[1] - b.split('+')[1];
+    function displayCert(code, completedBadges, totalBadges) {
+        if(completedBadges === totalBadges) {
+            code = code.sort(function(a, b) {
+                return a.toString() - b.toString();
             });
             code = code.join(' ');
             document.getElementById("duk-modal").style.display="block";
