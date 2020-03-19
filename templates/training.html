@@ -137,7 +137,7 @@
     function displayCert(code, completedBadges, totalBadges) {
         if(completedBadges === totalBadges) {
             code = code.sort(function(a, b) {
-                return a.split('+')[1] - b.split('+')[1];
+                return a.toString() - b.toString();
             });
             code = code.join(' ');
             document.getElementById("duk-modal").style.display="block";
