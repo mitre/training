@@ -142,7 +142,7 @@
             code = code.join(' ');
             document.getElementById("duk-modal").style.display="block";
             $('#duk-img').attr('src', '/training/img/certification.png');
-            $('#duk-text').text(btoa(code));
+            $('#duk-text').text(btoa(code)).css('word-wrap', 'break-word');
             clearInterval(refresher);
         }
     }
