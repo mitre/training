@@ -1,5 +1,5 @@
 name = 'Adjust sources'
-challenge = 'Create an entirely new fact source called "better_basic" with at least 1 trait and 1 rule'
+challenge = 'Create an entirely new fact source called "better basic" with at least 1 trait and 1 rule'
 extra_info = """As an adversary runs TTPs on a host, they look at the output and pick out indicators of interest. These may be
 things like user names or passwords, locations of other computers in the network or other useful information. An
 adversary makes note of these indicators to use in future TTPs."""

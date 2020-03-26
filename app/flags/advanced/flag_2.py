@@ -5,4 +5,4 @@ extra_info = """In a red-team engagement, there are usually multiple operators s
 
 async def verify(services):
     user = services.get('auth_svc').user_map.get('test')
-    return 'red' in user[2]
+    return user and 'red' in user[2]
