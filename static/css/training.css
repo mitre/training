@@ -93,3 +93,9 @@
   transform: rotateY(180deg);
   border-radius: 10px;
 }
+.training-disclaimer-important {
+    background: var(--navbar-color);
+    vertical-align: middle;
+    padding: 10px 0;
+    font-size: 15px;
+}
