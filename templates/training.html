@@ -143,9 +143,8 @@
                 return a.toString().length - b.toString().length;
             });
             code = code.join(' ');
-            document.getElementById("duk-modal").style.display="block";
-            $('#duk-img').attr('src', '/training/img/certification.png');
-            $('#duk-text').text(btoa(code)).css('word-wrap', 'break-word');
+            document.getElementById("alert-modal").style.display="block";
+            $('#alert-text').text(btoa(code)).css('word-wrap', 'break-word');
             clearInterval(refresher);
         }
     }
