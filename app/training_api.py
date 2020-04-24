@@ -8,7 +8,6 @@ from app.service.auth_svc import for_all_public_methods, check_authorization
 
 
 @for_all_public_methods(check_authorization)
-
 class TrainingApi(BaseService):
 
     def __init__(self, services):
