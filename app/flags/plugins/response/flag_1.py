@@ -1,13 +1,25 @@
+from app.utility.base_world import BaseWorld
+
+
 name = 'Blue operation'
-challenge = 'Run a blue operation using the previously deployed blue agent and the \'Incident responder\' ' \
-            'adversary/defender.'
+challenge = 'Run a blue operation using the previously deployed blue agent, the \'Incident responder\' ' \
+            'adversary/defender, and the \'response\' fact source. Test this blue agent by creating a netcat listener ' \
+            'on port 7010 on the endpoint with the blue agent, and connecting to this listener.'
 extra_info = """EDR agents are intended to run at all times while the endpoint is running. To simulate this, Caldera 
 agents can be registered on endpoints to automatically run when the endpoint is started. Caldera Defenders/Adversaries 
 can also be instructed to run continuously through the use of repeatable abilities."""
 
+
 async def verify(services):
-    for op in await services.get('data_svc').locate('operations'):
-        if op.finish and len(op.agents) and op.group == 'blue' \
-                and op.adversary.adversary_id == '7e422753-ad7a-4401-bc8b-b12a28e69c25':
-            return True
+    for op in await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE)):
+        if len(op.agents) and op.group == 'blue' and op.adversary.adversary_id == '7e422753-ad7a-4401-bc8b-b12a28e69c25':
+            return await is_unauth_process_detected(op) and is_unauth_process_killed(op)
     return False
+
+async def is_unauth_process_detected(operation):
+    facts = await operation.all_facts()
+    return True if any(fact.trait == 'host.pid.unauthorized' for fact in facts) else False
+
+def is_unauth_process_killed(operation):
+    return True if any(link.ability.ability_id == '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' for link in operation.chain) \
+        else False
