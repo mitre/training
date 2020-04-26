@@ -3,8 +3,8 @@ from app.utility.base_world import BaseWorld
 
 name = 'Blue operation'
 challenge = 'Run a blue operation using the previously deployed blue agent, the \'Incident responder\' ' \
-            'adversary/defender, and the \'response\' fact source. Test this blue agent by creating a netcat listener ' \
-            'on port 7010 on the endpoint with the blue agent, and connecting to this listener.'
+            'adversary/defender, and the \'response\' fact source. Test this blue agent by setting up a listener ' \
+            'on port 7010 on the endpoint with the blue agent.'
 extra_info = """EDR agents are intended to run at all times while the endpoint is running. To simulate this, Caldera 
 agents can be registered on endpoints to automatically run when the endpoint is started. Caldera Defenders/Adversaries 
 can also be instructed to run continuously through the use of repeatable abilities."""
