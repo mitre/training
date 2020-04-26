@@ -3,10 +3,11 @@ import logging
 from aiohttp import web
 from aiohttp_jinja2 import template
 
-from app.service.auth_svc import check_authorization
 from app.utility.base_service import BaseService
+from app.service.auth_svc import for_all_public_methods, check_authorization
 
 
+@for_all_public_methods(check_authorization)
 class TrainingApi(BaseService):
 
     def __init__(self, services):
@@ -14,14 +15,12 @@ class TrainingApi(BaseService):
         self.data_svc = services.get('data_svc')
         self.services = services
 
-    @check_authorization
     @template('training.html')
     async def splash(self, request):
         access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
         certifications = await self.data_svc.locate('certifications', match=access)
         return dict(certificates=[cert.display for cert in certifications])
 
-    @check_authorization
     async def retrieve_flags(self, request):
         data = dict(await request.json())
         badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
