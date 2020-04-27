@@ -6,18 +6,18 @@ challenge = 'Run a blue operation using the previously deployed blue agent, the 
             'adversary/defender, and the \'response\' fact source. Test this blue agent by setting up a listener ' \
             'on port 7010 on the endpoint with the blue agent.'
 extra_info = """EDR agents are intended to run at all times while the endpoint is running. To simulate this, Caldera 
-agents can be registered on endpoints to automatically run when the endpoint is started. Caldera Defenders/Adversaries 
-can also be instructed to run continuously through the use of repeatable abilities."""
+agents can be registered on endpoints to automatically run when the endpoint is booted. Caldera Defenders/Adversaries 
+can also be instructed to run continuously through the use of Repeatable abilities."""
 
 
 async def verify(services):
     for op in await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE)):
         if len(op.agents) and op.group == 'blue' and op.adversary.adversary_id == '7e422753-ad7a-4401-bc8b-b12a28e69c25':
-            return await is_unauth_process_detected(op) and is_unauth_process_killed(op)
+            return is_unauth_process_detected(op) and is_unauth_process_killed(op)
     return False
 
-async def is_unauth_process_detected(operation):
-    facts = await operation.all_facts()
+def is_unauth_process_detected(operation):
+    facts = operation.all_facts()
     return True if any(fact.trait == 'host.pid.unauthorized' for fact in facts) else False
 
 def is_unauth_process_killed(operation):
