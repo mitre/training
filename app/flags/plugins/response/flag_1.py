@@ -16,9 +16,11 @@ async def verify(services):
             return is_unauth_process_detected(op) and is_unauth_process_killed(op)
     return False
 
+
 def is_unauth_process_detected(operation):
     facts = operation.all_facts()
     return True if any(fact.trait == 'host.pid.unauthorized' for fact in facts) else False
+
 
 def is_unauth_process_killed(operation):
     return True if any(link.ability.ability_id == '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' for link in operation.chain) \
