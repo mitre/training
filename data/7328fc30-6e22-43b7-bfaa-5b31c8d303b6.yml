@@ -1,7 +1,0 @@
-id: 7328fc30-6e22-43b7-bfaa-5b31c8d303b6
-name: Test Certificate
-badges:
-  response:
-    flags:
-      - flags.plugins.response.flag_0
-      - flags.plugins.response.flag_1

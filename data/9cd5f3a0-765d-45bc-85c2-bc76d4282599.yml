@@ -37,6 +37,10 @@ badges:
   compass:
     flags:
       - flags.plugins.compass.flag_0
+  response:
+    flags:
+      - flags.plugins.response.flag_0
+      - flags.plugins.response.flag_1
   gameboard:
     flags:
       - flags.plugins.gameboard.flag_0
