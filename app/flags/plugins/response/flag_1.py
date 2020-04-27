@@ -5,8 +5,8 @@ name = 'Blue operation'
 challenge = 'Run a blue operation using the previously deployed blue agent, the \'Incident responder\' ' \
             'adversary/defender, and the \'response\' fact source. Do this by logging in as a \'Blue\' user. Test' \
             'this blue agent by setting up a listener on port 7011 on the endpoint with the blue agent.'
-extra_info = """EDR agents are intended to run at all times while the endpoint is running. To simulate this, Caldera 
-agents can be registered on endpoints to automatically run when the endpoint is booted. Caldera Defenders/Adversaries 
+extra_info = """EDR agents are intended to run at all times while the endpoint is running. To simulate this, Caldera
+agents can be registered on endpoints to automatically run when the endpoint is booted. Caldera Defenders/Adversaries
 can also be instructed to run continuously through the use of Repeatable abilities."""
 
 
