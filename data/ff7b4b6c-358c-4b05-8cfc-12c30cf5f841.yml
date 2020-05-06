@@ -1,0 +1,9 @@
+id: ff7b4b6c-358c-4b05-8cfc-12c30cf5f841
+name: Blue Test Certificate
+badges:
+  agents:
+    flags:
+      - flags.agents.blue_0
+      - flags.agents.blue_1
+      - flags.agents.blue_2
+      - flags.agents.blue_3
