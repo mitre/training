@@ -1,9 +1,10 @@
 id: ff7b4b6c-358c-4b05-8cfc-12c30cf5f841
 name: Blue Test Certificate
+access: blue
 badges:
-  agents:
+  autonomous:
     flags:
-      - flags.agents.blue_0
-      - flags.agents.blue_1
-      - flags.agents.blue_2
-      - flags.agents.blue_3
+      - flags.autonomous.blue_0
+#      - flags.autonomous.blue_1
+      - flags.autonomous.blue_2
+#      - flags.autonomous.blue_3

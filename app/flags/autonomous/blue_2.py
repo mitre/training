@@ -9,15 +9,15 @@ extra_info = """"""
 
 
 async def verify(services):
-    for op in services.get_service('data_svc').locate('operations',
-                                                      match=dict(access=BaseWorld.Access.BLUE), name='Blue Autonomous'):
+    for op in await services.get('data_svc').locate('operations',
+                                                    match=dict(access=BaseWorld.Access.BLUE, name='Blue Autonomous')):
         if is_file_found(op) and is_file_deleted(op):
             return True
     return False
 
 
 def is_file_found(op):
-    if all(trait in [f.trait for f in op.all_facts] for trait in ['file.malicious.hash', 'host.malicious.file']):
+    if all(trait in [f.trait for f in op.all_facts()] for trait in ['file.malicious.hash', 'host.malicious.file']):
         return True
     return False
 
