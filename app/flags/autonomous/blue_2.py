@@ -23,4 +23,4 @@ def is_file_found(op):
 
 
 def is_file_deleted(op):
-    return True if '5ec7ae3b-c909-41bb-9b6b-dadec409cd40' in [link.ability.ability_id for link in op.chain] else False
+    return '5ec7ae3b-c909-41bb-9b6b-dadec409cd40' in [link.ability.ability_id for link in op.chain if link.finish]

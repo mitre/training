@@ -23,4 +23,4 @@ def is_unauth_process_detected(op):
 
 
 def is_unauth_process_killed(op):
-    return '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' in [link.ability.ability_id for link in op.chain]
+    return '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' in [link.ability.ability_id for link in op.chain if link.finish]

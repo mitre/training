@@ -24,4 +24,4 @@ def is_url_found(op):
 
 
 def is_url_inoculated(op):
-    return True if '2ca64acd-dc12-4cc8-b78a-6a182508a50b' in [link.ability.ability_id for link in op.chain] else False
+    return '2ca64acd-dc12-4cc8-b78a-6a182508a50b' in [link.ability.ability_id for link in op.chain if link.finish]
