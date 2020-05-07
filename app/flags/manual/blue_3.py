@@ -17,7 +17,5 @@ async def verify(services):
 
 
 def is_file_detected(op):
-    if 'file.malicious.hash' in [f.trait for f in op.all_facts] and \
-            '77272c88-ccf5-4225-a3d9-f9e171d1ca5b' in [link.ability_id for link in op.chain]:
-        return True
-    return False
+    return 'file.malicious.hash' in [f.trait for f in op.all_facts()] and \
+            '77272c88-ccf5-4225-a3d9-f9e171d1ca5b' in [link.ability.ability_id for link in op.chain if link.finish]

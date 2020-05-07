@@ -5,10 +5,10 @@ badges:
   manual:
     flags:
       - flags.manual.blue_0
-      - flags.manual.blue_1
-      - flags.manual.blue_2
-#      - flags.manual.blue_3
-#      - flags.manual.blue_4
-#      - flags.manual.blue_5
+#      - flags.manual.blue_1
+#      - flags.manual.blue_2
+      - flags.manual.blue_3
+      - flags.manual.blue_4
+      - flags.manual.blue_5
 #      - flags.manual.blue_6
 #      - flags.manual.blue_7

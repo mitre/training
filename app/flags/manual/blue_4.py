@@ -16,7 +16,5 @@ async def verify(services):
 
 
 def is_file_found(op):
-    if 'host.malicious.file' in [f.trait for f in op.all_facts] and \
-            'f9b3eff0-e11c-48de-9338-1578b351b14b' in [link.ability_id for link in op.chain]:
-        return True
-    return False
+    return 'host.malicious.file' in [f.trait for f in op.all_facts()] and \
+            'f9b3eff0-e11c-48de-9338-1578b351b14b' in [link.ability.ability_id for link in op.chain if link.finish]
