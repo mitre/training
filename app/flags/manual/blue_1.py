@@ -16,6 +16,7 @@ async def verify(services):
 
 
 def is_unauth_process_detected(op):
-    if all(trait in [f.trait for f in op.all_facts] for trait in ['host.unauthorized.port', 'host.pid.unauthorized']):
+    if all(trait in [f.trait for f in op.all_facts()] for trait in
+           ['remote.port.unauthorized', 'host.pid.unauthorized']):
         return True
     return False
