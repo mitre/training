@@ -8,7 +8,7 @@ extra_info = """"""
 
 async def verify(services):
     for op in await services.get('data_svc').locate('operations',
-                                                    match=dict(access=BaseWorld.Access.BLUE), name='Blue Autonomous'):
+                                                    match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
         if is_url_inoculated(op):
             return True
     return False
