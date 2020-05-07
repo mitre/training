@@ -10,6 +10,6 @@ extra_info = """"""
 async def verify(services):
     for op in await services.get('data_svc').locate('operations',
                                                     match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
-        if op.adversary.adversary_id == 0:
+        if op.adversary.adversary_id == 'ad-hoc':
             return True
     return False
