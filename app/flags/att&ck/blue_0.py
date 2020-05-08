@@ -13,7 +13,6 @@ async def verify(services):
         match = await does_technique_match(services.get('data_svc', adv, technique))
         services.get('rest_svc').delete_adversary(adv.adversary_id)
         if match:
-
             return True
     return False
 
