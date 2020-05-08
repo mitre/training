@@ -2,13 +2,6 @@ id: ff7b4b6c-358c-4b05-8cfc-12c30cf5f841
 name: Blue Test Certificate
 access: blue
 badges:
-  manual:
+  att&ck:
     flags:
-      - flags.manual.blue_0
-#      - flags.manual.blue_1
-#      - flags.manual.blue_2
-#      - flags.manual.blue_3
-#      - flags.manual.blue_4
-#      - flags.manual.blue_5
-      - flags.manual.blue_6
-      - flags.manual.blue_7
+      - flags.att&ck.blue_0
