@@ -4,7 +4,7 @@ challenge = 'This badge tests your knowledge of ATT&CK techniques. Look on the b
             ' process. Ensure the uploaded adversary is named exactly \'blue_quiz_1\'.\n\n' \
             'The adversary procedure is:\nwhoami'
 extra_info = """Complete the challenge by determining the one ATT&CK technique that best matches the procedure on the
- back of this card. Select this technique in the Compass plugin on the red side of CALDERA, and download the layer.
+ front of this card. Select this technique in the Compass plugin on the red side of CALDERA, and download the layer.
  Rename the downloaded JSON file as indicated on the front of this card, and upload it to the server by selecting
  \'Upload Adversary Layer\'. Use the help button on the Compass plugin modal for reference."""
 

@@ -1,12 +1,13 @@
 name = 'ATT&CK Quiz 4'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_4\'.\n\n' \
-            'The adversary procedure is:\nNew-Service -Name "sandcat" -BinaryPathName "sandcat.go-windows"'
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_4\'. ' \
+            'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
+            'The adversary procedure is:\nGet-ChildItem -Path #{host.system.path}'
 extra_info = """"""
 
 
 async def verify(services):
     adversaries = await services.get('data_svc').locate('adversaries', match=dict(name='blue_quiz_4'))
-    technique = 'T1050'  # New Service
+    technique = 'T1083'  # New Service
     for adv in adversaries:
         match = await does_technique_match(services, adv, technique)
         await services.get('rest_svc').delete_adversary(dict(adversary_id=adv.adversary_id))

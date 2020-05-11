@@ -1,12 +1,14 @@
 name = 'ATT&CK Quiz 3'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_3\'.\n\n' \
-            'The adversary procedure is:\nmstsc /v:#{remote.host.ip}:3389'
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_3\'. ' \
+            'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
+            'The adversary procedure is:\nnet /y use \\#{remote.host.name} &' \
+            '\ncopy /y sandcat.go-windows\n\\\\#{remote.host.name}\\Users\\Public'
 extra_info = """"""
 
 
 async def verify(services):
     adversaries = await services.get('data_svc').locate('adversaries', match=dict(name='blue_quiz_3'))
-    technique = 'T1076'  # Remote Desktop Protocol
+    technique = 'T1105'  # Remote File Copy
     for adv in adversaries:
         match = await does_technique_match(services, adv, technique)
         await services.get('rest_svc').delete_adversary(dict(adversary_id=adv.adversary_id))

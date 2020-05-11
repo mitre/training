@@ -1,5 +1,6 @@
 name = 'ATT&CK Quiz 5'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_5\'.\n\n' \
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_5\'. ' \
+            'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
             'The adversary procedure is:\nGet-Clipboard -raw'
 extra_info = """"""
 
