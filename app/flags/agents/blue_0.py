@@ -1,5 +1,5 @@
 name = 'Red agent - *nix'
-challenge = 'Deploy a red agent on a Linux or Darwin machine. This agent will be used in later challenges.'
+challenge = 'Deploy a red agent on a Linux or Mac machine. This agent will be used in later challenges.'
 extra_info = """"""
 
 

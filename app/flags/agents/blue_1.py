@@ -1,5 +1,5 @@
 name = 'Blue agent - *nix'
-challenge = 'Deploy a blue agent on a Linux or Darwin machine. Ensure that this agent has ELEVATED priviliges. ' \
+challenge = 'Deploy a blue agent on a Linux or Mac machine. Ensure that this agent has ELEVATED priviliges. ' \
             'This agent will be used in later challenges.'
 extra_info = """"""
 
