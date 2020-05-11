@@ -7,6 +7,6 @@ to run. Using potential links, you can "toss in" any additional TTPs into a live
 
 async def verify(services):
     for op in await services.get('data_svc').locate('operations'):
-        if op.finish and op.adversary.adversary_id == 0 and len(op.chain) >= 5 and not op.group:
+        if op.finish and op.adversary.adversary_id == 'ad-hoc' and len(op.chain) >= 5 and not op.group:
             return True
     return False
