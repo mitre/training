@@ -25,7 +25,7 @@ async def enable(services):
 
 
 async def _load_flags(data_svc):
-    for filename in glob.iglob('plugins/training/data/**/*.yml', recursive=True):
+    for filename in glob.iglob('plugins/training/data/certifications/**/*.yml', recursive=True):
         for cert in BaseWorld.strip_yml(filename):
             access = getattr(BaseWorld.Access, str.upper(cert.get('access', 'RED')))
             certification = Certification(identifier=cert['id'], name=cert['name'], access=access)
