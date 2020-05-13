@@ -35,8 +35,7 @@ async def _load_flags(data_svc):
                 for number, module in enumerate(data['flags']):
                     flag_number += 1
                     loaded_module = import_module('plugins.training.app.%s' % module)
-                    badge.flags.append(Flag(setup=getattr(loaded_module, 'setup', None),
-                                            verify=getattr(loaded_module, 'verify'),
+                    badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
                                             number=flag_number,
                                             name=getattr(loaded_module, 'name'),
                                             challenge=getattr(loaded_module, 'challenge'),
