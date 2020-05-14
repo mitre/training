@@ -1,0 +1,8 @@
+---
+
+id: 6e19d5f9-e4d9-42b2-bc89-ea4298541d80
+name: Training Hunt Adversary
+description: Training Hunt Adversary
+hidden: True
+atomic_ordering:
+  - c0da588f-79f0-4263-8998-7496b1a40596
