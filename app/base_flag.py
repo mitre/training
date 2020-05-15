@@ -22,9 +22,10 @@ class BaseFlag:
         await services.get('rest_svc').create_operation(access=access, data=data)
 
     @staticmethod
-    async def is_operation_successful(services, op_name):
+    async def is_operation_successful(services, op_name, traits=[], num_links=1):
         operation = (await services.get('data_svc').locate('operations', match=dict(name=op_name)))[0]
-        if len(operation.chain) == 1 and 'host.user.name' in [f.trait for f in operation.all_facts()]:
+        if len(operation.chain) == num_links and \
+                all(trait in [f.trait for f in operation.all_facts()] for trait in traits):
             return True
         return False
 
