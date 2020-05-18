@@ -8,7 +8,7 @@ challenge = 'Start a listening process on Port 7011 on the Linux or Darwin machi
 extra_info = """"""
 
 operation_name = 'training_manual_1'
-adversary_id = '6e19d5f9-e4d9-42b2-bc89-ea4298541d80'
+adversary_id = '72c0b333-f6fe-4fa0-a342-4215e8de3947'
 agent_group = 'cert-nix'
 
 
@@ -31,7 +31,6 @@ async def is_flag_satisfied(services):
 
 
 def is_unauth_process_detected(op):
-    if all(trait in [f.trait for f in op.all_facts()] for trait in
-           ['remote.port.unauthorized', 'host.pid.unauthorized']):
-        return True
-    return False
+    return all(trait in [f.trait for f in op.all_facts()] for trait in
+               ['remote.port.unauthorized', 'host.pid.unauthorized']) and \
+           '3b4640bc-eacb-407a-a997-105e39788781' in [link.ability.ability_id for link in op.chain if link.finish]

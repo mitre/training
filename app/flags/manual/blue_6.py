@@ -1,3 +1,4 @@
+from plugins.training.app.base_flag import BaseFlag
 from app.utility.base_world import BaseWorld
 
 
@@ -8,7 +9,22 @@ challenge = 'Use the \'mail\' utility to send an email to a user on the Linux or
 extra_info = """"""
 
 
+operation_name = 'training_manual_3'
+adversary_id = '2c99958e-36e0-4fab-bcdf-977926a58cd6'
+agent_group = 'cert-nix'
+
+
 async def verify(services):
+    if await BaseFlag.does_agent_exist(services, agent_group):
+        if not (await BaseFlag.is_operation_started(services, operation_name)):
+            await BaseFlag.start_operation(services, operation_name, agent_group, adversary_id)
+        if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied(services):
+            await BaseFlag.cleanup_operation(services, operation_name)
+            return True
+    return False
+
+
+async def is_flag_satisfied(services):
     for op in await services.get('data_svc').locate('operations',
                                                     match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
         if is_url_found(op):

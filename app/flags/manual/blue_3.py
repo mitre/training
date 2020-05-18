@@ -1,3 +1,4 @@
+from plugins.training.app.base_flag import BaseFlag
 from app.utility.base_world import BaseWorld
 
 
@@ -8,7 +9,22 @@ challenge = 'Write a file on the Windows machine under the C:\\Users directory. 
 extra_info = """"""
 
 
+operation_name = 'training_manual_2'
+adversary_id = '890508db-9646-4a2d-8d1a-4ea25b3ce02a'
+agent_group = 'cert-win'
+
+
 async def verify(services):
+    if await BaseFlag.does_agent_exist(services, agent_group):
+        if not (await BaseFlag.is_operation_started(services, operation_name)):
+            await BaseFlag.start_operation(services, operation_name, agent_group, adversary_id)
+        if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied(services):
+            await BaseFlag.cleanup_operation(services, operation_name)
+            return True
+    return False
+
+
+async def is_flag_satisfied(services):
     for op in await services.get('data_svc').locate('operations',
                                                     match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
         if is_file_detected(op):
