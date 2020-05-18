@@ -6,7 +6,7 @@
   technique:
     attack_id: x
     name: x
-  hidden: False
+  hidden: True
   platforms:
     linux:
       sh:
