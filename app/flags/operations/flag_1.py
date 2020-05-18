@@ -10,6 +10,6 @@ commands, they can bypass this sort of detection tactic."""
 async def verify(services):
     for op in await services.get('data_svc').locate('operations'):
         if op.finish and op.adversary.adversary_id != 'de07f52d-9928-4071-9142-cb1d3bd851e8' \
-                and op.obfuscator == 'base64' and op.jitter == '10/20':
+                and op.obfuscator == 'base64' and op.jitter == '10/20' and len(op.chain) >= 5:
             return True
     return False
