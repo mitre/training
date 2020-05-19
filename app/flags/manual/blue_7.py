@@ -3,7 +3,8 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Inoculate suspicious URL'
-challenge = 'Run the appropriate response ability in the \'Blue Manual\' operation to inoculate this URL.'
+challenge = 'Run the appropriate response ability in the \'Blue Manual\' operation to inoculate the previously ' \
+            'found URL.'
 extra_info = """"""
 
 

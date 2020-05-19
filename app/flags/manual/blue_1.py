@@ -3,8 +3,9 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Detect process on Unauthorized Port'
-challenge = 'Start a listening process on Port 7011 on the Linux or Darwin machine. Run the appropriate detection ' \
-            'ability in the \'Blue Manual\' operation to detect this process.'
+challenge = 'Within a minute of this flag activating, a listening process will have been started on port 7011 on ' \
+            'the *nix machine. Run the appropriate detection ability in the \'Blue Manual\' operation to detect ' \
+            'this process.'
 extra_info = """"""
 
 operation_name = 'training_manual_1'

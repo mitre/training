@@ -3,9 +3,10 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Detect malicious file on system'
-challenge = 'Write a file on the Windows machine under the C:\\Users directory. Get the SHA256 hash of this file, ' \
-            'and write it to C:\\Users\\Public\\malicious_files.txt. Run the appropriate detection ability in the ' \
-            '\'Blue Manual\' operation to detect this file hash.'
+challenge = 'Within a minute of this flag activating, a pretend malicious file will have been written on the ' \
+            'Windows machine. The hash of this file will also have been written into ' \
+            'C:\\Users\\Public\\malicious_files.txt. Run the appropriate detection ability in the \'Blue Manual\' ' \
+            'operation to detect this file hash.'
 extra_info = """"""
 
 

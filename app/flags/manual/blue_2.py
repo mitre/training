@@ -2,7 +2,8 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Kill process on Unauthorized Port'
-challenge = 'Run the appropriate response ability in the \'Blue Manual\' operation to kill this process.'
+challenge = 'Run the appropriate response ability in the \'Blue Manual\' operation to kill the previously found ' \
+            'process.'
 extra_info = """"""
 
 

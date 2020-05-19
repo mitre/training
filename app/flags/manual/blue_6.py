@@ -3,9 +3,9 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Find suspicious URL in mail'
-challenge = 'Use the \'mail\' utility to send an email to a user on the Linux or Darwin machine. Spoof the sender ' \
-            'address to be an email address with a fake malicious domain. Run the appropriate detection ' \
-            'ability in the \'Blue Manual\' operation to find this URL.'
+challenge = 'Within a minute of this flag activating, a pretend phishing email with a malicious URL will have been ' \
+            'sent on the *nix machine. Run the appropriate detection ability in the \'Blue Manual\' operation to ' \
+            'find this URL.'
 extra_info = """"""
 
 
