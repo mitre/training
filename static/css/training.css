@@ -93,6 +93,10 @@
   transform: rotateY(180deg);
   border-radius: 10px;
 }
+#selected-badge-icon {
+  padding: 5px;
+  margin: 0px;
+}
 .training-disclaimer-important {
     background: var(--navbar-color);
     vertical-align: middle;
