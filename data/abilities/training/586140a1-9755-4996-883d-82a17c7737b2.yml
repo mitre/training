@@ -12,5 +12,4 @@
       psh:
         command: |
           echo 'Malicious file' > C:\Users\Public\malicious;
-          $FileHash = Get-FileHash C:\Users\Public\malicious;
-          echo $FileHash.Hash > C:\Users\Public\malicious_files.txt
+          (Get-FileHash C:\Users\Public\malicious).Hash > C:\Users\Public\malicious_files.txt
