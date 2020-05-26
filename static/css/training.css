@@ -48,6 +48,14 @@
     border-radius: 50%;
     border: 3px solid black;
 }
+div.badge-in-progress {
+    opacity: 0.75;
+    background-color: steelblue;
+}
+div.badge-completed{
+    opacity: 1.0;
+    background-color: darkgreen;
+}
 .flip-card {
     background-color: transparent;
     height: 300px;

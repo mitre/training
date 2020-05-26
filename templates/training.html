@@ -99,8 +99,7 @@
                 data.badges.forEach(function(badge) {
                     let badgeComplete = 0;
                     let b = $('#badge-'+badge.name);
-                    b.find('.badge-icon').css('opacity', 0.75);
-                    b.find('.badge-icon').css('background-color', 'steelblue');
+                    b.find('.badge-icon').addClass('badge-in-progress');
                     b.attr('status', 'progress');
                     badge.flags.forEach(function(flag) {
                         let template = $("#flag-template").clone();
@@ -122,8 +121,8 @@
                         flags.append(template);
                     });
                     if(badgeComplete === badge.flags.length) {
-                        b.find('.badge-icon').css('opacity', 1.0);
-                        b.find('.badge-icon').css('background-color', 'darkgreen');
+                        b.find('.badge-icon').removeClass('badge-in-progress');
+                        b.find('.badge-icon').addClass('badge-completed');
                         b.attr('status', 'completed');
                         completedBadges += 1
                     }
