@@ -1,9 +1,9 @@
 name = 'ATT&CK Quiz 3'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_3\'. ' \
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary layer exactly \'blue_quiz_3\'. ' \
             'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
             'The adversary procedure is:\nnet /y use \\#{remote.host.name} &' \
             '\ncopy /y sandcat.go-windows\n\\\\#{remote.host.name}\\Users\\Public'
-extra_info = """"""
+extra_info = ''
 
 
 async def verify(services):

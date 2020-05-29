@@ -1,8 +1,8 @@
 name = 'ATT&CK Quiz 4'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_4\'. ' \
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary layer exactly \'blue_quiz_4\'. ' \
             'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
             'The adversary procedure is:\nGet-ChildItem -Path #{host.system.path}'
-extra_info = """"""
+extra_info = ''
 
 
 async def verify(services):

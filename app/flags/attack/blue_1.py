@@ -1,8 +1,8 @@
 name = 'ATT&CK Quiz 2'
-challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary exactly \'blue_quiz_2\'. ' \
+challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adversary layer exactly \'blue_quiz_2\'. ' \
             'Ensure that you\'re starting from a fresh layer on the Compass plugin.\n\n' \
             'The adversary procedure is:\nImport-Module .\\invoke-mimi.ps1; Invoke-Mimikatz -DumpCreds'
-extra_info = """"""
+extra_info = ''
 
 
 async def verify(services):
