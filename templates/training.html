@@ -55,7 +55,7 @@
     </div>
 </li>
 
-<li id="badge-template" style="margin:10px;display:none">
+<li id="badge-template" style="margin:10px;display:none" onclick="selectBadge(this)">
     <div class="badge-icon">
         <b><p id="badge-name"></p></b>
         <img id="badge-icon"/>
@@ -98,8 +98,12 @@
             try {
                 data.badges.forEach(function(badge) {
                     let badgeComplete = 0;
+                    let b = $('#badge-'+badge.name);
+                    b.find('.badge-icon').addClass('badge-in-progress');
+                    b.attr('status', 'progress');
                     badge.flags.forEach(function(flag) {
                         let template = $("#flag-template").clone();
+                        template.attr('badge', badge.name);
                         template.find('#flag-number').html('&#127937 ' + flag.number);
                         template.find('#flag-name').text(flag.name);
                         template.find("#flag-challenge").text(flag.challenge);
@@ -111,23 +115,24 @@
                             code.push(flag.code);
                         } else {
                             template.find('#flag-status').html('&#10060;');
-                            template.show();
                             flags.append(template);
                             throw Exception; //show only the next incomplete flag
                         }
-                        template.show();
                         flags.append(template);
                     });
                     if(badgeComplete === badge.flags.length) {
-                        let b = $('#badge-'+badge.name);
-                        b.find('.badge-icon').css('opacity', 1.0);
-                        b.find('.badge-icon').css('background-color', 'darkgreen');
+                        b.find('.badge-icon').removeClass('badge-in-progress');
+                        b.find('.badge-icon').addClass('badge-completed');
+                        b.attr('status', 'completed');
                         completedBadges += 1
                     }
                 });
+                showRelevantFlags();
                 displayCert(code, completedBadges, data.badges.length);
 
-            } catch(e) { }
+            } catch(e) {
+                showRelevantFlags();
+            }
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
         if(!selectedCert){
@@ -135,6 +140,41 @@
         }
         $('#training-disclaimers').hide();
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
+    }
+
+    function showRelevantFlags() {
+        let flags = $('#flags');
+        let selected = $('#badges').find('.selected-badge');
+        if (selected.length) {
+            var badge_name = selected.find('#badge-name').text();
+            flags.find('li').each(function() {
+                if ($(this).attr('badge') === badge_name) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        } else {
+            flags.find('li').each(function() {
+                $(this).show();
+            });
+        }
+    }
+
+    function selectBadge(element) {
+        if ($(element).hasClass('selected-badge')) {
+            $(element).removeAttr('class');
+            $(element).find('.badge-icon').removeAttr('id');
+            showRelevantFlags();
+        } else if ($(element).attr('status')){
+            $('#badges').find('li').each(function() {
+                $(this).removeAttr('class');
+                $(this).find('.badge-icon').removeAttr('id');
+            });
+            $(element).attr('class', 'selected-badge');
+            $(element).find('.badge-icon').attr('id', 'selected-badge-icon');
+            showRelevantFlags();
+        }
     }
 
     function displayCert(code, completedBadges, totalBadges) {

@@ -48,6 +48,14 @@
     border-radius: 50%;
     border: 3px solid black;
 }
+div.badge-in-progress {
+    opacity: 0.75;
+    background-color: steelblue;
+}
+div.badge-completed{
+    opacity: 1.0;
+    background-color: darkgreen;
+}
 .flip-card {
     background-color: transparent;
     height: 300px;
@@ -92,6 +100,12 @@
   color: white;
   transform: rotateY(180deg);
   border-radius: 10px;
+}
+#selected-badge-icon {
+  padding: 2px;
+  margin: 0px;
+  border-style: solid;
+  border-color: white;
 }
 .training-disclaimer-important {
     background: var(--navbar-color);
