@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.utility.base_world import BaseWorld
 
 name = 'GameBoard plugin'
