@@ -15,7 +15,8 @@ async def verify(services):
     for op in await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE)):
         if len(op.agents) and op.group == 'blue' and \
                 op.adversary.adversary_id == '7e422753-ad7a-4401-bc8b-b12a28e69c25':
-            return is_unauth_process_killed(op)
+            if is_unauth_process_killed(op):
+                return True
     return False
 
 
