@@ -11,5 +11,6 @@ extra_info = """Purple-teaming is the process of running a red-team engagement i
 
 async def verify(services):
     red = await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.RED, name='Gameboard - Red'))
-    blue = await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE, name='Gameboard - Blue'))
+    blue = await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE,
+                                                                    name='Gameboard - Blue'))
     return all(red + blue)
