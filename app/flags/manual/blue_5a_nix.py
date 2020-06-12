@@ -1,7 +1,7 @@
 from app.utility.base_world import BaseWorld
 
 
-name = 'Backup Bash Profiles Baseline'
+name = 'Backup Bash Profiles'
 challenge = 'Run the appropriate setup ability in the \'Blue Manual\' operation to backup all the Bash Profiles on ' \
             'the *nix machine.'
 extra_info = """"""

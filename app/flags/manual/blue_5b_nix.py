@@ -16,4 +16,4 @@ async def verify(services):
 
 
 def bash_profiles_hashed(op):
-    return '622e4bda-e5a8-42bb-93d9-a7b1eebc7e41' in [link.ability.ability_id for link in op.chain if link.finish]
+    return 'df9d2b83-b40f-4167-af75-31ddde59af7e' in [link.ability.ability_id for link in op.chain if link.finish]
