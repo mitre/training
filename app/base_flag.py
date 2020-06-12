@@ -16,7 +16,7 @@ class BaseFlag:
 
     @staticmethod
     async def start_operation(services, op_name, group, adv_id):
-        access = dict(access=[BaseWorld.Access.RED])
+        access = dict(access=[BaseWorld.Access.HIDDEN])
         data = dict(name=op_name, group=group, adversary_id=adv_id,
                     planner='batch', atomic_enabled=1, hidden=True)
         await services.get('rest_svc').create_operation(access=access, data=data)
