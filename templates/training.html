@@ -184,7 +184,9 @@
             });
             code = code.join(' ');
             document.getElementById("alert-modal").style.display="block";
-            $('#alert-text').text(btoa(code)).css('word-wrap', 'break-word');
+            let alert_text = "Congratulations! You've completed the certification! The code for the certification is below:\n\n" + btoa(code);
+            $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
+            $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
             clearInterval(refresher);
         }
     }
