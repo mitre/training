@@ -32,3 +32,13 @@ class BaseFlag:
     @staticmethod
     async def cleanup_operation(services, op_name):
         await services.get('rest_svc').delete_operation(data=dict(name=op_name))
+
+    @staticmethod
+    async def standard_verify_with_operation(services, operation_name, adversary_id, agent_group, is_flag_satisfied):
+        if await BaseFlag.does_agent_exist(services, agent_group):
+            if not (await BaseFlag.is_operation_started(services, operation_name)):
+                await BaseFlag.start_operation(services, operation_name, agent_group, adversary_id)
+            if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied(services):
+                await BaseFlag.cleanup_operation(services, operation_name)
+                return True
+        return False

@@ -16,13 +16,8 @@ agent_group = 'cert-win'
 
 
 async def verify(services):
-    if await BaseFlag.does_agent_exist(services, agent_group):
-        if not (await BaseFlag.is_operation_started(services, operation_name)):
-            await BaseFlag.start_operation(services, operation_name, agent_group, adversary_id)
-        if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied(services):
-            await BaseFlag.cleanup_operation(services, operation_name)
-            return True
-    return False
+    return await BaseFlag.standard_verify_with_operation(services, operation_name, adversary_id, agent_group,
+                                                         is_flag_satisfied)
 
 
 async def is_flag_satisfied(services):
