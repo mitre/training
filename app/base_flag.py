@@ -32,3 +32,22 @@ class BaseFlag:
     @staticmethod
     async def cleanup_operation(services, op_name):
         await services.get('rest_svc').delete_operation(data=dict(name=op_name))
+
+    @staticmethod
+    async def verify_attack_flag(services, technique, adv_name):
+        adversaries = await services.get('data_svc').locate('adversaries', match=dict(name=adv_name))
+        for adv in adversaries:
+            match = await BaseFlag.does_technique_match(services, technique, adv)
+            await services.get('rest_svc').delete_adversary(dict(adversary_id=adv.adversary_id))
+            if match:
+                return True
+        return False
+
+    @staticmethod
+    async def does_technique_match(services, technique, adversary):
+        techniques = set()
+        for ab_id in adversary.atomic_ordering:
+            techniques.add((await services.get('rest_svc').display_objects('abilities',
+                                                                           data=dict(ability_id=ab_id)))[0][
+                               'technique_id'])
+        return technique in techniques and len(techniques) == 1
