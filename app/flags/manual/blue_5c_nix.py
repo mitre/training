@@ -3,8 +3,9 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Find Changes to Bash Profile'
-challenge = 'Within a minute of this flag activating, a Bash Profile will have been modified on the *nix machine. ' \
-            'Run the appropriate detection ability in the \'Blue Manual\' operation to find the modified profile.'
+challenge = 'Within a minute of this flag activating, the .bashrc file of the user used to deploy the red agent on ' \
+            'the *nix machine will have been modified. Run the appropriate detection ability in the \'Blue Manual\' ' \
+            'operation to find the modified profile.'
 extra_info = """"""
 
 
