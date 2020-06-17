@@ -1,0 +1,7 @@
+---
+
+id: 1a8218e4-c7b7-424a-befb-48b3421d2e78
+name: Blue Hunt Badge Flag 1
+description: First adversary for blue hunt badge
+atomic_ordering:
+  - c0da588f-79f0-4263-8998-7496b1a40596  #whoami
