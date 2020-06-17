@@ -12,12 +12,4 @@ agent_group = 'cert-nix'
 
 
 async def verify(services):
-    return await BaseFlag.standard_verify_with_operation(services, operation_name, adversary_id, agent_group,
-                                                         is_flag_satisfied)
-
-
-async def is_flag_satisfied(services):
-    link_pid = (await services.get('data_svc').locate('operations', match=dict(name=operation_name)))[0].chain[0].pid
-    if services.get('hunt_svc').is_pid_verified(link_pid):
-        return True
-    return False
+    return await BaseFlag.standard_hunt_flag(services, operation_name, adversary_id, agent_group)

@@ -61,3 +61,17 @@ class BaseFlag:
                 await BaseFlag.cleanup_operation(services, operation_name)
                 return True
         return False
+
+    @staticmethod
+    async def standard_hunt_flag(services, operation_name, adversary_id, agent_group):
+
+        async def is_flag_satisfied(svcs):
+            link_pid = (await svcs.get('data_svc').locate('operations', match=dict(name=operation_name)))[0].chain[
+                0].pid
+            if svcs.get('hunt_svc').is_pid_verified(link_pid):
+                return True
+            return False
+
+        return await BaseFlag.standard_verify_with_operation(services, operation_name, adversary_id, agent_group,
+                                                             is_flag_satisfied)
+
