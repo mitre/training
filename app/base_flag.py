@@ -63,12 +63,12 @@ class BaseFlag:
         return False
 
     @staticmethod
-    async def standard_hunt_flag(services, operation_name, adversary_id, agent_group):
+    async def standard_hunt_flag(services, operation_name, adversary_id, agent_group, verify_type='pid'):
 
         async def is_flag_satisfied(svcs):
-            link_pid = (await svcs.get('data_svc').locate('operations', match=dict(name=operation_name)))[0].chain[
-                0].pid
-            if svcs.get('hunt_svc').is_pid_verified(link_pid):
+            link_id = (await svcs.get('data_svc').locate('operations', match=dict(name=operation_name)))[0].chain[
+                0].id
+            if svcs.get('hunt_svc').is_link_verified(verify_type, link_id):
                 return True
             return False
 
