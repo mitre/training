@@ -1,5 +1,6 @@
 name = 'Add new user'
-challenge = 'Add new red-team user credentials, using "test" as both the username and password.'
+challenge = 'Add new red-team user credentials, using "test" as both the username and password. Make sure ' \
+            'the server is turned off before editing the configuration files.'
 extra_info = """In a red-team engagement, there are usually multiple operators sharing access to the C2."""
 
 
