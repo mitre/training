@@ -8,7 +8,7 @@ extra_info = """"""
 
 operation_name = 'Hunt1'
 adversary_id = '1a8218e4-c7b7-424a-befb-48b3421d2e78'
-agent_group = 'cert-nix'
+agent_group = 'cert-win'
 verify_type = 'pid'
 
 
