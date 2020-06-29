@@ -61,7 +61,7 @@ class BaseFlag:
                 await BaseFlag.cleanup_operation(services, operation_name)
                 return True
         return False
-    
+
     @staticmethod
     async def standard_hunt_flag(services, operation_name, adversary_id, agent_group, verify_type='pid'):
 
