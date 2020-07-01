@@ -38,7 +38,7 @@
 </div>
 
 <li id="flag-template" class="flag-box flip-card" style="display: none">
-    <div class="flip-card-inner">
+    <div class="flip-card-inner" data-flip="true">
         <div class="flip-card-front">
             <h3 id="flag-number"></h3>
             <h4 id="flag-name"></h4>
@@ -103,11 +103,16 @@
                     b.attr('status', 'progress');
                     badge.flags.forEach(function(flag) {
                         let template = $("#flag-template").clone();
+                        template.removeAttr('id');
                         template.attr('badge', badge.name);
                         template.find('#flag-number').html('&#127937 ' + flag.number);
                         template.find('#flag-name').text(flag.name);
                         template.find("#flag-challenge").text(flag.challenge);
-                        template.find("#flag-info").text(flag.extra_info);
+                        if (flag.extra_info == null || flag.extra_info == "") {
+                            template.find(".flip-card-inner").attr('data-flip', 'false');
+                        } else {
+                            template.find("#flag-info").text(flag.extra_info);
+                        }
                         template.find("#flag-completed-ts").text(flag.completed_ts);
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
@@ -140,6 +145,7 @@
         }
         $('#training-disclaimers').hide();
         restRequest('POST', {"name":selectedCert}, updateFlags, '/plugin/training/flags');
+        adsf;
     }
 
     function showRelevantFlags() {
