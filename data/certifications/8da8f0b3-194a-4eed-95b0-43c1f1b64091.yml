@@ -1,0 +1,32 @@
+id: 8da8f0b3-194a-4eed-95b0-43c1f1b64091
+name: Blue Certificate
+badges:
+  agents:
+    flags:
+      - blue_0
+      - blue_1
+      - blue_2
+      - blue_3
+  autonomous:
+    flags:
+      - blue_0
+      - blue_1
+      - blue_2
+      - blue_3
+  manual:
+    flags:
+      - blue_0
+      - blue_2a
+      - blue_2b
+      - blue_2c
+      - blue_5a_win
+      - blue_5b_win
+      - blue_5c_win
+      - blue_5d_win
+  attack:
+    flags:
+      - blue_0
+      - blue_1
+      - blue_2
+      - blue_3
+      - blue_4
