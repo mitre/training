@@ -1,0 +1,7 @@
+---
+
+id: b2d8e29a-fb11-4ba7-bde4-60d9a628784e
+name: Hunt Badge Initialize - Check for Sysmon
+description: Adversary for the Hunt badge to check to see if Sysmon is running on the target system
+atomic_ordering:
+  - 0c8f1f7d-44a1-46d6-8d8d-b4a8d4062fba

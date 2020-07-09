@@ -1,0 +1,18 @@
+---
+
+- id: 0c8f1f7d-44a1-46d6-8d8d-b4a8d4062fba
+  name: Check for Sysmon
+  description: Checks process list to see if Sysmon is running
+  tactic: training
+  technique:
+    attack_id: x
+    name: x
+  repeatable: True
+  platforms:
+    windows:
+      psh:
+        command: |
+          (Get-Process sysmo*).Name;
+        parsers:
+          plugins.stockpile.app.parsers.basic:
+            - source: host.process.name
