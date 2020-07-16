@@ -3,4 +3,7 @@ name: Hunt Certificate
 badges:
   hunt:
     flags:
-      - flags.hunt.blue_0
+      - flags.hunt.blue_1
+      - flags.hunt.blue_2
+      - flags.hunt.blue_3
+      - flags.hunt.blue_4
