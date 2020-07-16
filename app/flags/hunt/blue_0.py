@@ -4,7 +4,7 @@ from plugins.training.app.base_flag import BaseFlag
 name = "Initialize Hunt Badge"
 challenge = 'This flag tests the environment to ensure the rest of the Hunt badge works correctly. This flag will ' \
             'pass only if the following conditions are met:\n\n' \
-            '1) The Hunt plugin is enable in Caldera.\n' \
+            '1) The Hunt plugin is enabled in Caldera.\n' \
             '2) The target Windows machine has Sysmon running.'
 extra_info = """"""
 

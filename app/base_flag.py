@@ -24,7 +24,7 @@ class BaseFlag:
     @staticmethod
     async def is_operation_successful(services, op_name, traits=[], num_links=1):
         operation = (await services.get('data_svc').locate('operations', match=dict(name=op_name)))[0]
-        if len(operation.chain) == num_links and \
+        if len(operation.chain) >= num_links and \
                 all(trait in [f.trait for f in operation.all_facts()] for trait in traits):
             return True
         return False
