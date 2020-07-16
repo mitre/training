@@ -61,3 +61,8 @@ class BaseFlag:
                 await BaseFlag.cleanup_operation(services, operation_name)
                 return True
         return False
+
+    @staticmethod
+    async def reset(services, operation_name, verify):
+        await BaseFlag.cleanup_operation(services, operation_name)
+        await verify(services)

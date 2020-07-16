@@ -113,3 +113,11 @@ div.badge-completed{
     padding: 10px 0;
     font-size: 15px;
 }
+.flag-box .flag-reset-button {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    color: grey;
+    font-size: 25;
+    margin-right: 10px;
+}

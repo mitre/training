@@ -23,6 +23,7 @@ async def enable(services):
     app.router.add_static('/training', 'plugins/training/static/', append_version=True)
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
+    app.router.add_route('POST', '/plugin/training/reset_flag', training_api.reset_flag)
 
 
 async def expansion(services):
