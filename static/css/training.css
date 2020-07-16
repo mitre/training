@@ -79,6 +79,9 @@ div.badge-completed{
 .flip-card:hover .flip-card-inner[data-flip="true"] {
   transform: rotateY(180deg);
 }
+.flip-card:hover .flip-card-inner[data-flip="false"] .flip-card-front .flag-reset-button{
+  z-index: 1;
+}
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
