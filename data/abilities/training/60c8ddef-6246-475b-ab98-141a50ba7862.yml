@@ -10,4 +10,4 @@
     windows:
       psh:
         command: |
-          reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce /v "CALDERA Persistence" /t REG_SZ /d "#{location}" /f;
+          reg add HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce /v "CALDERA Persistence" /t REG_SZ /d "#{location}" /f;

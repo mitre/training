@@ -1,0 +1,7 @@
+---
+
+id: 9f0691a7-a11e-4921-9465-278d6953b316
+name: Blue Hunt Badge Flag 2
+description: Second adversary for blue hunt badge
+atomic_ordering:
+  - 0fe45b51-d25b-4a20-9e34-2e0c1af7e78e  #Exfiltrate File

