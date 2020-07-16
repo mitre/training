@@ -2,10 +2,10 @@
 - id: 60c8ddef-6246-475b-ab98-141a50ba7862
   name: Modify HKCU Registry Key
   Description: Modify the HKCU RunOnce Key by adding Caldera agent as a Run target
-  tactic: training
+  tactic: persistence
   technique:
-    attack_id: x
-    name: x
+    attack_id: T1547
+    name: Boot or Logon Autostart Execution
   platforms:
     windows:
       psh:

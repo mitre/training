@@ -2,10 +2,10 @@
 - id: 6e5c7220-06e8-4829-add4-ec41d28acfed
   name: Add New Registry Key
   description: Creates new registry key under HKCU
-  tactic: training
+  tactic: defense-evasion
   technique:
-    attack_id: x
-    name: x
+    attack_id: T1112
+    name: Modify Registry
   platforms:
     windows:
       psh:

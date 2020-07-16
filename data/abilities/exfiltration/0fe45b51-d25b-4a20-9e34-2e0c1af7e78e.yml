@@ -2,10 +2,10 @@
 - id: 0fe45b51-d25b-4a20-9e34-2e0c1af7e78e
   name: Exfiltrate File
   description: Exfiltrate a file with fake credentials
-  tactic: training
+  tactic: exfiltration
   technique:
-    attack_id: x
-    name: x
+    attack_id: T1041
+    name: Exfiltration Over C2 Channel
   platforms:
     windows:
       psh:

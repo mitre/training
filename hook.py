@@ -27,21 +27,25 @@ async def enable(services):
 
 async def expansion(services):
     data_svc = services.get('data_svc')
-    await _apply_hidden_access_to_loaded_files(data_svc)
+    await _apply_appropriate_access_to_loaded_files(data_svc)
 
 
-async def _apply_hidden_access_to_loaded_files(data_svc):
+async def _apply_appropriate_access_to_loaded_files(data_svc):
+    """
+    This function applies HIDDEN access to all adversaries and all abilities within the training tactic directory.
+    Abilities with other tactics are given RED access.
+    """
     object_types = ['abilities', 'adversaries']
     for obj_typ in object_types:
         for filename in glob.iglob('plugins/training/data/'+obj_typ+'/**/*.yml', recursive=True):
             obj_id = os.path.splitext(os.path.basename(filename))[0]
-            if obj_typ == 'abilities':
-                match = dict(ability_id=obj_id)
-            else:
-                match = dict(adversary_id=obj_id)
+            match = dict(ability_id=obj_id) if obj_typ == 'abilities' else dict(adversary_id=obj_id)
             objects = await data_svc.locate(obj_typ, match=match)
             for obj in objects:
-                obj.access = BaseWorld.Access.HIDDEN
+                if obj_typ == 'abilities' and filename.count('training') != 2:
+                    obj.access = BaseWorld.Access.RED
+                else:
+                    obj.access = BaseWorld.Access.HIDDEN
 
 
 async def _load_flags(data_svc):
