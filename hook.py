@@ -55,10 +55,16 @@ async def _load_flags(data_svc):
                 for number, module in enumerate(data['flags']):
                     flag_number += 1
                     loaded_module = import_module('plugins.training.app.%s' % module)
+                    additional_field_names = ['operation_name', 'adversary_id', 'agent_group']
+                    additional_fields = dict()
+                    for field in additional_field_names:
+                        if hasattr(loaded_module, field):
+                            additional_fields[field] = getattr(loaded_module, field)
                     badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
                                             number=flag_number,
                                             name=getattr(loaded_module, 'name'),
                                             challenge=getattr(loaded_module, 'challenge'),
-                                            extra_info=getattr(loaded_module, 'extra_info')))
+                                            extra_info=getattr(loaded_module, 'extra_info'),
+                                            additional_fields=additional_fields))
                 certification.badges.append(badge)
             await data_svc.store(certification)

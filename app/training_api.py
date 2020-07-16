@@ -47,8 +47,8 @@ class TrainingApi(BaseService):
         for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
-                    if hasattr(flag, 'adversary_id'):
-                        await BaseFlag.reset(self.services, flag.operation_name)
+                    if 'adversary_id' in flag.additional_fields:
+                        await BaseFlag.reset(self.services, flag.additional_fields['operation_name'], flag.verify)
                         reset = 1
                     break
             except Exception as e:
