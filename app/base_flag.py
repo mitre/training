@@ -74,4 +74,3 @@ class BaseFlag:
 
         return await BaseFlag.standard_verify_with_operation(services, operation_name, adversary_id, agent_group,
                                                              is_flag_satisfied)
-
