@@ -1,0 +1,13 @@
+---
+- id: 60c8ddef-6246-475b-ab98-141a50ba7862
+  name: Modify HKCU Registry Key
+  Description: Modify the HKCU RunOnce Key by adding Caldera agent as a Run target
+  tactic: training
+  technique:
+    attack_id: x
+    name: x
+  platforms:
+    windows:
+      psh:
+        command: |
+          reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce /v "CALDERA Persistence" /t REG_SZ /d "#{location}" /f;

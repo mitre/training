@@ -1,0 +1,7 @@
+---
+
+id: 5212d9f4-1ad4-4c77-9f8a-55ed8e02d804
+name: Blue Hunt Badge Flag 2
+description: Second adversary for blue hunt badge
+atomic_ordering:
+  - 60c8ddef-6246-475b-ab98-141a50ba7862  #Modify RunOnce key

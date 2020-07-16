@@ -1,0 +1,15 @@
+---
+- id: 8f1b22d7-ac12-4ce2-bef1-cfa97baedfc4
+  name: Drop Sandcat
+  description: Drop sandcat.go-windows onto a Windows system
+  tactic: training
+  technique:
+    attack_id: x
+    name: x
+  platforms:
+    windows:
+      psh:
+        command: |
+          ;
+        payloads:
+          - sandcat.go-windows

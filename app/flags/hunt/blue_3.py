@@ -1,13 +1,13 @@
 from plugins.training.app.base_flag import BaseFlag
 
 
-name = 'Hunt Flag 1'
+name = 'Hunt Flag 3'
 challenge = ''
 extra_info = """"""
 
 
-operation_name = 'training_hunt_1'
-adversary_id = '1a8218e4-c7b7-424a-befb-48b3421d2e78'
+operation_name = 'training_hunt_3'
+adversary_id = 'c25160e6-7d8d-490c-94cf-95944e46f885'
 agent_group = 'cert-win'
 verify_type = 'pid'
 

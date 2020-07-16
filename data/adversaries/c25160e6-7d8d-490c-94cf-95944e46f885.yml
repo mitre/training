@@ -1,0 +1,7 @@
+---
+
+id: c25160e6-7d8d-490c-94cf-95944e46f885
+name: Blue Hunt Badge Flag 3
+description: Third adversary for blue hunt badge
+atomic_ordering:
+  - 6e5c7220-06e8-4829-add4-ec41d28acfed  #Add new registry key

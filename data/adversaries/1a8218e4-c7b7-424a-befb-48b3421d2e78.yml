@@ -4,4 +4,4 @@ id: 1a8218e4-c7b7-424a-befb-48b3421d2e78
 name: Blue Hunt Badge Flag 1
 description: First adversary for blue hunt badge
 atomic_ordering:
-  - c0da588f-79f0-4263-8998-7496b1a40596  #whoami
+  - 8f1b22d7-ac12-4ce2-bef1-cfa97baedfc4  #drop sandcat.go
