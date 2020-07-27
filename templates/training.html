@@ -20,7 +20,7 @@
                     <option value="{{ cert.name }}">{{ cert.name }}</option>
                 {% endfor %}}
             </select>
-            <ul id="badges" class="profile-tests"></ul>
+            <ul id="badges" class="profile-tests" style="padding-inline-start: 0px"></ul>
         </div>
         <div class="column" style="flex:75%;">
             <div id="training-disclaimers">
@@ -57,10 +57,37 @@
 
 <li id="badge-template" style="margin:10px;display:none" onclick="selectBadge(this)">
     <div class="badge-icon">
+<!--        <progress class="badge-progress" max="100" value="60"></progress>-->
         <b><p id="badge-name"></p></b>
         <img id="badge-icon"/>
     </div>
 </li>
+
+<style>
+    .badge-progress {
+        position:absolute;
+        z-index:-1;
+        -webkit-transform: rotate(270deg);
+        background-color:steelblue;
+        left:-12px;
+        top:12px;
+        border-radius:25px;
+    }
+    .badge-progress::-webkit-progress-bar {
+        background-color: steelblue;
+        border-radius:25px;
+    }
+    .badge-progress::-webkit-progress-value {
+        background-color: darkgreen;
+        border-bottom-left-radius:25px;
+        border-top-left-radius:25px;
+    }
+    .badge-progress::-moz-progress-bar {
+        background-color: steelblue;
+        color: dargreen;
+        border-radius:25px;
+    }
+</style>
 
 <script>
     let refresher = setInterval(refresh, 15000);
@@ -121,11 +148,16 @@
                         } else {
                             template.find('#flag-status').html('&#10060;');
                             flags.append(template);
+                            $('.badge-in-progress').find('progress').remove();
+                            $('.badge-in-progress').prepend('<progress class="badge-progress" max="100" value="60"></progress>');
+                            $('.badge-in-progress').find('progress').width($('.badge-in-progress').parent().height()-6);
+                            $('.badge-in-progress').find('progress').height($('.badge-in-progress').parent().width()-6);
                             throw Exception; //show only the next incomplete flag
                         }
                         flags.append(template);
                     });
                     if(badgeComplete === badge.flags.length) {
+                        b.find('.badge-progress').remove();
                         b.find('.badge-icon').removeClass('badge-in-progress');
                         b.find('.badge-icon').addClass('badge-completed');
                         b.attr('status', 'completed');
