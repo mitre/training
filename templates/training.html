@@ -57,37 +57,10 @@
 
 <li id="badge-template" style="margin:10px;display:none" onclick="selectBadge(this)">
     <div class="badge-icon">
-<!--        <progress class="badge-progress" max="100" value="60"></progress>-->
         <b><p id="badge-name"></p></b>
         <img id="badge-icon"/>
     </div>
 </li>
-
-<style>
-    .badge-progress {
-        position:absolute;
-        z-index:-1;
-        -webkit-transform: rotate(270deg);
-        background-color:steelblue;
-        left:-12px;
-        top:12px;
-        border-radius:25px;
-    }
-    .badge-progress::-webkit-progress-bar {
-        background-color: steelblue;
-        border-radius:25px;
-    }
-    .badge-progress::-webkit-progress-value {
-        background-color: darkgreen;
-        border-bottom-left-radius:25px;
-        border-top-left-radius:25px;
-    }
-    .badge-progress::-moz-progress-bar {
-        background-color: steelblue;
-        color: dargreen;
-        border-radius:25px;
-    }
-</style>
 
 <script>
     let refresher = setInterval(refresh, 15000);
@@ -128,7 +101,7 @@
                     let b = $('#badge-'+badge.name);
                     b.find('.badge-icon').addClass('badge-in-progress');
                     b.attr('status', 'progress');
-                    badge.flags.forEach(function(flag) {
+                    badge.flags.forEach(function(flag, index) {
                         let template = $("#flag-template").clone();
                         template.removeAttr('id');
                         template.attr('badge', badge.name);
@@ -148,8 +121,9 @@
                         } else {
                             template.find('#flag-status').html('&#10060;');
                             flags.append(template);
+                            let progressValue = index/badge.flags.length;
                             $('.badge-in-progress').find('progress').remove();
-                            $('.badge-in-progress').prepend('<progress class="badge-progress" max="100" value="60"></progress>');
+                            $('.badge-in-progress').prepend('<progress class="badge-progress" max="1" value="' + progressValue + '"></progress>');
                             $('.badge-in-progress').find('progress').width($('.badge-in-progress').parent().height()-6);
                             $('.badge-in-progress').find('progress').height($('.badge-in-progress').parent().width()-6);
                             throw Exception; //show only the next incomplete flag
