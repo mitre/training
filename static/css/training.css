@@ -119,10 +119,10 @@ div.badge-completed{
     position:absolute;
     z-index:-1;
     -webkit-transform: rotate(270deg);
-    background-color:steelblue;
     left:-12px;
     top:12px;
     border-radius:25px;
+    background-color: steelblue;
 }
 .badge-progress::-webkit-progress-bar {
     background-color: steelblue;
@@ -134,7 +134,7 @@ div.badge-completed{
     border-top-left-radius:25px;
 }
 .badge-progress::-moz-progress-bar {
-    background-color: steelblue;
-    color: darkgreen;
+    background-color: darkgreen;
     border-radius:25px;
+    z-index:1
 }
