@@ -47,7 +47,8 @@ async def _apply_hidden_access_to_loaded_files(data_svc):
 async def _load_flags(data_svc):
     for filename in glob.iglob('plugins/training/data/certifications/**/*.yml', recursive=True):
         for cert in BaseWorld.strip_yml(filename):
-            certification = Certification(identifier=cert['id'], name=cert['name'], description=cert['description'],
+            certification = Certification(identifier=cert['id'], name=cert['name'],
+                                          description=cert.get('description', 'No description provided'),
                                           access=BaseWorld.Access.APP)
             flag_number = 0
             for badge, data in cert['badges'].items():
