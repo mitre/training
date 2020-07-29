@@ -1,5 +1,6 @@
 id: 9cd5f3a0-765d-45bc-85c2-bc76d4282599
 name: User Certificate
+description: Basic user certificate.
 badges:
   agents:
     flags:
