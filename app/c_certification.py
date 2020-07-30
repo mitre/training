@@ -15,7 +15,7 @@ class Certification(BaseObject):
         super().__init__()
         self.identifier = identifier
         self.name = name
-        self.description = description;
+        self.description = description
         self.access = access
         self.badges = []
 
