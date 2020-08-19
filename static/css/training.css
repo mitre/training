@@ -30,6 +30,7 @@
     position: absolute;
 }
 .badge-icon {
+    position: relative;
     padding: 2px;
     background-color: grey;
     border-radius: 25px;
@@ -37,6 +38,7 @@
     margin: 3px;
     text-align: center;
     opacity: 0.3;
+    overflow: hidden;
 }
 .badge-icon p {
     text-align: center;
@@ -112,4 +114,27 @@ div.badge-completed{
     vertical-align: middle;
     padding: 10px 0;
     font-size: 15px;
+}
+.badge-progress {
+    position:absolute;
+    z-index:-1;
+    -webkit-transform: rotate(270deg);
+    left:-12px;
+    top:12px;
+    border-radius:25px;
+    background-color: steelblue;
+}
+.badge-progress::-webkit-progress-bar {
+    background-color: steelblue;
+    border-radius:25px;
+}
+.badge-progress::-webkit-progress-value {
+    background-color: darkgreen;
+    border-bottom-left-radius:25px;
+    border-top-left-radius:25px;
+}
+.badge-progress::-moz-progress-bar {
+    background-color: darkgreen;
+    border-radius:25px;
+    z-index:1
 }
