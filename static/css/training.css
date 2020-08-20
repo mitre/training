@@ -30,6 +30,7 @@
     position: absolute;
 }
 .badge-icon {
+    position: relative;
     padding: 2px;
     background-color: grey;
     border-radius: 25px;
@@ -37,6 +38,7 @@
     margin: 3px;
     text-align: center;
     opacity: 0.3;
+    overflow: hidden;
 }
 .badge-icon p {
     text-align: center;
@@ -119,6 +121,7 @@ div.badge-completed{
     padding: 10px 0;
     font-size: 15px;
 }
+
 .flag-box .flag-reset-button {
     position: absolute;
     right: 0;
