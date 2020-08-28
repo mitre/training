@@ -42,8 +42,6 @@ function refresh(){
         let flags = $('#flags');
         flags.empty();
 
-        console.log(data.badges)
-
         badgeLoop:
         for (var badgeIdx in data.badges) {
             var badge = data.badges[badgeIdx];
@@ -51,7 +49,6 @@ function refresh(){
             let b = $('#badge-'+badge.name);
             b.find('.badge-icon').addClass('badge-in-progress');
             b.attr('status', 'progress');
-            console.log(badgeIdx)
             for (var flagIdx in badge.flags) {
                 var flag = badge.flags[flagIdx];
                 let flagHTML = createFlagHTML(badge, flag);
@@ -110,12 +107,7 @@ function addAnswerOptions(flag, template) {
     template.find("#flag-answer-" + flag.number).addClass("flag-answer");
     switch (flag.flag_type) {
         case "multiplechoice":
-            let mcType = ''
-            if (flag.multi_select) {
-                mcType = 'checkbox'
-            } else {
-                mcType = 'radio'
-            }
+            let mcType = flag.multi_select ? 'checkbox' : 'radio'
             flag.options.forEach(function(o) {
                 let btnSet = "mult-" + flag.number;
                 let radioHTML = "<label><input type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + "</label><br>";
@@ -128,7 +120,6 @@ function addAnswerOptions(flag, template) {
         default:
             stream("Unknown flag type provided");
     }
-
 }
 
 function showRelevantFlags() {
@@ -160,16 +151,19 @@ function getAnswers() {
         let flagNum = $(set).attr("id").split("-")[2];
         let answer = $(set).find("input:checked");
         if (answer.length > 1) {
+//        multiselect multiple choice
             let arr = [];
             answer.each(function(idx, a) {
-                arr.append(a.value)
+                arr.push(a.value)
             })
             answer = arr
         }
         else if (answer.length == 1) {
+//        single option multiple choice
             answer = answer.val();
         }
         else {
+//        fill in the blank
             answer = $(set).find("input").val();
         }
         answers[flagNum] = answer;
