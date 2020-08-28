@@ -115,3 +115,15 @@ div.badge-completed{
     padding: 10px 0;
     font-size: 15px;
 }
+.flag-answer {
+    padding: 0px 20px;
+    text-align: left;
+}
+input[type="radio"] {
+    width: auto;
+    margin: 5px 10px;
+    vertical-align: sub;
+}
+input[type="checkbox"] {
+    margin: 5px 10px;
+}
