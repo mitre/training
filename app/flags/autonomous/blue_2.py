@@ -2,8 +2,8 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Malicious file on system'
-challenge = 'Write a file on the Windows machine under the C:\\Users directory. Get the SHA256 hash of this file, ' \
-            'and write it to C:\\Users\\Public\\malicious_files.txt. The autonomous defender should ' \
+challenge = 'Write a file on the Windows machine under the C:\\Users\\Public directory. Get the SHA256 hash of this ' \
+            'file, and write it to C:\\Users\\Public\\malicious_files.txt. The autonomous defender should ' \
             'automatically find and delete the file.'
 extra_info = """"""
 

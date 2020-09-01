@@ -14,13 +14,16 @@
                 as you work through the challenges. Each time you complete a section, a badge (below) will be activated.
             </p>
             <br>
-            <select id="certification-name" style="margin-top:-15px" onchange="loadCertification();">
-                <option value="" disabled selected>Select a certificate</option>
-                {% for cert in certificates %}
-                    <option value="{{ cert.name }}">{{ cert.name }}</option>
-                {% endfor %}}
-            </select>
-            <ul id="badges" class="profile-tests"></ul>
+            <div id="cert-select-wrapper" style="display:flex">
+                <select id="certification-name" style="margin-top:-15px;flex:90%" onchange="loadCertification();">
+                    <option value="" disabled selected>Select a certificate</option>
+                    {% for cert in certificates %}
+                        <option value="{{ cert.name }}">{{ cert.name }}</option>
+                    {% endfor %}}
+                </select>
+                <div style="flex:5%;margin-top:-30px;cursor:pointer" onclick="document.getElementById('training-cert-description-modal').style.display='block'"><p style="border:solid;border-radius:25px;font-size:16px">?</p></div>
+            </div>
+            <ul id="badges" class="profile-tests" style="padding-inline-start: 0px"></ul>
         </div>
         <div class="column" style="flex:75%;">
             <div id="training-disclaimers">
@@ -37,8 +40,22 @@
     </div>
 </div>
 
+<div id="training-cert-description-modal" class="modal" style="display:none">
+    <div class="modal-content" style="width:60%">
+        <div class="container">
+            <div class="row duk-modal">
+                <span onclick="document.getElementById('training-cert-description-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <div class="column" style="flex:60%">
+                    <h3>Select a certification</h3>
+                    <p style="text-align:center;color:white;white-space:pre-wrap">Select a cert first to see information regarding it.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <li id="flag-template" class="flag-box flip-card" style="display: none">
-    <div class="flip-card-inner">
+    <div class="flip-card-inner" data-flip="true">
         <div class="flip-card-front">
             <h3 id="flag-number"></h3>
             <h4 id="flag-name"></h4>
@@ -70,6 +87,8 @@
     $(document).ready(function () {
         refresh();
     });
+
+    var certificates = {{ certificates | tojson }};
     
     function loadCertification(){
         function loadCert(data){
@@ -85,8 +104,19 @@
         }
         let selectedCert = $('#certification-name option:selected').attr('value');
         stream('Hover over each flag to get adversary emulation tips & tricks!');
+        setCertDescription(selectedCert);
         $('#badges').empty();
         restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
+    }
+
+    function setCertDescription(selectedCert) {
+        $.each(certificates, function(index, cert) {
+            if (cert.name == selectedCert) {
+                $('#training-cert-description-modal').find('h3').text(cert.name);
+                $('#training-cert-description-modal').find('p').html(cert.description);
+                return false; //break loop
+            }
+        });
     }
 
     function refresh(){
@@ -103,11 +133,16 @@
                     b.attr('status', 'progress');
                     badge.flags.forEach(function(flag) {
                         let template = $("#flag-template").clone();
+                        template.removeAttr('id');
                         template.attr('badge', badge.name);
                         template.find('#flag-number').html('&#127937 ' + flag.number);
                         template.find('#flag-name').text(flag.name);
                         template.find("#flag-challenge").text(flag.challenge);
-                        template.find("#flag-info").text(flag.extra_info);
+                        if (flag.extra_info == null || flag.extra_info == "") {
+                            template.find(".flip-card-inner").attr('data-flip', 'false');
+                        } else {
+                            template.find("#flag-info").text(flag.extra_info);
+                        }
                         template.find("#flag-completed-ts").text(flag.completed_ts);
                         if(flag.completed) {
                             template.find('#flag-status').html('&#x2705;');
