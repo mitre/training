@@ -26,7 +26,8 @@ class TrainingApi(BaseService):
         answers = {}
         if 'answers' in data.keys():
             answers = data.pop('answers')
-        badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
+        cert = next(c for c in await self.data_svc.locate('certifications', data))
+        badges = [badge for badge in cert.badges]
         for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
@@ -37,7 +38,8 @@ class TrainingApi(BaseService):
                             flag.completed = await flag.verify(answer)
                     else:
                         flag.completed = await flag.verify(self.services)
-                    break
+                    if not hasattr(cert, 'cert_type'):
+                        break
             except Exception as e:
                 logging.error(e)
         return web.json_response(dict(badges=[b.display for b in badges]))

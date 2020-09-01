@@ -127,3 +127,12 @@ input[type="radio"] {
 input[type="checkbox"] {
     margin: 5px 10px;
 }
+input.fill-in-the-blank {
+    width: 95%;
+    text-align: left;
+}
+input.fill-in-the-blank:disabled {
+    width: 95%;
+    text-align: left;
+    background-color: rgba(239, 239, 239, 0.3);
+}

@@ -5,6 +5,7 @@ import os
 from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
+from plugins.training.app.c_exam import Exam
 from plugins.training.app.c_flag import Flag
 from plugins.training.app.c_multiplechoice import MultipleChoice
 from plugins.training.app.c_fillinblank import FillInBlank
@@ -53,9 +54,14 @@ async def _apply_hidden_access_to_loaded_files(data_svc):
 async def _load_flags(data_svc):
     for filename in glob.iglob('plugins/training/data/certifications/**/*.yml', recursive=True):
         for cert in BaseWorld.strip_yml(filename):
-            certification = Certification(identifier=cert['id'], name=cert['name'],
-                                          description=cert.get('description', 'No description provided'),
-                                          access=BaseWorld.Access.APP)
+            if cert.get('cert_type') and cert.get('cert_type') == 'exam':
+                certification = Exam(identifier=cert['id'], name=cert['name'],
+                                     description=cert.get('description', 'No description provided'),
+                                     access=BaseWorld.Access.APP)
+            else:
+                certification = Certification(identifier=cert['id'], name=cert['name'],
+                                              description=cert.get('description', 'No description provided'),
+                                              access=BaseWorld.Access.APP)
             flag_number = 0
             for badge, data in cert['badges'].items():
                 badge = Badge(name=badge)
@@ -65,7 +71,7 @@ async def _load_flags(data_svc):
                     if hasattr(loaded_module, 'flag_type'):
                         flag_type = getattr(loaded_module, 'flag_type')
                         attrs = {attr: getattr(loaded_module, attr) for attr in dir(loaded_module)
-                                 if not attr.startswith('_')}
+                                 if not attr.startswith('_') and attr != 'flag_type'}
                         badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
                     else:
                         badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),

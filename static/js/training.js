@@ -1,10 +1,12 @@
-let refresher = setInterval(refresh, 15000);
+var refresher = setInterval(refresh, 15000);
 $('.section-profile').bind('destroyed', function() {
     clearInterval(refresher);
 });
 $(document).ready(function () {
     refresh();
 });
+
+var certificate;
 
 function loadCertification(){
     function loadCert(data){
@@ -20,19 +22,27 @@ function loadCertification(){
     }
     let selectedCert = $('#certification-name option:selected').attr('value');
     stream('Hover over each flag to get adversary emulation tips & tricks!');
-    setCertDescription(selectedCert);
+    certificate = certificates.find(function(cert){ return cert.name == selectedCert});
+    setCertDescription();
+    setCertRefresh();
     $('#badges').empty();
     restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
 }
 
-function setCertDescription(selectedCert) {
-    $.each(certificates, function(index, cert) {
-        if (cert.name == selectedCert) {
-            $('#training-cert-description-modal').find('h3').text(cert.name);
-            $('#training-cert-description-modal').find('p').html(cert.description);
-            return false; //break loop
-        }
-    });
+function setCertDescription() {
+    $('#training-cert-description-modal').find('h3').text(certificate.name);
+    $('#training-cert-description-modal').find('p').html(certificate.description);
+}
+
+function setCertRefresh() {
+    if (certificate.cert_type && certificate.cert_type == "exam") {
+        clearInterval(refresher);
+        $("#btn-check-answers").show();
+    }
+    else {
+        $("#btn-check-answers").hide();
+        refresher = setInterval(refresh, 15000);
+    }
 }
 
 function refresh(){
@@ -54,13 +64,16 @@ function refresh(){
                 let flagHTML = createFlagHTML(badge, flag);
                 if(flag.completed) {
                     flagHTML.find('#flag-status').html('&#x2705;');
+                    flagHTML.find("input").attr("disabled", true);
                     badgeComplete += 1;
                     code.push(flag.code);
                     flags.append(flagHTML);
                 } else {
                     flagHTML.find('#flag-status').html('&#10060;');
                     flags.append(flagHTML);
-                    break badgeLoop; //show only the next incomplete flag
+                    if (!certificate.cert_type) {
+                        break badgeLoop; //show only the next incomplete flag
+                    }
                 }
             }
             if(badgeComplete === badge.flags.length) {
@@ -115,7 +128,7 @@ function addAnswerOptions(flag, template) {
             })
             break;
         case "fillinblank":
-                template.find("#flag-answer-" + flag.number).append("<input style='width: 95%; text-align: left'></input>");
+                template.find("#flag-answer-" + flag.number).append("<input class='fill-in-the-blank'></input>");
             break;
         default:
             stream("Unknown flag type provided");
@@ -163,8 +176,8 @@ function getAnswers() {
             answer = answer.val();
         }
         else {
-//        fill in the blank
-            answer = $(set).find("input").val();
+//        fill in the blank OR no answers given
+            answer = $(set).find("input:not([type=checkbox],[type=radio])").val();
         }
         answers[flagNum] = answer;
     })
@@ -198,5 +211,17 @@ function displayCert(code, completedBadges, totalBadges) {
         $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
         $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
         clearInterval(refresher);
+    }
+}
+
+function checkAnswers() {
+    let answers = getAnswers()
+
+    let complete = true
+    for (var a in answers) {
+        complete = complete && answers[a];
+    }
+    if (complete || confirm("There are still unanswered questions, are you absolutely sure you want to submit?")) {
+        refresh()
     }
 }
