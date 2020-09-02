@@ -2,7 +2,7 @@ from plugins.training.app.base_flag import BaseFlag
 
 
 name = 'Hunt Flag 2'
-challenge = 'Look to Hunt Flag 1 for instructions.\n' \
+challenge = 'Look to Hunt Flag 1 for instructions. Select "training_hunt_2" as the operation.\n' \
             'Ensure you enter a PID.\n\n' \
             'Tactic: Persistence'
 extra_info = """Technique: Boot or Logon Autostart Execution"""

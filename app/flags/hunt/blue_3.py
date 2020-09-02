@@ -2,7 +2,7 @@ from plugins.training.app.base_flag import BaseFlag
 
 
 name = 'Hunt Flag 3'
-challenge = 'Look to Hunt Flag 1 for instructions.\n' \
+challenge = 'Look to Hunt Flag 1 for instructions. Select "training_hunt_3" as the operation.\n' \
             'Ensure you enter a PID.\n\n' \
             'Tactic: Defense Evasion'
 extra_info = """Technique: Modify Registry"""
