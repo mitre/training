@@ -4,7 +4,7 @@ from app.utility.base_object import BaseObject
 
 class FillInBlank(Flag, BaseObject):
 
-    def __init__(self, number, name, challenge, extra_info, answer):
+    def __init__(self, number, name, challenge, answer, extra_info=None):
         super().__init__(number, name, challenge, extra_info, self.verify)
         self.answer = answer
         self.flag_type = 'fillinblank'
