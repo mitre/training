@@ -3,7 +3,7 @@ from plugins.training.app.base_flag import BaseFlag
 
 name = 'Hunt Flag 4'
 challenge = 'Look to Hunt Flag 1 for instructions.\n' \
-            'Ensure you enter a PId.\n\n' \
+            'Ensure you enter a PID.\n\n' \
             'Tactic: Exfiltration'
 extra_info = """Technique: Exfiltration Over C2 Channel"""
 

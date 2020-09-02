@@ -3,7 +3,9 @@ from plugins.training.app.base_flag import BaseFlag
 
 name = "Initialize Hunt Badge"
 challenge = 'This flag tests the environment to ensure the rest of the Hunt badge works correctly. This flag will ' \
-            'pass only if the Gameboard plugin is enabled in Caldera.'
+            'pass only if the following conditions are met:\n\n' \
+            '1) The Gameboard plugin is enabled in Caldera.\n' \
+            '2) The target Windows machine has Sysmon running.'
 extra_info = """"""
 
 operation_name = 'hunt_initialize'
@@ -17,8 +19,16 @@ async def verify(services):
 
 
 async def is_flag_satisfied(services):
-    return gameboard_available(services)
+    return hunt_available(services) and await sysmon_available(services)
 
 
-def gameboard_available(services):
+def hunt_available(services):
     return 'gameboard_svc' in services
+
+
+async def sysmon_available(services):
+    ops = await services.get('data_svc').locate('operations', match=dict(name=operation_name))
+    for op in ops:
+        if 'host.process.name' in [fact.trait for fact in op.all_facts()]:
+            return True
+    return False

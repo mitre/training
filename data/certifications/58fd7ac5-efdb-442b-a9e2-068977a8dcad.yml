@@ -1,10 +1,11 @@
 id: 58fd7ac5-efdb-442b-a9e2-068977a8dcad
 name: Hunt Certificate
+description: "This certificate tests your ability to hunt for red team activities."
 badges:
   hunt:
     agents:
       - flags.agents.blue_2.py
-      - flags.agents.blue_3.py
+#      - flags.agents.blue_3.py
     flags:
       - flags.hunt.blue_0
       - flags.hunt.blue_1

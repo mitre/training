@@ -3,11 +3,13 @@ from plugins.training.app.base_flag import BaseFlag
 
 name = 'Hunt Flag 1'
 challenge = 'Complete this flag by hunting for the CALDERA ability that will have been run within one minute of this ' \
-            'flag activating. Submit the PID of the process in the Hunt plugin along with the relevant ATT&CK ' \
-            'information. The tactic is listed below. The technique is listed on the back of this ' \
+            'flag activating. Look to the back of this card for further instructions.' \
+            'The tactic of the red ability is listed below. The technique is listed on the back of this ' \
             'card as a hint.\n\n' \
             'Tactic: Command and Control'
-extra_info = """Technique: Ingress Tool Transfer"""
+extra_info = 'Select the "training_hunt_1" red operation in Gameboard and add an external detection for this ability ' \
+             'using the PID of the process you discover. Specify the correct host, tactic, and technique to ' \
+             'successfully add the detection.\n\nTechnique: Ingress Tool Transfer'
 
 
 operation_name = 'training_hunt_1'

@@ -68,7 +68,7 @@ class BaseFlag:
         async def is_flag_satisfied(svcs):
             link_id = (await svcs.get('data_svc').locate('operations', match=dict(name=operation_name)))[0].chain[
                 0].id
-            if await svcs.get('hunt_svc').is_link_verified(verify_type, link_id):
+            if await svcs.get('gameboard_svc').is_link_verified(verify_type, link_id):
                 return True
             return False
 
