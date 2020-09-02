@@ -6,6 +6,8 @@ $(document).ready(function () {
     refresh();
 });
 
+var layerFileData = {};
+
 var certificate;
 
 function loadCertification(){
@@ -65,6 +67,7 @@ function refresh(){
                 if(flag.completed) {
                     flagHTML.find('#flag-status').html('&#x2705;');
                     flagHTML.find("input").attr("disabled", true);
+                    flagHTML.find("button").removeClass("button-success").attr("disabled", true);
                     badgeComplete += 1;
                     code.push(flag.code);
                     flags.append(flagHTML);
@@ -92,7 +95,10 @@ function refresh(){
         return;
     }
     $('#training-disclaimers').hide();
-    restRequest('POST', {"name":selectedCert, "answers":getAnswers()}, update, '/plugin/training/flags');
+    let answers = checkAnswers();
+    if (answers) {
+        restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
+    }
 }
 
 function createFlagHTML(badge, flag) {
@@ -118,6 +124,7 @@ function addAnswerOptions(flag, template) {
     template.find("#flag-answer").show();
     template.find("#flag-answer").attr("id", "flag-answer-" + flag.number);
     template.find("#flag-answer-" + flag.number).addClass("flag-answer");
+    template.find("#flag-answer-" + flag.number).addClass(flag.flag_type);
     switch (flag.flag_type) {
         case "multiplechoice":
             let mcType = flag.multi_select ? 'checkbox' : 'radio'
@@ -128,7 +135,13 @@ function addAnswerOptions(flag, template) {
             })
             break;
         case "fillinblank":
-                template.find("#flag-answer-" + flag.number).append("<input class='fill-in-the-blank'></input>");
+            template.find("#flag-answer-" + flag.number).append("<input class='fill-in-the-blank'>");
+            break;
+        case "navigator":
+            let uploadHTML = "<input id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
+                        "<button class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
+                        "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
+            template.find("#flag-answer-" + flag.number).append(uploadHTML);
             break;
         default:
             stream("Unknown flag type provided");
@@ -162,22 +175,36 @@ function getAnswers() {
             return;
         }
         let flagNum = $(set).attr("id").split("-")[2];
-        let answer = $(set).find("input:checked");
-        if (answer.length > 1) {
-//        multiselect multiple choice
-            let arr = [];
-            answer.each(function(idx, a) {
-                arr.push(a.value)
-            })
-            answer = arr
-        }
-        else if (answer.length == 1) {
-//        single option multiple choice
-            answer = answer.val();
-        }
-        else {
-//        fill in the blank OR no answers given
-            answer = $(set).find("input:not([type=checkbox],[type=radio])").val();
+        let type = $(set).attr("class").split(" ")[1];
+        let answer = [];
+
+        switch (type) {
+            case "multiplechoice":
+                answer = $(set).find("input:checked");
+                if (answer.length > 1) {
+        //        multiselect multiple choice
+                    let arr = [];
+                    answer.each(function(idx, a) {
+                        arr.push(a.value)
+                    })
+                    answer = arr
+                }
+                else if (answer.length == 1) {
+        //        single option multiple choice
+                    answer = answer.val();
+                }
+                else {
+                    answer = "";
+                }
+                break;
+            case "fillinblank":
+                answer = $(set).find("input:not([type=checkbox],[type=radio],[type=file])").val();
+                break;
+            case "navigator":
+                answer = layerFileData[flagNum];
+                break;
+            default:
+                stream("Unknown flag type provided");
         }
         answers[flagNum] = answer;
     })
@@ -222,6 +249,49 @@ function checkAnswers() {
         complete = complete && answers[a];
     }
     if (complete || confirm("There are still unanswered questions, are you absolutely sure you want to submit?")) {
-        refresh()
+        return answers
+    }
+    else {
+        return null
     }
 }
+
+function uploadLayer(btn) {
+    $(btn).siblings("#layer-upload").click();
+}
+
+$("body").on("change", "input.layer-upload", async function (event){
+    if(event.currentTarget) {
+        let file = event.currentTarget.files[0];
+        let parentId = $(this).parent().attr("id").split("-")[2];
+        if(file && file.name){
+            $(this).siblings("#layer-upload-filename").html(file.name);
+            try {
+                layerFileData[parentId] = await readUploadedFileAsText(file)
+            } catch (e) {
+                console.warn(e.message)
+            }
+        }
+        else {
+            $(this).siblings("#layer-upload-filename").html("");
+            delete layerFileData[parentId];
+        }
+    }
+});
+
+function readUploadedFileAsText(inputFile) {
+    const temporaryFileReader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+        temporaryFileReader.onerror = () => {
+            temporaryFileReader.abort();
+            reject(new DOMException("Problem parsing input file."));
+        };
+
+        temporaryFileReader.onload = () => {
+            resolve(temporaryFileReader.result);
+        };
+        temporaryFileReader.readAsText(inputFile);
+  });
+}
+

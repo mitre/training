@@ -136,3 +136,6 @@ input.fill-in-the-blank:disabled {
     text-align: left;
     background-color: rgba(239, 239, 239, 0.3);
 }
+input.layer-upload + .layer-upload-label {
+    cursor: pointer;
+}
