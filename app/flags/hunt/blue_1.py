@@ -7,7 +7,7 @@ challenge = 'Complete this flag by hunting for the CALDERA ability that will hav
             'The tactic of the red ability is listed below. The technique is listed on the back of this ' \
             'card as a hint.\n\n' \
             'Tactic: Command and Control'
-extra_info = 'Select the "training_hunt_1" red operation in Gameboard and add an external detection for this ability ' \
+extra_info = 'Select the "training_hunt_1" red operation in GameBoard and add an external detection for this ability ' \
              'using the PID of the process you discover. Specify the correct host, tactic, and technique to ' \
              'successfully add the detection.\n\nTechnique: Ingress Tool Transfer'
 
