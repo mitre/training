@@ -7,9 +7,9 @@ challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adve
             '\ncopy /y sandcat.go-windows\n\\\\#{remote.host.name}\\Users\\Public'
 extra_info = ''
 
-technique = 'T1105'  # Remote File Copy
-adv_name = 'blue_quiz_5'
+_technique = 'T1105'  # Remote File Copy
+_adv_name = 'blue_quiz_5'
 
 
 async def verify(services):
-    return await BaseFlag.verify_attack_flag(services, technique, adv_name)
+    return await BaseFlag.verify_attack_flag(services, _technique, _adv_name)

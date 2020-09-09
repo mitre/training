@@ -10,17 +10,17 @@ extra_info = """"""
 async def verify(services):
     for op in await services.get('data_svc').locate('operations',
                                                     match=dict(access=BaseWorld.Access.BLUE, name='Blue Autonomous')):
-        if is_unauth_process_detected(op) and is_unauth_process_killed(op):
+        if _is_unauth_process_detected(op) and _is_unauth_process_killed(op):
             return True
     return False
 
 
-def is_unauth_process_detected(op):
+def _is_unauth_process_detected(op):
     if all(trait in [f.trait for f in op.all_facts()] for trait in
            ['remote.port.unauthorized', 'host.pid.unauthorized']):
         return True
     return False
 
 
-def is_unauth_process_killed(op):
+def _is_unauth_process_killed(op):
     return '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' in [link.ability.ability_id for link in op.chain if link.finish]

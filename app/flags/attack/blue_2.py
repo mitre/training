@@ -6,9 +6,9 @@ challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adve
             'The adversary procedure is:\nGet-Clipboard -raw'
 extra_info = ''
 
-technique = 'T1115'  # Clipboard Data
-adv_name = 'blue_quiz_3'
+_technique = 'T1115'  # Clipboard Data
+_adv_name = 'blue_quiz_3'
 
 
 async def verify(services):
-    return await BaseFlag.verify_attack_flag(services, technique, adv_name)
+    return await BaseFlag.verify_attack_flag(services, _technique, _adv_name)

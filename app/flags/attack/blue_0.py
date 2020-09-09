@@ -11,9 +11,9 @@ extra_info = 'Complete the challenge by determining the ONE ATT&CK technique tha
              'layer to the server by selecting \'Upload Adversary Layer\'. Use the help button on the Compass ' \
              'plugin modal for reference.'
 
-technique = 'T1033'  # System Owner User Discovery
-adv_name = 'blue_quiz_1'
+_technique = 'T1033'  # System Owner User Discovery
+_adv_name = 'blue_quiz_1'
 
 
 async def verify(services):
-    return await BaseFlag.verify_attack_flag(services, technique, adv_name)
+    return await BaseFlag.verify_attack_flag(services, _technique, _adv_name)

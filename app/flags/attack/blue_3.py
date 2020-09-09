@@ -6,9 +6,9 @@ challenge = 'Refer to \'ATT&CK Quiz 1\' for instructions. Name the uploaded adve
             'The adversary procedure is:\nImport-Module .\\invoke-mimi.ps1; Invoke-Mimikatz -DumpCreds'
 extra_info = ''
 
-technique = 'T1003'  # Credential Dumping
-adv_name = 'blue_quiz_4'
+_technique = 'T1003'  # Credential Dumping
+_adv_name = 'blue_quiz_4'
 
 
 async def verify(services):
-    return await BaseFlag.verify_attack_flag(services, technique, adv_name)
+    return await BaseFlag.verify_attack_flag(services, _technique, _adv_name)

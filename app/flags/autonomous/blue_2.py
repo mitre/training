@@ -11,16 +11,16 @@ extra_info = """"""
 async def verify(services):
     for op in await services.get('data_svc').locate('operations',
                                                     match=dict(access=BaseWorld.Access.BLUE, name='Blue Autonomous')):
-        if is_file_found(op) and is_file_deleted(op):
+        if _is_file_found(op) and _is_file_deleted(op):
             return True
     return False
 
 
-def is_file_found(op):
+def _is_file_found(op):
     if all(trait in [f.trait for f in op.all_facts()] for trait in ['file.malicious.hash', 'host.malicious.file']):
         return True
     return False
 
 
-def is_file_deleted(op):
+def _is_file_deleted(op):
     return '5ec7ae3b-c909-41bb-9b6b-dadec409cd40' in [link.ability.ability_id for link in op.chain if link.finish]
