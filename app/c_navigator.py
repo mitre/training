@@ -5,8 +5,12 @@ from app.utility.base_object import BaseObject
 
 
 class Navigator(Flag, BaseObject):
+    """
+    Type of flag that checks if a provided ATT&CK Navigator layer file contains the required (Tactic, Technique)
+    mappings
+    """
 
-    def __init__(self, number, name, challenge, answer, extra_info=None):
+    def __init__(self, number, name, challenge, answer, extra_info=''):
         super().__init__(number, name, challenge, extra_info, self.verify)
         self.answer = answer
         self.flag_type = 'navigator'

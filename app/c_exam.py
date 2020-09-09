@@ -3,6 +3,10 @@ from app.utility.base_object import BaseObject
 
 
 class Exam(Certification, BaseObject):
+    """
+    Type of certification that will display and, on submit, check and return all flags instead of just first unfinished
+    Flag
+    """
 
     @property
     def display(self):

@@ -32,7 +32,7 @@ class Flag(BaseObject):
                     extra_info=self.extra_info, code=self.calculate_code(),
                     completed_ts=self.completed_ts.strftime('%Y-%m-%d %H:%M:%S') if self.completed_ts else '')
 
-    def __init__(self, number, name, challenge, extra_info, verify):
+    def __init__(self, number, name, challenge, verify, extra_info=''):
         super().__init__()
         self.number = number
         self.name = name
