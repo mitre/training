@@ -5,7 +5,7 @@ from app.utility.base_object import BaseObject
 class MultipleChoice(Flag, BaseObject):
 
     def __init__(self, number, name, challenge, options, multi_select, answer, extra_info=''):
-        super().__init__(number, name, challenge, extra_info, self.verify)
+        super().__init__(number, name, challenge, self.verify, extra_info=extra_info)
         self.answer = answer
         self.options = options
         self.multi_select = multi_select

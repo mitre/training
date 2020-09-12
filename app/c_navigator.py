@@ -11,7 +11,7 @@ class Navigator(Flag, BaseObject):
     """
 
     def __init__(self, number, name, challenge, answer, extra_info=''):
-        super().__init__(number, name, challenge, extra_info, self.verify)
+        super().__init__(number, name, challenge, self.verify, extra_info=extra_info)
         self.answer = answer
         self.flag_type = 'navigator'
 
