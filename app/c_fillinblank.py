@@ -13,7 +13,7 @@ class FillInBlank(Flag, BaseObject):
     def display(self):
         return dict(number=self.number, name=self.name, challenge=self.challenge, flag_type=self.flag_type,
                     completed=self.completed, extra_info=self.extra_info, code=self.calculate_code(),
-                    completed_ts=self.completed_ts.strftime('%Y-%m-%d %H:%M:%S') if self.completed_ts else '')
+                    completed_timestamp=self._convert_timestamp())
 
     def verify(self, answer):
         return answer.lower() == self.answer

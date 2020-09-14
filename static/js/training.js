@@ -116,7 +116,7 @@ function createFlagHTML(badge, flag) {
     } else {
         template.find("#flag-info").text(flag.extra_info);
     }
-    template.find("#flag-completed-ts").text(flag.completed_ts);
+    template.find("#flag-completed-ts").text(flag.completed_timestamp);
     return template
 }
 
