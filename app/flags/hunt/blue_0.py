@@ -1,6 +1,3 @@
-from plugins.training.app.base_flag import BaseFlag
-
-
 name = "Initialize Hunt Badge"
 challenge = 'This flag tests the environment to ensure the rest of the Hunt badge works correctly. This flag will ' \
             'pass only if the GameBoard plugin is enabled in Caldera.'
