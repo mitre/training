@@ -95,10 +95,7 @@ function refresh(){
         return;
     }
     $('#training-disclaimers').hide();
-    let answers = checkAnswers();
-    if (answers) {
-        restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
-    }
+    restRequest('POST', {"name":selectedCert, "answers":[]}, update, '/plugin/training/flags')
 }
 
 function createFlagHTML(badge, flag) {
@@ -242,6 +239,13 @@ function displayCert(code, completedBadges, totalBadges) {
 }
 
 function checkAnswers() {
+    let answers = allAnswered();
+    if (answers) {
+        restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
+    }
+}
+
+function allAnswered() {
     let answers = getAnswers()
 
     let complete = true
