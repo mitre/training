@@ -1,7 +1,6 @@
 import glob
-import os
-
 from importlib import import_module
+import os
 
 from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
