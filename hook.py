@@ -1,6 +1,7 @@
 import glob
 from importlib import import_module
 import os
+import types
 
 from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
@@ -18,7 +19,8 @@ address = '/plugin/training/gui'
 
 _question_types = dict(multiplechoice=MultipleChoice,
                        fillinblank=FillInBlank,
-                       navigator=Navigator)
+                       navigator=Navigator,
+                       standard_flag=Flag)
 
 
 async def enable(services):
@@ -69,16 +71,9 @@ async def _load_flags(data_svc):
                 for number, module in enumerate(data['flags']):
                     flag_number += 1
                     loaded_module = import_module('plugins.training.app.%s' % module)
-                    if hasattr(loaded_module, 'flag_type'):
-                        flag_type = getattr(loaded_module, 'flag_type')
-                        attrs = {attr: getattr(loaded_module, attr) for attr in dir(loaded_module)
-                                 if not attr.startswith('_') and attr != 'flag_type'}
-                        badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
-                    else:
-                        badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
-                                                number=flag_number,
-                                                name=getattr(loaded_module, 'name'),
-                                                challenge=getattr(loaded_module, 'challenge'),
-                                                extra_info=getattr(loaded_module, 'extra_info')))
+                    flag_type = getattr(loaded_module, '_flag_type', 'standard_flag')
+                    attrs = {attr: val for attr, val in vars(loaded_module).items()
+                             if not attr.startswith('_') and type(val) not in [types.ModuleType, type]}
+                    badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
                 certification.badges.append(badge)
             await data_svc.store(certification)
