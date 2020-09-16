@@ -23,14 +23,23 @@ class TrainingApi(BaseService):
 
     async def retrieve_flags(self, request):
         data = dict(await request.json())
-        badges = [badge for c in await self.data_svc.locate('certifications', data) for badge in c.badges]
+        answers = {}
+        if 'answers' in data.keys():
+            answers = data.pop('answers')
+        cert = next(c for c in await self.data_svc.locate('certifications', data))
+        badges = [badge for badge in cert.badges]
         for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
                     flag.activate()
-                    if await flag.verify(self.services):
-                        flag.completed = True
-                    break
+                    if hasattr(flag, 'flag_type'):
+                        answer = answers.get(str(flag.number), None)
+                        if answer:
+                            flag.completed = flag.verify(answer)
+                    else:
+                        flag.completed = await flag.verify(self.services)
+                    if not hasattr(cert, 'cert_type'):
+                        break
             except Exception as e:
                 logging.error(e)
         return web.json_response(dict(badges=[b.display for b in badges]))
