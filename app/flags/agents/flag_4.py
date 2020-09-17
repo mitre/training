@@ -1,8 +1,8 @@
 from app.utility.base_world import BaseWorld
 
 name = 'Agent filename'
-challenge = 'Ensure that new agents will be named "super_scary.exe" when downloaded on any host. ' \
-            'Note that the extension is automatically appended.'
+challenge = 'Ensure that new agents will be named "super_scary" when downloaded on any host. ' \
+            'Note that the extension is automatically appended if necessary.'
 extra_info = """Adversaries try to blend in when they compromise a host. One common tactic is to name
 their agent after a program that is already running on the host. When defenders check process lists
 and file names, the name has a higher chance of blending in."""
