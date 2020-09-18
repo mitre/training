@@ -48,57 +48,54 @@ function setCertRefresh() {
 }
 
 function refresh(){
-    function update(data){
-        let completedBadges = 0;
-        let code = [];
-        let flags = $('#flags');
-        flags.empty();
-
-        badgeLoop:
-        for (var badgeIdx in data.badges) {
-            var badge = data.badges[badgeIdx];
-            let badgeComplete = 0;
-            let b = $('#badge-'+badge.name);
-            b.find('.badge-icon').addClass('badge-in-progress');
-            b.attr('status', 'progress');
-            for (var flagIdx in badge.flags) {
-                var flag = badge.flags[flagIdx];
-                let flagHTML = createFlagHTML(badge, flag);
-                if(flag.completed) {
-                    flagHTML.find('#flag-status').html('&#x2705;');
-                    flagHTML.find("input").attr("disabled", true);
-                    flagHTML.find("button").removeClass("button-success").attr("disabled", true);
-                    badgeComplete += 1;
-                    code.push(flag.code);
-                    flags.append(flagHTML);
-                } else {
-                    flagHTML.find('#flag-status').html('&#10060;');
-                    flags.append(flagHTML);
-                    if (!certificate.cert_type) {
-                        break badgeLoop; //show only the next incomplete flag
-                    }
-                }
-            }
-            if(badgeComplete === badge.flags.length) {
-                b.find('.badge-icon').removeClass('badge-in-progress');
-                b.find('.badge-icon').addClass('badge-completed');
-                b.attr('status', 'completed');
-                completedBadges += 1
-            }
-        }
-        showRelevantFlags();
-        displayCert(code, completedBadges, data.badges.length);
-    }
-
     let selectedCert = $('#certification-name option:selected').attr('value');
     if(!selectedCert){
         return;
     }
     $('#training-disclaimers').hide();
-    let answers = checkAnswers();
-    if (answers) {
-        restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
+    restRequest('POST', {"name":selectedCert, "answers":[]}, update, '/plugin/training/flags')
+}
+
+function update(data){
+    let completedBadges = 0;
+    let code = [];
+    let flags = $('#flags');
+    flags.empty();
+
+    badgeLoop:
+    for (var badgeIdx in data.badges) {
+        var badge = data.badges[badgeIdx];
+        let badgeComplete = 0;
+        let b = $('#badge-'+badge.name);
+        b.find('.badge-icon').addClass('badge-in-progress');
+        b.attr('status', 'progress');
+        for (var flagIdx in badge.flags) {
+            var flag = badge.flags[flagIdx];
+            let flagHTML = createFlagHTML(badge, flag);
+            if(flag.completed) {
+                flagHTML.find('#flag-status').html('&#x2705;');
+                flagHTML.find("input").attr("disabled", true);
+                flagHTML.find("button").removeClass("button-success").attr("disabled", true);
+                badgeComplete += 1;
+                code.push(flag.code);
+                flags.append(flagHTML);
+            } else {
+                flagHTML.find('#flag-status').html('&#10060;');
+                flags.append(flagHTML);
+                if (!certificate.cert_type) {
+                    break badgeLoop; //show only the next incomplete flag
+                }
+            }
+        }
+        if(badgeComplete === badge.flags.length) {
+            b.find('.badge-icon').removeClass('badge-in-progress');
+            b.find('.badge-icon').addClass('badge-completed');
+            b.attr('status', 'completed');
+            completedBadges += 1
+        }
     }
+    showRelevantFlags();
+    displayCert(code, completedBadges, data.badges.length);
 }
 
 function createFlagHTML(badge, flag) {
@@ -242,6 +239,14 @@ function displayCert(code, completedBadges, totalBadges) {
 }
 
 function checkAnswers() {
+    let answers = allAnswered();
+    if (answers) {
+        let selectedCert = $('#certification-name option:selected').attr('value');
+        restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
+    }
+}
+
+function allAnswered() {
     let answers = getAnswers()
 
     let complete = true
