@@ -56,7 +56,7 @@ class TrainingApi(BaseService):
         for flag in [flag for b in badges for flag in b.flags]:
             try:
                 if not flag.completed:
-                    if 'adversary_id' in flag.additional_fields:
+                    if all(field in flag.additional_fields for field in ['adversary_id', 'operation_name']):
                         await BaseFlag.reset(self.services, flag.additional_fields['operation_name'], flag.verify)
                         reset = 1
                     break
