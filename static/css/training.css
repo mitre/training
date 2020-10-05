@@ -30,6 +30,7 @@
     position: absolute;
 }
 .badge-icon {
+    position: relative;
     padding: 2px;
     background-color: grey;
     border-radius: 25px;
@@ -37,6 +38,7 @@
     margin: 3px;
     text-align: center;
     opacity: 0.3;
+    overflow: hidden;
 }
 .badge-icon p {
     text-align: center;
@@ -126,4 +128,28 @@ div.badge-completed{
     color: grey;
     font-size: 25;
     margin-right: 10px;
+}
+.flag-answer {
+    padding: 0px 20px;
+    text-align: left;
+}
+input[type="radio"] {
+    width: auto;
+    margin: 5px 10px;
+    vertical-align: sub;
+}
+input[type="checkbox"] {
+    margin: 5px 10px;
+}
+input.fill-in-the-blank {
+    width: 95%;
+    text-align: left;
+}
+input.fill-in-the-blank:disabled {
+    width: 95%;
+    text-align: left;
+    background-color: rgba(239, 239, 239, 0.3);
+}
+input.layer-upload + .layer-upload-label {
+    cursor: pointer;
 }

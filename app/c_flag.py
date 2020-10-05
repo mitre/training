@@ -16,11 +16,11 @@ class Flag(BaseObject):
     @completed.setter
     def completed(self, v):
         self._completed = v
-        self._completed_ts = datetime.now()
+        self._completed_timestamp = datetime.now()
 
     @property
-    def completed_ts(self):
-        return self._completed_ts
+    def completed_timestamp(self):
+        return self._completed_timestamp
 
     @property
     def started_ts(self):
@@ -30,10 +30,10 @@ class Flag(BaseObject):
     def display(self):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
-                    completed_ts=self.completed_ts.strftime('%Y-%m-%d %H:%M:%S') if self.completed_ts else '',
+                    completed_timestamp=self._convert_timestamp(),
                     resettable='True' if 'adversary_id' in self.additional_fields else 'False')
 
-    def __init__(self, number, name, challenge, extra_info, verify, additional_fields):
+    def __init__(self, number, name, challenge, verify, extra_info='', additional_fields=None):
         super().__init__()
         self.number = number
         self.name = name
@@ -42,7 +42,7 @@ class Flag(BaseObject):
         self.verify = verify
         self.additional_fields = additional_fields
         self._completed = False
-        self._completed_ts = None
+        self._completed_timestamp = None
         self._started_ts = None
         self._ticks = 0
 
@@ -56,8 +56,11 @@ class Flag(BaseObject):
     def activate(self):
         if not self._started_ts:
             self._started_ts = datetime.now()
-        if not self._completed_ts:
+        if not self._completed_timestamp:
             self._ticks += 1
 
     def calculate_code(self):
         return self.unique
+
+    def _convert_timestamp(self):
+        return self.completed_timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.completed_timestamp else ''

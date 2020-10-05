@@ -9,12 +9,13 @@ class Certification(BaseObject):
 
     @property
     def display(self):
-        return dict(name=self.name, badges=[b.display for b in self.badges])
+        return dict(name=self.name, description=self.description, badges=[b.display for b in self.badges])
 
-    def __init__(self, identifier, name, access):
+    def __init__(self, identifier, name, description, access):
         super().__init__()
         self.identifier = identifier
         self.name = name
+        self.description = description
         self.access = access
         self.badges = []
 
