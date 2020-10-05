@@ -81,6 +81,9 @@ function update(data){
                 flags.append(flagHTML);
             } else {
                 flagHTML.find('#flag-status').html('&#10060;');
+                if (flag.resettable === 'True') {
+                    template.find('.flag-reset-button').show();
+                }
                 flags.append(flagHTML);
                 if (!certificate.cert_type) {
                     break badgeLoop; //show only the next incomplete flag
@@ -309,7 +312,7 @@ function trainingSendFlagReset() {
 }
 
 function resetCallback(data) {
-    if (data.reset == '1') {
+    if (data.reset === '1') {
         stream('The flag has been reset.');
     } else {
         stream('The flag cannot be reset.');
