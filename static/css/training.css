@@ -81,6 +81,12 @@ div.badge-completed{
 .flip-card:hover .flip-card-inner[data-flip="true"] {
   transform: rotateY(180deg);
 }
+.flip-card:hover .flip-card-inner[data-flip="false"] .flip-card-front .flag-reset-button{
+  z-index: 1;
+}
+.flip-card:hover .flip-card-inner[data-flip="true"] .flip-card-back .flag-reset-button{
+    z-index: 1;
+}
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
@@ -114,6 +120,14 @@ div.badge-completed{
     vertical-align: middle;
     padding: 10px 0;
     font-size: 15px;
+}
+.flag-box .flag-reset-button {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    color: grey;
+    font-size: 25;
+    margin-right: 10px;
 }
 .flag-answer {
     padding: 0px 20px;

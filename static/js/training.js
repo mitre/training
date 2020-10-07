@@ -81,6 +81,9 @@ function update(data){
                 flags.append(flagHTML);
             } else {
                 flagHTML.find('#flag-status').html('&#10060;');
+                if (flag.resettable === 'True') {
+                    flagHTML.find('.flag-reset-button').show();
+                }
                 flags.append(flagHTML);
                 if (!certificate.cert_type) {
                     break badgeLoop; //show only the next incomplete flag
@@ -300,3 +303,18 @@ function readUploadedFileAsText(inputFile) {
   });
 }
 
+function trainingSendFlagReset() {
+    let selectedCert = $('#certification-name option:selected').attr('value');
+    if(!selectedCert){
+        return;
+    }
+    restRequest('POST', {"name":selectedCert}, resetCallback, '/plugin/training/reset_flag');
+}
+
+function resetCallback(data) {
+    if (data.reset === 1) {
+        stream('The flag has been reset.');
+    } else {
+        stream('The flag cannot be reset.');
+    }
+}

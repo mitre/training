@@ -30,15 +30,17 @@ class Flag(BaseObject):
     def display(self):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
-                    completed_timestamp=self._convert_timestamp())
+                    completed_timestamp=self._convert_timestamp(),
+                    resettable='True' if 'adversary_id' in self.additional_fields else 'False')
 
-    def __init__(self, number, name, challenge, verify, extra_info=''):
+    def __init__(self, number, name, challenge, verify, extra_info='', additional_fields=None):
         super().__init__()
         self.number = number
         self.name = name
         self.challenge = challenge
         self.extra_info = extra_info
         self.verify = verify
+        self.additional_fields = additional_fields
         self._completed = False
         self._completed_timestamp = None
         self._started_ts = None

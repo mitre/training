@@ -31,6 +31,7 @@ async def enable(services):
     app.router.add_static('/training', 'plugins/training/static/', append_version=True)
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
+    app.router.add_route('POST', '/plugin/training/reset_flag', training_api.reset_flag)
 
 
 async def expansion(services):
@@ -75,10 +76,16 @@ async def _load_flags(data_svc):
                                  if not attr.startswith('_') and attr != 'flag_type'}
                         badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
                     else:
+                        additional_field_names = ['operation_name', 'adversary_id', 'agent_group']
+                        additional_fields = dict()
+                        for field in additional_field_names:
+                            if hasattr(loaded_module, field):
+                                additional_fields[field] = getattr(loaded_module, field)
                         badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
                                                 number=flag_number,
                                                 name=getattr(loaded_module, 'name'),
                                                 challenge=getattr(loaded_module, 'challenge'),
-                                                extra_info=getattr(loaded_module, 'extra_info')))
+                                                extra_info=getattr(loaded_module, 'extra_info'),
+                                                additional_fields=additional_fields))
                 certification.badges.append(badge)
             await data_svc.store(certification)
