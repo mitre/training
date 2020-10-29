@@ -2,8 +2,9 @@ from app.utility.base_world import BaseWorld
 
 
 name = 'Process on Unauthorized Port'
-challenge = 'Start a listening process on Port 7011 on the Linux or Darwin machine. The autonomous defender should ' \
-            'automatically kill this listener.'
+challenge = 'Start a listening process on Port 7011 on the Linux or Darwin machine (`nc -l 7011` should work). The ' \
+            'autonomous defender created in the last flag (Incident Responder defender profile, batch planner, and ' \
+            'response source) will automatically kill this listener.'
 extra_info = """"""
 
 
