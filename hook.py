@@ -69,23 +69,12 @@ async def _load_flags(data_svc):
                 badge = Badge(name=badge)
                 for number, module in enumerate(data['flags']):
                     flag_number += 1
-                    loaded_module = import_module('plugins.training.app.%s' % module)
-                    if hasattr(loaded_module, 'flag_type'):
-                        flag_type = getattr(loaded_module, 'flag_type')
-                        attrs = {attr: getattr(loaded_module, attr) for attr in dir(loaded_module)
-                                 if not attr.startswith('_') and attr != 'flag_type'}
-                        badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
-                    else:
-                        additional_field_names = ['operation_name', 'adversary_id', 'agent_group']
-                        additional_fields = dict()
-                        for field in additional_field_names:
-                            if hasattr(loaded_module, field):
-                                additional_fields[field] = getattr(loaded_module, field)
-                        badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
-                                                number=flag_number,
-                                                name=getattr(loaded_module, 'name'),
-                                                challenge=getattr(loaded_module, 'challenge'),
-                                                extra_info=getattr(loaded_module, 'extra_info'),
-                                                additional_fields=additional_fields))
+                    module_name = 'plugins.training.app.%s' % module
+                    import_module(module_name)
+                    cls = next(cls for cls, cls_attrs in Flag.registry.items() if cls_attrs['module'] == module_name)
+                    base_cls = cls.__base__
+                    attrs = {attr: val for attr, val in vars(cls).items() if not attr.startswith('_')}
+                    flag = base_cls(**attrs, number=flag_number)
+                    badge.flags.append(flag)
                 certification.badges.append(badge)
             await data_svc.store(certification)

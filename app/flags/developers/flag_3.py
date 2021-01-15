@@ -1,25 +1,26 @@
 import socket
-
-name = 'Write new parser'
-challenge = 'Add a new parser which parses IPV6 addresses with the trait, "host.ip.ipv6". ' \
-              'Then run an adversary which correctly parses out matching facts. Hint: use the ability you created ' \
-            'in an earlier flag.'
-extra_info = ''
+from plugins.training.app.c_flag import Flag
 
 
-async def verify(services):
-    for op in await services.get('data_svc').locate('operations'):
-        if op.finish:
-            found_fact = [fact for fact in op.all_facts() if fact.trait == 'host.ip.ipv6'
-                          and len(fact.value.split(':')) == 8 and _valid_ipv6(fact.value.split(':'))]
-            if len(found_fact) > 0:
+class DevelopersFlag3(Flag):
+    name = 'Write new parser'
+    challenge = 'Add a new parser which parses IPV6 addresses with the trait, "host.ip.ipv6". ' \
+                'Then run an adversary which correctly parses out matching facts. Hint: use the ability you created ' \
+                'in an earlier flag.'
+    extra_info = ''
+
+    async def verify(self, services):
+        def _valid_ipv6(n):
+            try:
+                socket.inet_pton(socket.AF_INET6, n)
                 return True
-    return False
+            except socket.error:
+                return False
 
-
-def _valid_ipv6(n):
-    try:
-        socket.inet_pton(socket.AF_INET6, n)
-        return True
-    except socket.error:
+        for op in await services.get('data_svc').locate('operations'):
+            if op.finish:
+                found_fact = [fact for fact in op.all_facts() if fact.trait == 'host.ip.ipv6'
+                              and len(fact.value.split(':')) == 8 and _valid_ipv6(fact.value.split(':'))]
+                if len(found_fact) > 0:
+                    return True
         return False

@@ -1,9 +1,23 @@
+import abc
+
 from datetime import datetime
 
 from app.utility.base_object import BaseObject
 
 
-class Flag(BaseObject):
+class RegisterLeafClasses(type):
+    # https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Metaprogramming.html#example-self-registration-of-subclasses
+    def __init__(cls, name, bases, nmspc):
+        super(RegisterLeafClasses, cls).__init__(name, bases, nmspc)
+        if not hasattr(cls, 'registry'):
+            cls.registry = dict()
+        if cls not in cls.registry.keys():
+            cls.registry[cls] = dict(module=cls.__module__, base=cls.__base__)
+        if bases[0] in cls.registry.keys():
+            cls.registry.pop(bases[0])
+
+
+class Flag(BaseObject, metaclass=RegisterLeafClasses):
 
     @property
     def unique(self):
@@ -31,7 +45,8 @@ class Flag(BaseObject):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
                     completed_timestamp=self._convert_timestamp(),
-                    resettable='True' if 'adversary_id' in self.additional_fields else 'False')
+                    resettable='True' if self.additional_fields and 'adversary_id' in self.additional_fields
+                    else 'False')
 
     def __init__(self, number, name, challenge, verify, extra_info='', additional_fields=None):
         super().__init__()
@@ -45,6 +60,15 @@ class Flag(BaseObject):
         self._completed_timestamp = None
         self._started_ts = None
         self._ticks = 0
+
+    @abc.abstractmethod
+    def verify(self, services):
+        """
+        Determines whether a flag's challenge has been met or not
+        :param services:
+        :return: boolean True if flag challenge is met, False otherwise
+        """
+        pass
 
     def store(self, ram):
         existing = self.retrieve(ram['flags'], self.unique)
@@ -64,3 +88,19 @@ class Flag(BaseObject):
 
     def _convert_timestamp(self):
         return self.completed_timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.completed_timestamp else ''
+
+    @staticmethod
+    def _is_unauth_process_killed(op):
+        return any(lnk.ability.ability_id == '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' for lnk in op.chain if lnk.finish)
+
+    @staticmethod
+    def _is_unauth_process_detected(op):
+        return all(trait in [f.trait for f in op.all_facts()] for trait in
+                   ['remote.port.unauthorized', 'host.pid.unauthorized']) and \
+               '3b4640bc-eacb-407a-a997-105e39788781' in [link.ability.ability_id for link in op.chain if link.finish]
+
+    @staticmethod
+    def _is_file_found(op):
+        return all(trait in [f.trait for f in op.all_facts()] for trait in
+                   ['file.malicious.hash', 'host.malicious.file']) and \
+               'f9b3eff0-e11c-48de-9338-1578b351b14b' in [link.ability.ability_id for link in op.chain if link.finish]

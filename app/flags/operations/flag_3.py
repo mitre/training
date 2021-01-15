@@ -1,12 +1,16 @@
-name = 'Empty operation'
-challenge = 'Run a new operation, this time not selecting any profiles or groups. Add at least 5 potential links ' \
-              'to the operation.'
-extra_info = """When you run an autonomous adversary emulation exercise, the operation can only run the tasks it is pre-configured
-to run. Using potential links, you can "toss in" any additional TTPs into a live, autonomous operation."""
+from plugins.training.app.c_flag import Flag
 
 
-async def verify(services):
-    for op in await services.get('data_svc').locate('operations'):
-        if op.finish and op.adversary.adversary_id == 'ad-hoc' and len(op.chain) >= 5 and not op.group:
-            return True
-    return False
+class OperationsFlag3(Flag):
+    name = 'Empty operation'
+    challenge = 'Run a new operation, this time not selecting any profiles or groups. Add at least 5 potential links ' \
+                'to the operation.'
+    extra_info = """When you run an autonomous adversary emulation exercise, the operation can only run the tasks it 
+    is pre-configured to run. Using potential links, you can "toss in" any additional TTPs into a live, autonomous 
+    operation."""
+
+    async def verify(self, services):
+        for op in await services.get('data_svc').locate('operations'):
+            if op.finish and op.adversary.adversary_id == 'ad-hoc' and len(op.chain) >= 5 and not op.group:
+                return True
+        return False
