@@ -22,7 +22,7 @@ class ManualBlue4bNix(Flag):
 
         def is_cronjob_found(op):
             return all(trait in [f.trait for f in op.all_facts()] for trait in ['host.user.name', 'host.new.cronjob']) and \
-                    'ee54384f-cfbc-4228-9dc1-cc5632307afb' in [link.ability.ability_id for link in op.chain if link.finish]
+                    op.ran_ability_id('ee54384f-cfbc-4228-9dc1-cc5632307afb')
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],

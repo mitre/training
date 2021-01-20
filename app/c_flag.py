@@ -12,7 +12,7 @@ class RegisterLeafClasses(type):
         if not hasattr(cls, 'registry'):
             cls.registry = dict()
         if cls not in cls.registry.keys():
-            cls.registry[cls] = dict(module_name=cls.__module__, base=cls.__base__)
+            cls.registry[cls] = dict(module_name=cls.__module__)
         if bases[0] in cls.registry.keys():
             cls.registry.pop(bases[0])
 
@@ -91,16 +91,16 @@ class Flag(BaseObject, metaclass=RegisterLeafClasses):
 
     @staticmethod
     def _is_unauth_process_killed(op):
-        return any(lnk.ability.ability_id == '02fb7fa9-8886-4330-9e65-fa7bb1bc5271' for lnk in op.chain if lnk.finish)
+        return op.ran_ability_id('02fb7fa9-8886-4330-9e65-fa7bb1bc5271')
 
     @staticmethod
     def _is_unauth_process_detected(op):
         return all(trait in [f.trait for f in op.all_facts()] for trait in
                    ['remote.port.unauthorized', 'host.pid.unauthorized']) and \
-               '3b4640bc-eacb-407a-a997-105e39788781' in [link.ability.ability_id for link in op.chain if link.finish]
+               op.ran_ability_id('3b4640bc-eacb-407a-a997-105e39788781')
 
     @staticmethod
     def _is_file_found(op):
         return all(trait in [f.trait for f in op.all_facts()] for trait in
                    ['file.malicious.hash', 'host.malicious.file']) and \
-               'f9b3eff0-e11c-48de-9338-1578b351b14b' in [link.ability.ability_id for link in op.chain if link.finish]
+               op.ran_ability_id('f9b3eff0-e11c-48de-9338-1578b351b14b')
