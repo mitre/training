@@ -12,7 +12,7 @@ class RegisterLeafClasses(type):
         if not hasattr(cls, 'registry'):
             cls.registry = dict()
         if cls not in cls.registry.keys():
-            cls.registry[cls] = dict(module=cls.__module__, base=cls.__base__)
+            cls.registry[cls] = dict(module_name=cls.__module__, base=cls.__base__)
         if bases[0] in cls.registry.keys():
             cls.registry.pop(bases[0])
 

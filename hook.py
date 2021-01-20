@@ -64,17 +64,26 @@ async def _load_flags(data_svc):
                 certification = Certification(identifier=cert['id'], name=cert['name'],
                                               description=cert.get('description', 'No description provided'),
                                               access=BaseWorld.Access.APP)
-            flag_number = 0
+            flag_number = 1
             for badge, data in cert['badges'].items():
                 badge = Badge(name=badge)
                 for number, module in enumerate(data['flags']):
-                    flag_number += 1
                     module_name = 'plugins.training.app.%s' % module
-                    import_module(module_name)
-                    cls = next(cls for cls, cls_attrs in Flag.registry.items() if cls_attrs['module'] == module_name)
-                    base_cls = cls.__base__
-                    attrs = {attr: val for attr, val in vars(cls).items() if not attr.startswith('_')}
-                    flag = base_cls(**attrs, number=flag_number)
-                    badge.flags.append(flag)
+                    try:
+                        import_module(module_name)
+                        for cls, cls_attrs in Flag.registry.items():
+                            if cls_attrs['module_name'] == module_name:
+                                badge.flags.append(_create_flag(cls, flag_number))
+                                flag_number += 1
+                    except ModuleNotFoundError:
+                        module_name, cls_name = module_name.rsplit('.', 1)
+                        cls = getattr(import_module(module_name), cls_name)
+                        badge.flags.append(_create_flag(cls, flag_number))
+                        flag_number += 1
                 certification.badges.append(badge)
             await data_svc.store(certification)
+
+
+def _create_flag(cls, flag_number):
+    attrs = {attr: val for attr, val in vars(cls).items() if not attr.startswith('_')}
+    return cls(**attrs, number=flag_number)
