@@ -38,7 +38,7 @@ class TrainingApi(BaseService):
                         if answer:
                             flag.completed = flag.verify(answer)
                     else:
-                        flag.completed = await flag.verify(flag, self.services)
+                        flag.completed = await flag.verify(self.services)
                     if not hasattr(cert, 'cert_type'):
                         break
             except Exception as e:

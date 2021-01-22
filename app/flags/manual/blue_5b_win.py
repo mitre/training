@@ -10,7 +10,7 @@ class ManualBlue5bWin(Flag):
 
     async def verify(self, services):
         def powershell_profiles_hashed():
-            return op.ran_ability.id('90a67a85-e81c-4525-8bae-12a2c5787d9a')
+            return op.ran_ability_id('90a67a85-e81c-4525-8bae-12a2c5787d9a')
 
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):

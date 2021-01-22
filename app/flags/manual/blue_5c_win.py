@@ -23,7 +23,7 @@ class ManualBlue5cWin(Flag):
 
         def is_modified_profile_found(op):
             return 'has_been_modified' in [f.trait for f in op.all_facts()] and \
-                    op.ran_ability_it('930236c2-5397-4868-8c7b-72e294a5a376')
+                    op.ran_ability_id('930236c2-5397-4868-8c7b-72e294a5a376')
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],

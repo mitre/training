@@ -57,7 +57,7 @@ class BaseFlag:
         if await BaseFlag.does_agent_exist(services, agent_group):
             if not (await BaseFlag.is_operation_started(services, operation_name)):
                 await BaseFlag.start_operation(services, operation_name, agent_group, adversary_id)
-            if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied(services):
+            if await BaseFlag.is_operation_successful(services, operation_name) and await is_flag_satisfied():
                 await BaseFlag.cleanup_operation(services, operation_name)
                 return True
         return False
