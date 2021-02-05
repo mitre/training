@@ -2,7 +2,7 @@ from app.utility.base_world import BaseWorld
 from plugins.training.app.c_flag import Flag
 
 
-class ManualBlue1c(Flag):
+class ManualBlue2c(Flag):
     name = 'Delete malicious file on system'
     challenge = 'Run the appropriate response ability in the \'Blue Manual\' operation to delete the previously ' \
                 'found malicious file.'
