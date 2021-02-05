@@ -18,6 +18,10 @@ class RegisterLeafClasses(type):
 
 
 class Flag(BaseObject, metaclass=RegisterLeafClasses):
+    name = None
+    challenge = None
+    extra_info = None
+    additional_fields = None
 
     @property
     def unique(self):
@@ -48,13 +52,9 @@ class Flag(BaseObject, metaclass=RegisterLeafClasses):
                     resettable='True' if self.additional_fields and 'adversary_id' in self.additional_fields
                     else 'False')
 
-    def __init__(self, number, name, challenge, extra_info='', additional_fields=None):
+    def __init__(self, number):
         super().__init__()
         self.number = number
-        self.name = name
-        self.challenge = challenge
-        self.extra_info = extra_info
-        self.additional_fields = additional_fields
         self._completed = False
         self._completed_timestamp = None
         self._started_ts = None

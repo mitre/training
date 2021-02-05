@@ -1,6 +1,5 @@
 import glob
 from importlib import import_module
-import inspect
 import os
 
 from app.utility.base_world import BaseWorld
@@ -72,21 +71,14 @@ async def _load_flags(data_svc):
                     module_name = 'plugins.training.app.%s' % module
                     try:
                         import_module(module_name)
-                        filtered_registry = {k: v for k, v in Flag.registry.items() if v['module_name'] == module_name}
-                        for cls, cls_attrs in filtered_registry.items():
-                            badge.flags.append(_create_flag(cls, flag_number))
+                        flag_subclasses = [k for k, v in Flag.registry.items() if v['module_name'] == module_name]
+                        for flag_subclass in flag_subclasses:
+                            badge.flags.append(flag_subclass(number=flag_number))
                             flag_number += 1
                     except ModuleNotFoundError:
                         module_name, cls_name = module_name.rsplit('.', 1)
-                        cls = getattr(import_module(module_name), cls_name)
-                        badge.flags.append(_create_flag(cls, flag_number))
+                        flag_subclass = getattr(import_module(module_name), cls_name)
+                        badge.flags.append(flag_subclass(number=flag_number))
                         flag_number += 1
                 certification.badges.append(badge)
             await data_svc.store(certification)
-
-
-def _create_flag(cls, flag_number):
-    cls_params = inspect.signature(cls.__init__).parameters.keys()
-    attrs = {attr: getattr(cls, attr, None) for attr, val in vars(cls).items() if getattr(cls, attr, None) is not None
-             and attr in cls_params}
-    return cls(**attrs, number=flag_number)

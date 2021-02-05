@@ -3,10 +3,10 @@ from app.utility.base_object import BaseObject
 
 
 class FillInBlank(Flag, BaseObject):
+    answer = None
 
-    def __init__(self, number, name, challenge, answer, extra_info=''):
-        super().__init__(number, name, challenge, extra_info=extra_info)
-        self.answer = answer
+    def __init__(self, number):
+        super().__init__(number)
         self.flag_type = 'fillinblank'
 
     @property
