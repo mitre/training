@@ -6,19 +6,12 @@ from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
 from plugins.training.app.c_exam import Exam
-from plugins.training.app.c_fillinblank import FillInBlank
 from plugins.training.app.c_flag import Flag
-from plugins.training.app.c_multiplechoice import MultipleChoice
-from plugins.training.app.c_navigator import Navigator
 from plugins.training.app.training_api import TrainingApi
 
 name = 'Training'
 description = 'A certification course to become a CALDERA SME'
 address = '/plugin/training/gui'
-
-_question_types = dict(multiplechoice=MultipleChoice,
-                       fillinblank=FillInBlank,
-                       navigator=Navigator)
 
 
 async def enable(services):
