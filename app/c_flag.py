@@ -49,8 +49,7 @@ class Flag(BaseObject, metaclass=RegisterLeafClasses):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
                     completed_timestamp=self._convert_timestamp(),
-                    resettable='True' if self.additional_fields and 'adversary_id' in self.additional_fields
-                    else 'False')
+                    resettable=self._is_resettable())
 
     def __init__(self, number):
         super().__init__()
@@ -88,18 +87,23 @@ class Flag(BaseObject, metaclass=RegisterLeafClasses):
     def _convert_timestamp(self):
         return self.completed_timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.completed_timestamp else ''
 
+    def _is_resettable(self):
+        return 'True' if self.additional_fields and 'adversary_id' in self.additional_fields else 'False'
+
     @staticmethod
     def _is_unauth_process_killed(op):
         return op.ran_ability_id('02fb7fa9-8886-4330-9e65-fa7bb1bc5271')
 
     @staticmethod
     def _is_unauth_process_detected(op):
-        return all(trait in [f.trait for f in op.all_facts()] for trait in
-                   ['remote.port.unauthorized', 'host.pid.unauthorized']) and \
-               op.ran_ability_id('3b4640bc-eacb-407a-a997-105e39788781')
+        operation_traits = set(f.trait for f in op.all_facts())
+        return op.ran_ability_id('3b4640bc-eacb-407a-a997-105e39788781') and \
+            'remote.port.unauthorized' in operation_traits and \
+            'host.pid.unauthorized' in operation_traits
 
     @staticmethod
     def _is_file_found(op):
-        return all(trait in [f.trait for f in op.all_facts()] for trait in
-                   ['file.malicious.hash', 'host.malicious.file']) and \
-               op.ran_ability_id('f9b3eff0-e11c-48de-9338-1578b351b14b')
+        operation_traits = set(f.trait for f in op.all_facts())
+        return op.ran_ability_id('f9b3eff0-e11c-48de-9338-1578b351b14b') and \
+            'file.malicious.hash' in operation_traits and \
+            'host.malicious.file' in operation_traits
