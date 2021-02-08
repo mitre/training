@@ -9,11 +9,11 @@ class ManualBlue5dWin(Flag):
     extra_info = """"""
 
     async def verify(self, services):
-        def is_modified_profile_restored():
-            return op.ran_ability_id('e846973a-767b-4f9c-8b9e-5249cfcd7b97')
+        def is_modified_profile_restored(operation):
+            return operation.ran_ability_id('e846973a-767b-4f9c-8b9e-5249cfcd7b97')
 
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
-            if is_modified_profile_restored():
+            if is_modified_profile_restored(op):
                 return True
         return False

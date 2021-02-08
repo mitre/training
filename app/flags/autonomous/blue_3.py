@@ -10,16 +10,16 @@ class AutonomousBlue3(Flag):
     extra_info = """"""
 
     async def verify(self, services):
-        def is_url_found():
-            return 'remote.suspicious.url' in [f.trait for f in op.all_facts()] \
-                   and op.ran_ability_id('1226f8ec-e2e5-4311-88e7-378c0e5cc7ce')
+        def is_url_found(operation):
+            return 'remote.suspicious.url' in [f.trait for f in operation.all_facts()] \
+                   and operation.ran_ability_id('1226f8ec-e2e5-4311-88e7-378c0e5cc7ce')
 
-        def is_url_inoculated():
-            return op.ran_ability_id('2ca64acd-dc12-4cc8-b78a-6a182508a50b')
+        def is_url_inoculated(operation):
+            return operation.ran_ability_id('2ca64acd-dc12-4cc8-b78a-6a182508a50b')
 
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE,
                                                                    name='Blue Autonomous')):
-            if is_url_found() and is_url_inoculated():
+            if is_url_found(op) and is_url_inoculated(op):
                 return True
         return False

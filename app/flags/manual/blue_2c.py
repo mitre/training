@@ -9,8 +9,8 @@ class ManualBlue2c(Flag):
     extra_info = """"""
 
     async def verify(self, services):
-        def is_file_deleted(op):
-            return op.ran_ability_id('5ec7ae3b-c909-41bb-9b6b-dadec409cd40')
+        def is_file_deleted(operation):
+            return operation.ran_ability_id('5ec7ae3b-c909-41bb-9b6b-dadec409cd40')
 
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):

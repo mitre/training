@@ -16,16 +16,15 @@ class ManualBlue2a(Flag):
 
     async def verify(self, services):
         async def is_flag_satisfied():
-            for op in await services.get('data_svc').locate('operations',
-                                                            match=dict(access=BaseWorld.Access.BLUE,
-                                                                       name='Blue Manual')):
+            for op in await services.get('data_svc').locate('operations', match=dict(access=BaseWorld.Access.BLUE,
+                                                                                     name='Blue Manual')):
                 if is_file_detected(op):
                     return True
             return False
 
         def is_file_detected(op):
-            return 'file.malicious.hash' in [f.trait for f in op.all_facts()] and \
-                    op.ran_ability_id('77272c88-ccf5-4225-a3d9-f9e171d1ca5b')
+            return op.ran_ability_id('77272c88-ccf5-4225-a3d9-f9e171d1ca5b') and \
+                   'file.malicious.hash' in [f.trait for f in op.all_facts()]
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],

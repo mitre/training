@@ -9,11 +9,11 @@ class ManualBlue4aWin(Flag):
     extra_info = """"""
 
     async def verify(self, services):
-        def is_baseline_acquired():
-            return op.ran_ability_id('a65a62e1-b8c0-4f88-b564-166e7499d560')
+        def is_baseline_acquired(operation):
+            return operation.ran_ability_id('a65a62e1-b8c0-4f88-b564-166e7499d560')
 
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
-            if is_baseline_acquired():
+            if is_baseline_acquired(op):
                 return True
         return False

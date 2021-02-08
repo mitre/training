@@ -14,15 +14,17 @@ class ManualBlue4bNix(Flag):
 
     async def verify(self, services):
         async def is_flag_satisfied():
-            for op in await services.get('data_svc').locate('operations',
-                                                            match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
+            for op in await services.get('data_svc').locate('operations', match=dict(access=BaseWorld.Access.BLUE,
+                                                                                     name='Blue Manual')):
                 if is_cronjob_found(op):
                     return True
             return False
 
         def is_cronjob_found(op):
-            return all(trait in [f.trait for f in op.all_facts()] for trait in ['host.user.name', 'host.new.cronjob']) and \
-                    op.ran_ability_id('ee54384f-cfbc-4228-9dc1-cc5632307afb')
+            operation_traits = set(f.trait for f in op.all_facts())
+            return op.ran_ability_id('ee54384f-cfbc-4228-9dc1-cc5632307afb') and \
+                'host.user.name' in operation_traits and \
+                'host.new.cronjob' in operation_traits
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],

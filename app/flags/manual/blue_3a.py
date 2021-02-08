@@ -15,16 +15,15 @@ class ManualBlue3a(Flag):
 
     async def verify(self, services):
         async def is_flag_satisfied():
-            for op in await services.get('data_svc').locate('operations',
-                                                            match=dict(access=BaseWorld.Access.BLUE,
-                                                                       name='Blue Manual')):
+            for op in await services.get('data_svc').locate('operations', match=dict(access=BaseWorld.Access.BLUE,
+                                                                                     name='Blue Manual')):
                 if is_url_found(op):
                     return True
             return False
 
         def is_url_found(op):
-            return 'remote.suspicious.url' in [f.trait for f in op.all_facts()] and \
-                    op.ran_ability_id('1226f8ec-e2e5-4311-88e7-378c0e5cc7ce')
+            return op.ran_ability_id('1226f8ec-e2e5-4311-88e7-378c0e5cc7ce') and \
+                   'remote.suspicious.url' in set([f.trait for f in op.all_facts()])
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],
