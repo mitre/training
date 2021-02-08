@@ -6,7 +6,6 @@ from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
 from plugins.training.app.c_exam import Exam
-from plugins.training.app.c_flag import Flag
 from plugins.training.app.training_api import TrainingApi
 
 name = 'Training'
@@ -58,20 +57,12 @@ async def _load_flags(data_svc):
                                               description=cert.get('description', 'No description provided'),
                                               access=BaseWorld.Access.APP)
             flag_number = 1
-            for badge, data in cert['badges'].items():
+            for badge, flags in cert['badges'].items():
                 badge = Badge(name=badge)
-                for number, module in enumerate(data['flags']):
-                    module_name = 'plugins.training.app.%s' % module
-                    try:
-                        import_module(module_name)
-                        flag_subclasses = [k for k, v in Flag.registry.items() if v['module_name'] == module_name]
-                        for flag_subclass in flag_subclasses:
-                            badge.flags.append(flag_subclass(number=flag_number))
-                            flag_number += 1
-                    except ModuleNotFoundError:
-                        module_name, cls_name = module_name.rsplit('.', 1)
-                        flag_subclass = getattr(import_module(module_name), cls_name)
-                        badge.flags.append(flag_subclass(number=flag_number))
-                        flag_number += 1
+                for number, module in enumerate(flags):
+                    module_name, cls_name = ('plugins.training.app.%s' % module).split(':')
+                    flag_subclass = getattr(import_module(module_name), cls_name)
+                    badge.flags.append(flag_subclass(number=flag_number))
+                    flag_number += 1
                 certification.badges.append(badge)
             await data_svc.store(certification)

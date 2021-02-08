@@ -5,19 +5,7 @@ from datetime import datetime
 from app.utility.base_object import BaseObject
 
 
-class RegisterLeafClasses(type):
-    # https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Metaprogramming.html#example-self-registration-of-subclasses
-    def __init__(cls, name, bases, nmspc):
-        super(RegisterLeafClasses, cls).__init__(name, bases, nmspc)
-        if not hasattr(cls, 'registry'):
-            cls.registry = dict()
-        if cls not in cls.registry.keys():
-            cls.registry[cls] = dict(module_name=cls.__module__)
-        if bases[0] in cls.registry.keys():
-            cls.registry.pop(bases[0])
-
-
-class Flag(BaseObject, metaclass=RegisterLeafClasses):
+class Flag(BaseObject):
     name = None
     challenge = None
     extra_info = None
