@@ -3,38 +3,38 @@ name: User Certificate
 description: "Basic user certificate."
 badges:
   agents:
-    - flags.agents.flag_0:AgentsFlag0
-    - flags.agents.flag_1:AgentsFlag1
-    - flags.agents.flag_2:AgentsFlag2
-    - flags.agents.flag_3:AgentsFlag3
-    - flags.agents.flag_4:AgentsFlag4
-    - flags.agents.flag_5:AgentsFlag5
-    - flags.agents.flag_6:AgentsFlag6
-    - flags.agents.flag_7:AgentsFlag7
+    - flags.agents.flag_0.AgentsFlag0
+    - flags.agents.flag_1.AgentsFlag1
+    - flags.agents.flag_2.AgentsFlag2
+    - flags.agents.flag_3.AgentsFlag3
+    - flags.agents.flag_4.AgentsFlag4
+    - flags.agents.flag_5.AgentsFlag5
+    - flags.agents.flag_6.AgentsFlag6
+    - flags.agents.flag_7.AgentsFlag7
   adversaries:
-    - flags.adversaries.flag_0:AdversariesFlag0
-    - flags.adversaries.flag_1:AdversariesFlag1
-    - flags.adversaries.flag_2:AdversariesFlag2
+    - flags.adversaries.flag_0.AdversariesFlag0
+    - flags.adversaries.flag_1.AdversariesFlag1
+    - flags.adversaries.flag_2.AdversariesFlag2
   operations:
-    - flags.operations.flag_0:OperationsFlag0
-    - flags.operations.flag_1:OperationsFlag1
-    - flags.operations.flag_2:OperationsFlag2
-    - flags.operations.flag_3:OperationsFlag3
+    - flags.operations.flag_0.OperationsFlag0
+    - flags.operations.flag_1.OperationsFlag1
+    - flags.operations.flag_2.OperationsFlag2
+    - flags.operations.flag_3.OperationsFlag3
   advanced:
-    - flags.advanced.flag_0:AdvancedFlag0
-    - flags.advanced.flag_1:AdvancedFlag1
-    - flags.advanced.flag_2:AdvancedFlag2
+    - flags.advanced.flag_0.AdvancedFlag0
+    - flags.advanced.flag_1.AdvancedFlag1
+    - flags.advanced.flag_2.AdvancedFlag2
   manx:
-    - flags.plugins.manx.flag_0:PluginsManxFlag0
-    - flags.plugins.manx.flag_1:PluginsManxFlag1
+    - flags.plugins.manx.flag_0.PluginsManxFlag0
+    - flags.plugins.manx.flag_1.PluginsManxFlag1
   mock:
-    - flags.plugins.mock.flag_0:PluginsMockFlag0
+    - flags.plugins.mock.flag_0.PluginsMockFlag0
   compass:
-    - flags.plugins.compass.flag_0:PluginsCompassFlag0
+    - flags.plugins.compass.flag_0.PluginsCompassFlag0
   response:
-    - flags.plugins.response.flag_0:PluginsResponseFlag0
-    - flags.plugins.response.flag_1:PluginsResponseFlag1
+    - flags.plugins.response.flag_0.PluginsResponseFlag0
+    - flags.plugins.response.flag_1.PluginsResponseFlag1
   gameboard:
-    - flags.plugins.gameboard.flag_0:PluginsGameboardFlag0
+    - flags.plugins.gameboard.flag_0.PluginsGameboardFlag0
   atomic:
-    - flags.plugins.atomic.flag_0:PluginsAtomicFlag0
+    - flags.plugins.atomic.flag_0.PluginsAtomicFlag0
