@@ -1,9 +1,15 @@
+import abc
+
 from datetime import datetime
 
 from app.utility.base_object import BaseObject
 
 
 class Flag(BaseObject):
+    name = None
+    challenge = None
+    extra_info = None
+    additional_fields = None
 
     @property
     def unique(self):
@@ -31,20 +37,24 @@ class Flag(BaseObject):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
                     completed_timestamp=self._convert_timestamp(),
-                    resettable='True' if 'adversary_id' in self.additional_fields else 'False')
+                    resettable=self._is_resettable())
 
-    def __init__(self, number, name, challenge, verify, extra_info='', additional_fields=None):
+    def __init__(self, number):
         super().__init__()
         self.number = number
-        self.name = name
-        self.challenge = challenge
-        self.extra_info = extra_info
-        self.verify = verify
-        self.additional_fields = additional_fields
         self._completed = False
         self._completed_timestamp = None
         self._started_ts = None
         self._ticks = 0
+
+    @abc.abstractmethod
+    def verify(self, services):
+        """
+        Determines whether a flag's challenge has been met or not
+        :param services:
+        :return: boolean True if flag challenge is met, False otherwise
+        """
+        pass
 
     def store(self, ram):
         existing = self.retrieve(ram['flags'], self.unique)
@@ -64,3 +74,24 @@ class Flag(BaseObject):
 
     def _convert_timestamp(self):
         return self.completed_timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.completed_timestamp else ''
+
+    def _is_resettable(self):
+        return 'True' if self.additional_fields and 'adversary_id' in self.additional_fields else 'False'
+
+    @staticmethod
+    def _is_unauth_process_killed(op):
+        return op.ran_ability_id('02fb7fa9-8886-4330-9e65-fa7bb1bc5271')
+
+    @staticmethod
+    def _is_unauth_process_detected(op):
+        operation_traits = set(f.trait for f in op.all_facts())
+        return op.ran_ability_id('3b4640bc-eacb-407a-a997-105e39788781') and \
+            'remote.port.unauthorized' in operation_traits and \
+            'host.pid.unauthorized' in operation_traits
+
+    @staticmethod
+    def _is_file_found(op):
+        operation_traits = set(f.trait for f in op.all_facts())
+        return op.ran_ability_id('f9b3eff0-e11c-48de-9338-1578b351b14b') and \
+            'file.malicious.hash' in operation_traits and \
+            'host.malicious.file' in operation_traits

@@ -33,7 +33,7 @@ class TrainingApi(BaseService):
             try:
                 if not flag.completed:
                     flag.activate()
-                    if hasattr(flag, 'flag_type'):
+                    if hasattr(flag, 'answer'):
                         answer = answers.get(str(flag.number), None)
                         if answer:
                             flag.completed = flag.verify(answer)

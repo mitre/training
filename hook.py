@@ -6,19 +6,11 @@ from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
 from plugins.training.app.c_certification import Certification
 from plugins.training.app.c_exam import Exam
-from plugins.training.app.c_fillinblank import FillInBlank
-from plugins.training.app.c_flag import Flag
-from plugins.training.app.c_multiplechoice import MultipleChoice
-from plugins.training.app.c_navigator import Navigator
 from plugins.training.app.training_api import TrainingApi
 
 name = 'Training'
 description = 'A certification course to become a CALDERA SME'
 address = '/plugin/training/gui'
-
-_question_types = dict(multiplechoice=MultipleChoice,
-                       fillinblank=FillInBlank,
-                       navigator=Navigator)
 
 
 async def enable(services):
@@ -64,28 +56,13 @@ async def _load_flags(data_svc):
                 certification = Certification(identifier=cert['id'], name=cert['name'],
                                               description=cert.get('description', 'No description provided'),
                                               access=BaseWorld.Access.APP)
-            flag_number = 0
-            for badge, data in cert['badges'].items():
+            flag_number = 1
+            for badge, flags in cert['badges'].items():
                 badge = Badge(name=badge)
-                for number, module in enumerate(data['flags']):
+                for number, module in enumerate(flags):
+                    module_name, cls_name = ('plugins.training.app.%s' % module).rsplit('.', 1)
+                    flag_subclass = getattr(import_module(module_name), cls_name)
+                    badge.flags.append(flag_subclass(number=flag_number))
                     flag_number += 1
-                    loaded_module = import_module('plugins.training.app.%s' % module)
-                    if hasattr(loaded_module, 'flag_type'):
-                        flag_type = getattr(loaded_module, 'flag_type')
-                        attrs = {attr: getattr(loaded_module, attr) for attr in dir(loaded_module)
-                                 if not attr.startswith('_') and attr != 'flag_type'}
-                        badge.flags.append(_question_types[flag_type](**attrs, number=flag_number))
-                    else:
-                        additional_field_names = ['operation_name', 'adversary_id', 'agent_group']
-                        additional_fields = dict()
-                        for field in additional_field_names:
-                            if hasattr(loaded_module, field):
-                                additional_fields[field] = getattr(loaded_module, field)
-                        badge.flags.append(Flag(verify=getattr(loaded_module, 'verify'),
-                                                number=flag_number,
-                                                name=getattr(loaded_module, 'name'),
-                                                challenge=getattr(loaded_module, 'challenge'),
-                                                extra_info=getattr(loaded_module, 'extra_info'),
-                                                additional_fields=additional_fields))
                 certification.badges.append(badge)
             await data_svc.store(certification)

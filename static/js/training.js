@@ -53,7 +53,7 @@ function refresh(){
         return;
     }
     $('#training-disclaimers').hide();
-    restRequest('POST', {"name":selectedCert, "answers":[]}, update, '/plugin/training/flags')
+    restRequest('POST', {"name":selectedCert, "answers":{}}, update, '/plugin/training/flags')
 }
 
 function update(data){

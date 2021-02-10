@@ -9,10 +9,10 @@ class Navigator(Flag, BaseObject):
     Type of flag that checks if a provided ATT&CK Navigator layer file contains the required (Tactic, Technique)
     mappings
     """
+    answer = None
 
-    def __init__(self, number, name, challenge, answer, extra_info=''):
-        super().__init__(number, name, challenge, self.verify, extra_info=extra_info)
-        self.answer = answer
+    def __init__(self, number):
+        super().__init__(number)
         self.flag_type = 'navigator'
 
     @property

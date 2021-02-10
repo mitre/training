@@ -3,12 +3,12 @@ from app.utility.base_object import BaseObject
 
 
 class MultipleChoice(Flag, BaseObject):
+    answer = None
+    options = None
+    multi_select = False
 
-    def __init__(self, number, name, challenge, options, multi_select, answer, extra_info=''):
-        super().__init__(number, name, challenge, self.verify, extra_info=extra_info)
-        self.answer = answer
-        self.options = options
-        self.multi_select = multi_select
+    def __init__(self, number):
+        super().__init__(number)
         self.flag_type = 'multiplechoice'
 
     @property
