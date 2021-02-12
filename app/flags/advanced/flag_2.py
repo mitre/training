@@ -3,9 +3,12 @@ from plugins.training.app.c_flag import Flag
 
 class AdvancedFlag2(Flag):
     name = 'Add new user'
-    challenge = 'Add new red-team user credentials, using "test" as both the username and password. Make sure ' \
-                'the server is turned off before editing the configuration files.'
-    extra_info = """In a red-team engagement, there are usually multiple operators sharing access to the C2."""
+    challenge = 'Add new red-team user credentials, using "test" as both the username and password.'
+    extra_info = (
+        'During an adversary emulation operation, multiple users may need access to the CALDERA server.\n'
+        'This flag requires making direct changes to the configuration file at conf/local.yml. Make sure the server is '
+        'turned off before editing this file, or else changes will be overwritten.'
+    )
 
     async def verify(self, services):
         user = services.get('auth_svc').user_map.get('test')
