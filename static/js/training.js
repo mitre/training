@@ -277,7 +277,7 @@ function displayCert(code, completedBadges, totalBadges) {
     }
 }
 
-function checkAnswers() {1
+function checkAnswers() {
     let answers = allAnswered();
     if (answers) {
         let selectedCert = $('#certification-name option:selected').attr('value');
