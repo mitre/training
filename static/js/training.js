@@ -7,8 +7,33 @@ $(document).ready(function () {
 });
 
 var layerFileData = {};
-
 var certificate;
+
+function handleCertificateSelectionChange(){
+    loadCertification();
+    showCertificateSolutionGuideButton();
+}
+
+function showCertificateSolutionGuideButton() {
+    if ( $('#certification-name').val() !== null ){
+        $("#btn-view-certificate-solution-guide").show();
+    }
+}
+
+function openCertificateSolutionGuide() {
+    let selectedCert = $('#certification-name option:selected').attr('value');
+    window.open(
+        `/plugin/training/solution-guides/certificates/${selectedCert}`,
+        '_blank'
+    );
+}
+
+function openFlagSolutionGuide(certName, badgeName, flagName){
+    window.open(
+        `/plugin/training/solution-guides/certificates/${certName}/badges/${badgeName}/flags/${flagName}`,
+        '_blank'
+    );
+}
 
 function loadCertification(){
     function loadCert(data){
@@ -47,6 +72,10 @@ function setCertRefresh() {
     }
 }
 
+function getSelectedCertificateName(){
+    return $('#certification-name option:selected').attr('value');
+}
+
 function refresh(){
     let selectedCert = $('#certification-name option:selected').attr('value');
     if(!selectedCert){
@@ -71,7 +100,7 @@ function update(data){
         b.attr('status', 'progress');
         for (var flagIdx in badge.flags) {
             var flag = badge.flags[flagIdx];
-            let flagHTML = createFlagHTML(badge, flag);
+            let flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
             if(flag.completed) {
                 flagHTML.find('#flag-status').html('&#x2705;');
                 flagHTML.find("input").attr("disabled", true);
@@ -101,7 +130,7 @@ function update(data){
     displayCert(code, completedBadges, data.badges.length);
 }
 
-function createFlagHTML(badge, flag) {
+function createFlagHTML(certName, badge, flag) {
     let template = $("#flag-template").clone();
     template.removeAttr('id');
     template.attr('badge', badge.name);
@@ -117,6 +146,13 @@ function createFlagHTML(badge, flag) {
         template.find("#flag-info").text(flag.extra_info);
     }
     template.find("#flag-completed-ts").text(flag.completed_timestamp);
+
+    let btnViewFlagSolutionGuide = template.find("#btn-view-flag-solution-guide");
+    btnViewFlagSolutionGuide.on(
+        "click",
+        function(e) { openFlagSolutionGuide(certName, badge.name, flag.name) }
+    );
+
     return template
 }
 
@@ -241,7 +277,7 @@ function displayCert(code, completedBadges, totalBadges) {
     }
 }
 
-function checkAnswers() {
+function checkAnswers() {1
     let answers = allAnswered();
     if (answers) {
         let selectedCert = $('#certification-name option:selected').attr('value');

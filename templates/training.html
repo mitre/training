@@ -15,7 +15,7 @@
             </p>
             <br>
             <div id="cert-select-wrapper" style="display:flex">
-                <select id="certification-name" style="margin-top:-15px;flex:90%" onchange="loadCertification();">
+                <select id="certification-name" style="margin-top:-15px;flex:90%" onchange="handleCertificateSelectionChange()">
                     <option value="" disabled selected>Select a certificate</option>
                     {% for cert in certificates %}
                         <option value="{{ cert.name }}">{{ cert.name }}</option>
@@ -24,6 +24,7 @@
                 <div style="flex:5%;margin-top:-30px;cursor:pointer" onclick="document.getElementById('training-cert-description-modal').style.display='block'"><p style="border:solid;border-radius:25px;font-size:16px">?</p></div>
             </div>
             <button id="btn-check-answers" class="button-success atomic-button" style="display:none" onclick="checkAnswers()" >Check Answers</button>
+            <button id="btn-view-certificate-solution-guide" class="button-success" hidden onclick="openCertificateSolutionGuide()">View Solution Guide</button>
             <ul id="badges" class="profile-tests" style="padding-inline-start: 0px"></ul>
         </div>
         <div class="column" style="flex:75%;">
@@ -63,6 +64,7 @@
         <div class="flip-card-back">
             <div class="flag-reset-button" onclick="trainingSendFlagReset()" style="display: none">&#8635;</div>
             <p id="flag-info" style="white-space: pre-line"></p>
+            <button id="btn-view-flag-solution-guide">View Solution Guide</button>
         </div>
     </div>
 </li>
