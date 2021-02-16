@@ -1,6 +1,7 @@
+import os
 import glob
 from importlib import import_module
-import os
+
 
 from app.utility.base_world import BaseWorld
 from plugins.training.app.c_badge import Badge
@@ -24,6 +25,18 @@ async def enable(services):
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
     app.router.add_route('POST', '/plugin/training/reset_flag', training_api.reset_flag)
+
+    app.router.add_route(
+        'GET',
+        '/plugin/training/solution-guides/certificates/{cert_name}/badges/{badge_name}/flags/{flag_name}',
+        training_api.flag_solution_guide
+    )
+
+    app.router.add_route(
+        'GET',
+        '/plugin/training/solution-guides/certificates/{cert_name}',
+        training_api.certificate_solution_guide
+    )
 
 
 async def expansion(services):
