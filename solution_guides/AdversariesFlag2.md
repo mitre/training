@@ -11,8 +11,8 @@
     1. Select `darwin` as the platform from the drop-down.
     1. Select `sh` as the executor from the drop-down.
     1. Select `sandcat.go-darwin` from the payloads box.
-    1. Enter `whoami` in the command  text box.   
+    1. Enter `whoami` in the command text box.
     1. Enter `ifconfig -a` in the cleanup command text box.
 1. Press the `Add to Adversary` button
 1. Press the `Save` button on the left side of the _Adversary Profiles_ window.
-1. Task complete.
+1. Task completed.

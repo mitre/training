@@ -3,7 +3,7 @@
 1. Press the button to deploy an agent.
 1. Choose 54ndc47 (Sandcat) agent.
 1. Choose Linux platform.
-1. Update the `app.contact.http` value to speficy an ip address (keep the port) that is reachable from the remote system (i.e., not `0.0.0.0`).
+1. Update the `app.contact.http` value to specify an ip address (keep the port) that is reachable from the remote system (i.e., not `0.0.0.0`).
 1. Select and copy the first command to your clipboard. This command will instruct the agent to communicate over an HTTP channel.
 1. On the remote system, open a terminal window with a shell.
 1. Paste the copied command into the shell and execute it.

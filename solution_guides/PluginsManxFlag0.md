@@ -4,8 +4,8 @@
 1. Press the button to deploy an agent.
 1. Choose Manx agent.
 1. Choose Linux platform.
-1. Update the `app.contact.http` value to speficy an ip address of `127.0.0.1` (keep the port). This is for downloading the agent binary.
-1. Update the `app.contact.tcp` value to speficy an ip address of `127.0.0.1` (keep the port). This is for the agent-C2 communication channel.
+1. Update the `app.contact.http` value to specify an ip address of `127.0.0.1` (keep the port). This is for downloading the agent binary.
+1. Update the `app.contact.tcp` value to specify an ip address of `127.0.0.1` (keep the port). This is for the agent-C2 communication channel.
 1. Select and copy the first command to your clipboard. This command will instruct the agent to communicate over a TCP channel.
 
 ### Running two remote shell commands
@@ -25,8 +25,8 @@
 1. Enter an operation name of `Manx Flag 0`
 1. Click on `Basic Options`
 1. Select `red` from the groups list
-1. Select `Hunter` from the advserary list
+1. Select `Hunter` from the adversary list
 1. Select `Auto-close operation` from the close options list.
-1. Press the Start button.
+1. Press the `Start` button.
 1. Wait for the operation to complete. The operation status will change to `FINISHED`. This may take several minutes.
-1. Task complete
+1. Task completed.

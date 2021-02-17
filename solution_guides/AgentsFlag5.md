@@ -8,5 +8,5 @@
 1. Select `Campaigns > agents`.
 1. On the left side of the window, click on `BOOTSTRAP ABILITIES`
 1. Paste the UUID into the text box
-1. Press the Save button.
-1. Task complete
+1. Press the `Save` button.
+1. Task completed
