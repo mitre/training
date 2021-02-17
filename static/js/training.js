@@ -9,7 +9,7 @@ $(document).ready(function () {
 var layerFileData = {};
 var certificate;
 
-function handleCertificateSelectionChange(){
+function handleCertificateSelectionChange() {
     loadCertification();
     showCertificateSolutionGuideButton();
 }
