@@ -15,13 +15,13 @@ function handleCertificateSelectionChange(){
 }
 
 function showCertificateSolutionGuideButton() {
-    if ( $('#certification-name').val() !== null ){
-        $("#btn-view-certificate-solution-guide").show();
+    if (getSelectedCertificateName() !== null){
+        $('#btn-view-certificate-solution-guide').show();
     }
 }
 
 function openCertificateSolutionGuide() {
-    let selectedCert = $('#certification-name option:selected').attr('value');
+    let selectedCert = getSelectedCertificateName();
     window.open(
         `/plugin/training/solution-guides/certificates/${selectedCert}`,
         '_blank'
@@ -155,9 +155,9 @@ function createFlagHTML(certName, badge, flag) {
 
     template.find("#flag-completed-ts").text(flag.completed_timestamp);
 
-    let btnViewFlagSolutionGuide = template.find("#btn-view-flag-solution-guide");
+    let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
     btnViewFlagSolutionGuide.on(
-        "click",
+        'click',
         function(e) { openFlagSolutionGuide(certName, badge.name, flag.name) }
     );
 
