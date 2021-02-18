@@ -36,5 +36,3 @@ badges:
     - flags.plugins.response.flag_1.PluginsResponseFlag1
   gameboard:
     - flags.plugins.gameboard.flag_0.PluginsGameboardFlag0
-  atomic:
-    - flags.plugins.atomic.flag_0.PluginsAtomicFlag0
