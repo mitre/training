@@ -16,4 +16,5 @@ class PluginsGameboardFlag0(Flag):
                                                                        name='Gameboard - Red'))
         blue = await services.get('data_svc').locate('operations', dict(access=BaseWorld.Access.BLUE,
                                                                         name='Gameboard - Blue'))
-        return all(red + blue)
+
+        return bool(red and blue)
