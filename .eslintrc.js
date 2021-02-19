@@ -9,12 +9,12 @@ module.exports = {
         "ecmaVersion": 12
     },
     "globals": {
-        stream: 'readonly',
-        restRequest: 'readonly',
-        certificates: 'readonly',
+        stream: "readonly",
+        restRequest: "readonly",
+        certificates: "readonly",
     },
     "rules": {
-        semi: ['error', 'always'],
-        quotes: ['error', 'single', {'avoidEscape': true }]
+        semi: ["error", "always"],
+        quotes: ["error", "single", {"avoidEscape": true }]
     }
 };
