@@ -4,3 +4,4 @@
 .idea/*
 *.history/*
 .idea
+node_modules
