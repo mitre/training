@@ -1,5 +1,5 @@
 module.exports = {
-    "extends": "eslint:recommended",
+    "extends": "airbnb-base",
     "env": {
         "browser": true,
         "es2021": true,
@@ -13,9 +13,5 @@ module.exports = {
         restRequest: "readonly",
         certificates: "readonly",
     },
-    "rules": {
-        semi: ["error", "always"],
-        "space-before-blocks": ["error", "always"],
-        quotes: ["error", "single", {"avoidEscape": true }]
-    }
+    "rules": {}
 };
