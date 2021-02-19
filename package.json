@@ -1,0 +1,10 @@
+{
+  "name": "caldera-training",
+  "description": "CALDERA training plugin",
+  "devDependencies": {
+    "eslint": "^7.20.0"
+  },
+  "scripts": {
+    "lint": "eslint ./static/js/*.js"
+  }
+}
