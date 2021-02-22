@@ -3,7 +3,6 @@
 .markdown-body body {
     margin: 0 auto;
     font-family: Georgia, Palatino, serif;
-    color: #444444;
     line-height: 1;
 }
 
@@ -11,7 +10,6 @@
 .markdown-body h2,
 .markdown-body h3,
 .markdown-body h4 {
-    color: #111111;
     font-weight: 400;
 }
 

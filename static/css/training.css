@@ -153,3 +153,8 @@ input.fill-in-the-blank:disabled {
 input.layer-upload + .layer-upload-label {
     cursor: pointer;
 }
+
+.solution-content {
+    background-color: black;
+    color: white;
+}
