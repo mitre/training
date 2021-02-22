@@ -1,6 +1,8 @@
 import abc
-
+import os
 from datetime import datetime
+
+import markdown
 
 from app.utility.base_object import BaseObject
 
@@ -39,6 +41,24 @@ class Flag(BaseObject):
                     completed_timestamp=self._convert_timestamp(),
                     resettable=self._is_resettable())
 
+    @property
+    def solution_guide_filename(self):
+        return f'{self.__class__.__name__}.md'
+
+    @property
+    def solution_guide_path(self):
+        import plugins.training  # avoiding an import cycle
+
+        return os.path.join(
+            plugins.training.PLUGIN_DIR,
+            'solution_guides',
+            self.solution_guide_filename
+        )
+
+    @property
+    def has_solution_guide(self):
+        return os.path.exists(self.solution_guide_path)
+
     def __init__(self, number):
         super().__init__()
         self.number = number
@@ -71,6 +91,10 @@ class Flag(BaseObject):
 
     def calculate_code(self):
         return self.unique
+
+    def solution_guide_as_html(self):
+        with open(self.solution_guide_path, encoding='utf-8') as f:
+            return markdown.markdown(f.read())
 
     def _convert_timestamp(self):
         return self.completed_timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.completed_timestamp else ''

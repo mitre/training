@@ -5,6 +5,7 @@ from aiohttp_jinja2 import template
 
 from app.utility.base_service import BaseService
 from app.service.auth_svc import for_all_public_methods, check_authorization
+from plugins.training.app import errors
 from plugins.training.app.base_flag import BaseFlag
 
 
@@ -21,6 +22,41 @@ class TrainingApi(BaseService):
         access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
         certifications = await self.data_svc.locate('certifications', match=access)
         return dict(certificates=[cert.display for cert in certifications])
+
+    @template('flag_solution_guide.html')
+    async def flag_solution_guide(self, request):
+        cert_name = request.match_info['cert_name']
+        badge_name = request.match_info['badge_name']
+        flag_name = request.match_info['flag_name']
+
+        certificate_list = await self.data_svc.locate('certifications', match={'name': cert_name})
+
+        if not certificate_list:
+            raise web.HTTPNotFound(text='Certificate does not exist')
+
+        certificate = certificate_list[0]
+
+        try:
+            flag = certificate.get_flag(badge_name, flag_name)
+        except errors.BadgeDoesNotExist:
+            raise web.HTTPNotFound(text='Badge does not exist')
+        except errors.FlagDoesNotExist:
+            raise web.HTTPNotFound(text='Flag does not exist')
+
+        if not flag.has_solution_guide:
+            raise web.HTTPNotFound(text='No solution guide exists for flag')
+
+        return dict(flag=flag)
+
+    @template('certificate_solution_guide.html')
+    async def certificate_solution_guide(self, request):
+        cert_name = request.match_info['cert_name']
+        certificate_list = await self.data_svc.locate('certifications', match={'name': cert_name})
+
+        if not certificate_list:
+            raise web.HTTPNotFound(text='Certificate does not exist')
+
+        return dict(certificate=certificate_list[0])
 
     async def retrieve_flags(self, request):
         data = dict(await request.json())

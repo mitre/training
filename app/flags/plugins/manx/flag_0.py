@@ -3,11 +3,17 @@ from plugins.training.app.c_flag import Flag
 
 class PluginsManxFlag0(Flag):
     name = 'Manx plugin'
-    challenge = 'Start a new Manx agent on your localhost. Then send at least 2 commands to it through the ' \
-                'reverse-shell session. Then run a normal operation against the agent using the Hunter profile.'
-    extra_info = """One of the most common activities a red-team operator will attempt to do is gain a reverse-shell 
-    on a compromised host. This type of shell is a persistent (usually via TCP) connection which gives the operator a 
-    terminal experience that is as-if they are sitting behind the keyboard on the remote host."""
+
+    challenge = (
+        'Start a new Manx agent on your localhost. Then send at least 2 commands to it through the '
+        'reverse-shell session. Then run a normal operation against the agent using the Hunter profile.'
+    )
+
+    extra_info = (
+        'One of the most common activities a red-team operator will attempt to do is gain a reverse-shell '
+        'on a compromised host. This type of shell is a persistent (usually via TCP) connection which gives '
+        'the operator a terminal experience that is as-if they are sitting behind the keyboard on the remote host.'
+    )
 
     async def verify(self, services):
         check1, check2 = False, False
