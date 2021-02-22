@@ -157,4 +157,5 @@ input.layer-upload + .layer-upload-label {
 .solution-content {
     background-color: black;
     color: white;
+    font-family: Verdana,sans-serif;
 }
