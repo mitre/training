@@ -7,8 +7,33 @@ $(document).ready(function () {
 });
 
 var layerFileData = {};
-
 var certificate;
+
+function handleCertificateSelectionChange() {
+    loadCertification();
+    showCertificateSolutionGuideButton();
+}
+
+function showCertificateSolutionGuideButton() {
+    if (getSelectedCertificateName() !== null){
+        $('#btn-view-certificate-solution-guide').show();
+    }
+}
+
+function openCertificateSolutionGuide() {
+    let selectedCert = getSelectedCertificateName();
+    window.open(
+        `/plugin/training/solution-guides/certificates/${selectedCert}`,
+        '_blank'
+    );
+}
+
+function openFlagSolutionGuide(certName, badgeName, flagName){
+    window.open(
+        `/plugin/training/solution-guides/certificates/${certName}/badges/${badgeName}/flags/${flagName}`,
+        '_blank'
+    );
+}
 
 function loadCertification(){
     function loadCert(data){
@@ -47,6 +72,10 @@ function setCertRefresh() {
     }
 }
 
+function getSelectedCertificateName(){
+    return $('#certification-name option:selected').attr('value');
+}
+
 function refresh(){
     let selectedCert = $('#certification-name option:selected').attr('value');
     if(!selectedCert){
@@ -71,11 +100,15 @@ function update(data){
         b.attr('status', 'progress');
         for (var flagIdx in badge.flags) {
             var flag = badge.flags[flagIdx];
-            let flagHTML = createFlagHTML(badge, flag);
+            let flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
+
             if(flag.completed) {
                 flagHTML.find('#flag-status').html('&#x2705;');
-                flagHTML.find("input").attr("disabled", true);
-                flagHTML.find("button").removeClass("button-success").attr("disabled", true);
+
+                elementsToDisable = flagHTML.find('[data-disable-on-completion="true"]');
+                elementsToDisable.attr('disabled', true);
+                elementsToDisable.filter('button').removeClass('button-success');
+
                 badgeComplete += 1;
                 code.push(flag.code);
                 flags.append(flagHTML);
@@ -101,22 +134,33 @@ function update(data){
     displayCert(code, completedBadges, data.badges.length);
 }
 
-function createFlagHTML(badge, flag) {
+function createFlagHTML(certName, badge, flag) {
     let template = $("#flag-template").clone();
     template.removeAttr('id');
+
     template.attr('badge', badge.name);
     template.find('#flag-number').html('&#127937 ' + flag.number);
     template.find('#flag-name').text(flag.name);
-    template.find("#flag-challenge").text(flag.challenge);
+    template.find('#flag-challenge').text(flag.challenge);
+
     if (flag.flag_type) {
         addAnswerOptions(flag, template);
     }
+
     if (flag.extra_info == null || flag.extra_info == "") {
         template.find(".flip-card-inner").attr('data-flip', 'false');
     } else {
         template.find("#flag-info").text(flag.extra_info);
     }
+
     template.find("#flag-completed-ts").text(flag.completed_timestamp);
+
+    let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
+    btnViewFlagSolutionGuide.on(
+        'click',
+        function(e) { openFlagSolutionGuide(certName, badge.name, flag.name) }
+    );
+
     return template
 }
 
@@ -125,21 +169,22 @@ function addAnswerOptions(flag, template) {
     template.find("#flag-answer").attr("id", "flag-answer-" + flag.number);
     template.find("#flag-answer-" + flag.number).addClass("flag-answer");
     template.find("#flag-answer-" + flag.number).addClass(flag.flag_type);
+
     switch (flag.flag_type) {
         case "multiplechoice":
             let mcType = flag.multi_select ? 'checkbox' : 'radio'
             flag.options.forEach(function(o) {
                 let btnSet = "mult-" + flag.number;
-                let radioHTML = "<label><input type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + "</label><br>";
+                let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + "</label><br>";
                 template.find("#flag-answer-" + flag.number).append(radioHTML);
             })
             break;
         case "fillinblank":
-            template.find("#flag-answer-" + flag.number).append("<input class='fill-in-the-blank'>");
+            template.find("#flag-answer-" + flag.number).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
             break;
         case "navigator":
-            let uploadHTML = "<input id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
-                        "<button class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
+            let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
+                        "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
                         "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
             template.find("#flag-answer-" + flag.number).append(uploadHTML);
             break;

@@ -1,7 +1,9 @@
+import os
 from base64 import b32encode
 
 from plugins.training.app.c_flag import Flag
 
+PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def calculate_code(self):
     if self.started_ts and self.completed_timestamp:

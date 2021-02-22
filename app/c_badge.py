@@ -1,5 +1,7 @@
 from app.utility.base_object import BaseObject
 
+from plugins.training.app import errors
+
 
 class Badge(BaseObject):
 
@@ -15,3 +17,15 @@ class Badge(BaseObject):
         super().__init__()
         self.name = name
         self.flags = []
+
+    def get_flag(self, flag_name):
+        """Return a Flag with a matching `name`.
+
+        Raises:
+            FlagDoesNotExist: If no Flag is found with a matching `name`
+        """
+        for flag in self.flags:
+            if flag.name == flag_name:
+                return flag
+
+        raise errors.FlagDoesNotExist
