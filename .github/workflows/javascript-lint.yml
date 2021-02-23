@@ -1,4 +1,4 @@
-name: Javascript linter
+name: javascript-lint
 
 on: [push]
 jobs:
