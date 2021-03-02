@@ -29,8 +29,6 @@ badges:
     - flags.plugins.manx.flag_1.PluginsManxFlag1
   mock:
     - flags.plugins.mock.flag_0.PluginsMockFlag0
-  compass:
-    - flags.plugins.compass.flag_0.PluginsCompassFlag0
   response:
     - flags.plugins.response.flag_0.PluginsResponseFlag0
     - flags.plugins.response.flag_1.PluginsResponseFlag1
