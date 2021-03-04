@@ -78,7 +78,7 @@ function getSelectedCertificateName(){
 
 function refresh(){
   let selectedCert = $('#certification-name option:selected').attr('value');
-  if(!selectedCert){
+  if (!selectedCert){
     return;
   }
   $('#training-disclaimers').hide();
@@ -102,7 +102,7 @@ function update(data){
       var flag = badge.flags[flagIdx];
       let flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
 
-      if(flag.completed) {
+      if (flag.completed) {
         flagHTML.find('#flag-status').html('&#x2705;');
 
         elementsToDisable = flagHTML.find('[data-disable-on-completion="true"]');
@@ -123,7 +123,7 @@ function update(data){
         }
       }
     }
-    if(badgeComplete === badge.flags.length) {
+    if (badgeComplete === badge.flags.length) {
       b.find('.badge-icon').removeClass('badge-in-progress');
       b.find('.badge-icon').addClass('badge-completed');
       b.attr('status', 'completed');
@@ -273,7 +273,7 @@ function selectBadge(element) {
 }
 
 function displayCert(code, completedBadges, totalBadges) {
-  if(completedBadges === totalBadges) {
+  if (completedBadges === totalBadges) {
     code = code.sort(function(a, b) {
       return a.toString().length - b.toString().length;
     });
@@ -314,10 +314,10 @@ function uploadLayer(btn) {
 }
 
 $('body').on('change', 'input.layer-upload', async function (event){
-  if(event.currentTarget) {
+  if (event.currentTarget) {
     let file = event.currentTarget.files[0];
     let parentId = $(this).parent().attr('id').split('-')[2];
-    if(file && file.name){
+    if (file && file.name){
       $(this).siblings('#layer-upload-filename').html(file.name);
       try {
         layerFileData[parentId] = await readUploadedFileAsText(file);
@@ -350,7 +350,7 @@ function readUploadedFileAsText(inputFile) {
 
 function trainingSendFlagReset() {
   let selectedCert = $('#certification-name option:selected').attr('value');
-  if(!selectedCert){
+  if (!selectedCert){
     return;
   }
   restRequest('POST', {'name': selectedCert}, resetCallback, '/plugin/training/reset_flag');
