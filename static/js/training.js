@@ -41,7 +41,7 @@ function loadCertification() {
       let template = $('#badge-template').clone();
       template.attr('id', 'badge-' + badge.name);
       template.find('#badge-name').text(badge.name);
-      template.find('#badge-icon').attr('src', '/training/img/badges/'+badge.name+'.png');
+      template.find('#badge-icon').attr('src', '/training/img/badges/' + badge.name + '.png');
       template.show();
       $('#badges').append(template);
     });
@@ -94,7 +94,7 @@ function update(data) {
   for (var badgeIdx in data.badges) {
     var badge = data.badges[badgeIdx];
     let badgeComplete = 0;
-    let b = $('#badge-'+badge.name);
+    let b = $('#badge-' + badge.name);
     b.find('.badge-icon').addClass('badge-in-progress');
     b.attr('status', 'progress');
     for (var flagIdx in badge.flags) {
@@ -276,7 +276,7 @@ function displayCert(code, completedBadges, totalBadges) {
       return a.toString().length - b.toString().length;
     });
     code = code.join(' ');
-    document.getElementById('alert-modal').style.display='block';
+    document.getElementById('alert-modal').style.display = 'block';
     let alert_text = "Congratulations! You've completed the certification! The code for the certification is below:\n\n" + btoa(code);
     $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
     $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
