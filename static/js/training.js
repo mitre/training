@@ -119,7 +119,7 @@ function update(data){
         }
         flags.append(flagHTML);
         if (!certificate.cert_type) {
-          break badgeLoop; //show only the next incomplete flag
+          break badgeLoop; // show only the next incomplete flag
         }
       }
     }
