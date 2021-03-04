@@ -15,7 +15,7 @@ function handleCertificateSelectionChange() {
 }
 
 function showCertificateSolutionGuideButton() {
-  if (getSelectedCertificateName() !== null){
+  if (getSelectedCertificateName() !== null) {
     $('#btn-view-certificate-solution-guide').show();
   }
 }
@@ -28,15 +28,15 @@ function openCertificateSolutionGuide() {
   );
 }
 
-function openFlagSolutionGuide(certName, badgeName, flagName){
+function openFlagSolutionGuide(certName, badgeName, flagName) {
   window.open(
     `/plugin/training/solution-guides/certificates/${certName}/badges/${badgeName}/flags/${flagName}`,
     '_blank'
   );
 }
 
-function loadCertification(){
-  function loadCert(data){
+function loadCertification() {
+  function loadCert(data) {
     data[0].badges.forEach(function (badge) {
       let template = $('#badge-template').clone();
       template.attr('id', 'badge-' + badge.name);
@@ -49,7 +49,7 @@ function loadCertification(){
   }
   let selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
-  certificate = certificates.find(function (cert){ return cert.name == selectedCert; });
+  certificate = certificates.find(function (cert) { return cert.name == selectedCert; });
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
@@ -71,20 +71,20 @@ function setCertRefresh() {
   }
 }
 
-function getSelectedCertificateName(){
+function getSelectedCertificateName() {
   return $('#certification-name option:selected').attr('value');
 }
 
-function refresh(){
+function refresh() {
   let selectedCert = $('#certification-name option:selected').attr('value');
-  if (!selectedCert){
+  if (!selectedCert) {
     return;
   }
   $('#training-disclaimers').hide();
   restRequest('POST', { 'name': selectedCert, 'answers': {} }, update, '/plugin/training/flags');
 }
 
-function update(data){
+function update(data) {
   let completedBadges = 0;
   let code = [];
   let flags = $('#flags');
@@ -259,7 +259,7 @@ function selectBadge(element) {
     $(element).removeAttr('class');
     $(element).find('.badge-icon').removeAttr('id');
     showRelevantFlags();
-  } else if ($(element).attr('status')){
+  } else if ($(element).attr('status')) {
     $('#badges').find('li').each(function () {
       $(this).removeAttr('class');
       $(this).find('.badge-icon').removeAttr('id');
@@ -310,11 +310,11 @@ function uploadLayer(btn) {
   $(btn).siblings('#layer-upload').click();
 }
 
-$('body').on('change', 'input.layer-upload', async function (event){
+$('body').on('change', 'input.layer-upload', async function (event) {
   if (event.currentTarget) {
     let file = event.currentTarget.files[0];
     let parentId = $(this).parent().attr('id').split('-')[2];
-    if (file && file.name){
+    if (file && file.name) {
       $(this).siblings('#layer-upload-filename').html(file.name);
       try {
         layerFileData[parentId] = await readUploadedFileAsText(file);
@@ -346,7 +346,7 @@ function readUploadedFileAsText(inputFile) {
 
 function trainingSendFlagReset() {
   let selectedCert = $('#certification-name option:selected').attr('value');
-  if (!selectedCert){
+  if (!selectedCert) {
     return;
   }
   restRequest('POST', { 'name': selectedCert }, resetCallback, '/plugin/training/reset_flag');
