@@ -6,7 +6,25 @@
     right: 0;
     margin: 20px;
     position:absolute;
-    font-size: 40px;
+    font-size: 10px;
+}
+@media only screen and (min-width: 700px) {
+    .flag-box h1 {
+        font-size: 20px;
+    }
+}
+@media only screen and (min-width: 900px) {
+    .flag-box h1 {
+        font-size: 30px;
+    }
+}
+@media only screen and (min-width: 1400px) {
+    .flag-box h1 {
+        font-size: 40px;
+    }
+}
+#flag-challenge {
+    word-break: break-word;
 }
 .flag-box p {
     font-size:13px;
@@ -59,15 +77,33 @@ div.badge-completed{
     background-color: darkgreen;
 }
 .flip-card {
+    height: 975px;
     background-color: transparent;
-    height: 300px;
     perspective: 1000px;
-    width: 25%;
+    width: 30%;
     color: white;
     padding: 20px;
     margin: 5px;
-    min-height:350px;
+    min-height: 350px;
     position: relative;
+}
+@media only screen and (min-width: 700px) {
+    .flip-card {
+        height: 800px;
+        width: 30%;
+    }
+}
+@media only screen and (min-width: 900px) {
+    .flip-card {
+        height: 600px;
+        width: 30%;
+    }
+}
+@media only screen and (min-width: 1400px) {
+    .flip-card {
+        height: 400px;
+        width: 25%;
+    }
 }
 .flip-card-inner {
   position: relative;
@@ -152,4 +188,10 @@ input.fill-in-the-blank:disabled {
 }
 input.layer-upload + .layer-upload-label {
     cursor: pointer;
+}
+
+.solution-content {
+    background-color: black;
+    color: white;
+    font-family: Verdana,sans-serif;
 }

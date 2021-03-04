@@ -3,10 +3,12 @@ from plugins.training.app.c_flag import Flag
 
 class OperationsFlag0(Flag):
     name = 'Basic operation'
-    challenge = 'Run a new operation, using the Hunter profile and select any group of agents'
-    extra_info = """An autonomous operation is where an adversary pre-configures their attack and let's their agent 
-    and C2 operate without their interference. From a red-team perspective, this is an invaluable way to run 
-    repeatable adversary emulation exercises, ensuring that each one is identical to the last."""
+    challenge = 'Run and finish an operation. Use the Hunter adversary profile provided in the Stockpile plugin.'
+    extra_info = (
+        'An autonomous operation uses an adversary profile to pre-configures the attack. Agents and C2 run '
+        'without operator interference. This allows operators to run repeatable adversary emulation '
+        'exercises, ensuring that each one is identical to the last.'
+    )
 
     async def verify(self, services):
         for op in await services.get('data_svc').locate('operations'):
