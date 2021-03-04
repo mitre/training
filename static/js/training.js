@@ -301,9 +301,8 @@ function allAnswered() {
   }
   if (complete || confirm('There are still unanswered questions, are you absolutely sure you want to submit?')) {
     return answers;
-  } else {
-    return null;
   }
+  return null;
 }
 
 function uploadLayer(btn) {
