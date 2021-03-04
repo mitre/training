@@ -1,8 +1,8 @@
 var refresher = setInterval(refresh, 15000);
-$('.section-profile').bind('destroyed', function () {
+$('.section-profile').bind('destroyed', () => {
   clearInterval(refresher);
 });
-$(document).ready(function () {
+$(document).ready(() => {
   refresh();
 });
 
@@ -37,7 +37,7 @@ function openFlagSolutionGuide(certName, badgeName, flagName) {
 
 function loadCertification() {
   function loadCert(data) {
-    data[0].badges.forEach(function (badge) {
+    data[0].badges.forEach((badge) => {
       const template = $('#badge-template').clone();
       template.attr('id', `badge-${badge.name}`);
       template.find('#badge-name').text(badge.name);
@@ -49,7 +49,7 @@ function loadCertification() {
   }
   const selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
-  certificate = certificates.find(function (cert) { return cert.name == selectedCert; });
+  certificate = certificates.find((cert) => cert.name == selectedCert);
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
@@ -157,7 +157,7 @@ function createFlagHTML(certName, badge, flag) {
   const btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
     'click',
-    function (e) { openFlagSolutionGuide(certName, badge.name, flag.name); },
+    (e) => { openFlagSolutionGuide(certName, badge.name, flag.name); },
   );
 
   return template;
@@ -172,7 +172,7 @@ function addAnswerOptions(flag, template) {
   switch (flag.flag_type) {
     case 'multiplechoice':
       const mcType = flag.multi_select ? 'checkbox' : 'radio';
-      flag.options.forEach(function (o) {
+      flag.options.forEach((o) => {
         const btnSet = `mult-${flag.number}`;
         const radioHTML = `<label><input data-disable-on-completion='true' type='${mcType}' name='${btnSet}' value='${o}'>${o}</label><br>`;
         template.find(`#flag-answer-${flag.number}`).append(radioHTML);
@@ -213,7 +213,7 @@ function showRelevantFlags() {
 
 function getAnswers() {
   const answers = {};
-  $('.flag-answer').each(function (i, set) {
+  $('.flag-answer').each((i, set) => {
     if ($(set).parent().find('#flag-status').html()
       .charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
@@ -229,7 +229,7 @@ function getAnswers() {
         if (answer.length > 1) {
         //        multiselect multiple choice
           const arr = [];
-          answer.each(function (idx, a) {
+          answer.each((idx, a) => {
             arr.push(a.value);
           });
           answer = arr;
@@ -272,9 +272,7 @@ function selectBadge(element) {
 
 function displayCert(code, completedBadges, totalBadges) {
   if (completedBadges === totalBadges) {
-    code = code.sort(function (a, b) {
-      return a.toString().length - b.toString().length;
-    });
+    code = code.sort((a, b) => a.toString().length - b.toString().length);
     code = code.join(' ');
     document.getElementById('alert-modal').style.display = 'block';
     const alert_text = `Congratulations! You've completed the certification! The code for the certification is below:\n\n${btoa(code)}`;
