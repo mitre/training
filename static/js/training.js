@@ -53,7 +53,7 @@ function loadCertification(){
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
-  restRequest('POST', {'index':'certifications','name':selectedCert}, loadCert);
+  restRequest('POST', {'index':'certifications', 'name':selectedCert}, loadCert);
 }
 
 function setCertDescription() {
