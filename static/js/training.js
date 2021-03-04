@@ -1,5 +1,5 @@
 var refresher = setInterval(refresh, 15000);
-$('.section-profile').bind('destroyed', function() {
+$('.section-profile').bind('destroyed', function () {
   clearInterval(refresher);
 });
 $(document).ready(function () {
@@ -37,7 +37,7 @@ function openFlagSolutionGuide(certName, badgeName, flagName){
 
 function loadCertification(){
   function loadCert(data){
-    data[0].badges.forEach(function(badge) {
+    data[0].badges.forEach(function (badge) {
       let template = $('#badge-template').clone();
       template.attr('id', 'badge-' + badge.name);
       template.find('#badge-name').text(badge.name);
@@ -49,7 +49,7 @@ function loadCertification(){
   }
   let selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
-  certificate = certificates.find(function(cert){ return cert.name == selectedCert; });
+  certificate = certificates.find(function (cert){ return cert.name == selectedCert; });
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
@@ -158,7 +158,7 @@ function createFlagHTML(certName, badge, flag) {
   let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
     'click',
-    function(e) { openFlagSolutionGuide(certName, badge.name, flag.name); }
+    function (e) { openFlagSolutionGuide(certName, badge.name, flag.name); }
   );
 
   return template;
@@ -173,7 +173,7 @@ function addAnswerOptions(flag, template) {
   switch (flag.flag_type) {
     case 'multiplechoice':
       let mcType = flag.multi_select ? 'checkbox' : 'radio';
-      flag.options.forEach(function(o) {
+      flag.options.forEach(function (o) {
         let btnSet = 'mult-' + flag.number;
         let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + '</label><br>';
         template.find('#flag-answer-' + flag.number).append(radioHTML);
@@ -198,7 +198,7 @@ function showRelevantFlags() {
   let selected = $('#badges').find('.selected-badge');
   if (selected.length) {
     var badge_name = selected.find('#badge-name').text();
-    flags.find('li').each(function() {
+    flags.find('li').each(function () {
       if ($(this).attr('badge') === badge_name) {
         $(this).show();
       } else {
@@ -206,7 +206,7 @@ function showRelevantFlags() {
       }
     });
   } else {
-    flags.find('li').each(function() {
+    flags.find('li').each(function () {
       $(this).show();
     });
   }
@@ -214,7 +214,7 @@ function showRelevantFlags() {
 
 function getAnswers() {
   let answers = {};
-  $('.flag-answer').each(function(i, set) {
+  $('.flag-answer').each(function (i, set) {
     if ($(set).parent().find('#flag-status').html().charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
       return;
@@ -229,7 +229,7 @@ function getAnswers() {
         if (answer.length > 1) {
         //        multiselect multiple choice
           let arr = [];
-          answer.each(function(idx, a) {
+          answer.each(function (idx, a) {
             arr.push(a.value);
           });
           answer = arr;
@@ -262,7 +262,7 @@ function selectBadge(element) {
     $(element).find('.badge-icon').removeAttr('id');
     showRelevantFlags();
   } else if ($(element).attr('status')){
-    $('#badges').find('li').each(function() {
+    $('#badges').find('li').each(function () {
       $(this).removeAttr('class');
       $(this).find('.badge-icon').removeAttr('id');
     });
@@ -274,7 +274,7 @@ function selectBadge(element) {
 
 function displayCert(code, completedBadges, totalBadges) {
   if (completedBadges === totalBadges) {
-    code = code.sort(function(a, b) {
+    code = code.sort(function (a, b) {
       return a.toString().length - b.toString().length;
     });
     code = code.join(' ');
