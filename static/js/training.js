@@ -53,7 +53,7 @@ function loadCertification() {
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
-  restRequest('POST', { 'index': 'certifications', 'name': selectedCert }, loadCert);
+  restRequest('POST', { index: 'certifications', name: selectedCert }, loadCert);
 }
 
 function setCertDescription() {
@@ -81,7 +81,7 @@ function refresh() {
     return;
   }
   $('#training-disclaimers').hide();
-  restRequest('POST', { 'name': selectedCert, 'answers': {} }, update, '/plugin/training/flags');
+  restRequest('POST', { name: selectedCert, answers: {} }, update, '/plugin/training/flags');
 }
 
 function update(data) {
@@ -288,7 +288,7 @@ function checkAnswers() {
   let answers = allAnswered();
   if (answers) {
     let selectedCert = $('#certification-name option:selected').attr('value');
-    restRequest('POST', { 'name': selectedCert, 'answers': answers }, update, '/plugin/training/flags');
+    restRequest('POST', { name: selectedCert, answers }, update, '/plugin/training/flags');
   }
 }
 
@@ -348,7 +348,7 @@ function trainingSendFlagReset() {
   if (!selectedCert) {
     return;
   }
-  restRequest('POST', { 'name': selectedCert }, resetCallback, '/plugin/training/reset_flag');
+  restRequest('POST', { name: selectedCert }, resetCallback, '/plugin/training/reset_flag');
 }
 
 function resetCallback(data) {
