@@ -49,7 +49,7 @@ function loadCertification(){
   }
   let selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
-  certificate = certificates.find(function(cert){ return cert.name == selectedCert;});
+  certificate = certificates.find(function(cert){ return cert.name == selectedCert; });
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
