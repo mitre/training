@@ -14,6 +14,7 @@ module.exports = {
         certificates: "readonly",
     },
     "rules": {
+        // These can't be fixed with --fix and will require manual updates.
         "camelcase": "off",
         "eqeqeq": "off",
         "func-names": "off",
