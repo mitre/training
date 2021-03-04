@@ -39,9 +39,9 @@ function loadCertification() {
   function loadCert(data) {
     data[0].badges.forEach(function (badge) {
       let template = $('#badge-template').clone();
-      template.attr('id', 'badge-' + badge.name);
+      template.attr('id', `badge-${badge.name}`);
       template.find('#badge-name').text(badge.name);
-      template.find('#badge-icon').attr('src', '/training/img/badges/' + badge.name + '.png');
+      template.find('#badge-icon').attr('src', `/training/img/badges/${badge.name}.png`);
       template.show();
       $('#badges').append(template);
     });
@@ -94,7 +94,7 @@ function update(data) {
   for (var badgeIdx in data.badges) {
     var badge = data.badges[badgeIdx];
     let badgeComplete = 0;
-    let b = $('#badge-' + badge.name);
+    let b = $(`#badge-${badge.name}`);
     b.find('.badge-icon').addClass('badge-in-progress');
     b.attr('status', 'progress');
     for (var flagIdx in badge.flags) {
@@ -138,7 +138,7 @@ function createFlagHTML(certName, badge, flag) {
   template.removeAttr('id');
 
   template.attr('badge', badge.name);
-  template.find('#flag-number').html('&#127937 ' + flag.number);
+  template.find('#flag-number').html(`&#127937 ${flag.number}`);
   template.find('#flag-name').text(flag.name);
   template.find('#flag-challenge').text(flag.challenge);
 
@@ -165,27 +165,27 @@ function createFlagHTML(certName, badge, flag) {
 
 function addAnswerOptions(flag, template) {
   template.find('#flag-answer').show();
-  template.find('#flag-answer').attr('id', 'flag-answer-' + flag.number);
-  template.find('#flag-answer-' + flag.number).addClass('flag-answer');
-  template.find('#flag-answer-' + flag.number).addClass(flag.flag_type);
+  template.find('#flag-answer').attr('id', `flag-answer-${flag.number}`);
+  template.find(`#flag-answer-${flag.number}`).addClass('flag-answer');
+  template.find(`#flag-answer-${flag.number}`).addClass(flag.flag_type);
 
   switch (flag.flag_type) {
     case 'multiplechoice':
       let mcType = flag.multi_select ? 'checkbox' : 'radio';
       flag.options.forEach(function (o) {
-        let btnSet = 'mult-' + flag.number;
-        let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + '</label><br>';
-        template.find('#flag-answer-' + flag.number).append(radioHTML);
+        let btnSet = `mult-${flag.number}`;
+        let radioHTML = `<label><input data-disable-on-completion='true' type='${mcType}' name='${btnSet}' value='${o}'>${o}</label><br>`;
+        template.find(`#flag-answer-${flag.number}`).append(radioHTML);
       });
       break;
     case 'fillinblank':
-      template.find('#flag-answer-' + flag.number).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
+      template.find(`#flag-answer-${flag.number}`).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
       break;
     case 'navigator':
       let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
                         "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
                         "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
-      template.find('#flag-answer-' + flag.number).append(uploadHTML);
+      template.find(`#flag-answer-${flag.number}`).append(uploadHTML);
       break;
     default:
       stream('Unknown flag type provided');
@@ -277,7 +277,7 @@ function displayCert(code, completedBadges, totalBadges) {
     });
     code = code.join(' ');
     document.getElementById('alert-modal').style.display = 'block';
-    let alert_text = "Congratulations! You've completed the certification! The code for the certification is below:\n\n" + btoa(code);
+    let alert_text = `Congratulations! You've completed the certification! The code for the certification is below:\n\n${btoa(code)}`;
     $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
     $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
     clearInterval(refresher);
