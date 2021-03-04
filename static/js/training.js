@@ -24,14 +24,14 @@ function openCertificateSolutionGuide() {
   let selectedCert = getSelectedCertificateName();
   window.open(
     `/plugin/training/solution-guides/certificates/${selectedCert}`,
-    '_blank'
+    '_blank',
   );
 }
 
 function openFlagSolutionGuide(certName, badgeName, flagName) {
   window.open(
     `/plugin/training/solution-guides/certificates/${certName}/badges/${badgeName}/flags/${flagName}`,
-    '_blank'
+    '_blank',
   );
 }
 
@@ -157,7 +157,7 @@ function createFlagHTML(certName, badge, flag) {
   let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
     'click',
-    function (e) { openFlagSolutionGuide(certName, badge.name, flag.name); }
+    function (e) { openFlagSolutionGuide(certName, badge.name, flag.name); },
   );
 
   return template;
