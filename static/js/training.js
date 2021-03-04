@@ -38,8 +38,8 @@ function openFlagSolutionGuide(certName, badgeName, flagName){
 function loadCertification(){
   function loadCert(data){
     data[0].badges.forEach(function(badge) {
-      let template = $("#badge-template").clone();
-      template.attr("id", "badge-" + badge.name);
+      let template = $('#badge-template').clone();
+      template.attr('id', 'badge-' + badge.name);
       template.find('#badge-name').text(badge.name);
       template.find('#badge-icon').attr('src', '/training/img/badges/'+badge.name+'.png');
       template.show();
@@ -53,7 +53,7 @@ function loadCertification(){
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
-  restRequest('POST', {"index":"certifications","name":selectedCert}, loadCert)
+  restRequest('POST', {'index':'certifications','name':selectedCert}, loadCert)
 }
 
 function setCertDescription() {
@@ -62,12 +62,12 @@ function setCertDescription() {
 }
 
 function setCertRefresh() {
-  if (certificate.cert_type && certificate.cert_type == "exam") {
+  if (certificate.cert_type && certificate.cert_type == 'exam') {
     clearInterval(refresher);
-    $("#btn-check-answers").show();
+    $('#btn-check-answers').show();
   }
   else {
-    $("#btn-check-answers").hide();
+    $('#btn-check-answers').hide();
     refresher = setInterval(refresh, 15000);
   }
 }
@@ -82,7 +82,7 @@ function refresh(){
     return;
   }
   $('#training-disclaimers').hide();
-  restRequest('POST', {"name":selectedCert, "answers":{}}, update, '/plugin/training/flags')
+  restRequest('POST', {'name':selectedCert, 'answers':{}}, update, '/plugin/training/flags')
 }
 
 function update(data){
@@ -135,7 +135,7 @@ function update(data){
 }
 
 function createFlagHTML(certName, badge, flag) {
-  let template = $("#flag-template").clone();
+  let template = $('#flag-template').clone();
   template.removeAttr('id');
 
   template.attr('badge', badge.name);
@@ -147,13 +147,13 @@ function createFlagHTML(certName, badge, flag) {
     addAnswerOptions(flag, template);
   }
 
-  if (flag.extra_info == null || flag.extra_info == "") {
-    template.find(".flip-card-inner").attr('data-flip', 'false');
+  if (flag.extra_info == null || flag.extra_info == '') {
+    template.find('.flip-card-inner').attr('data-flip', 'false');
   } else {
-    template.find("#flag-info").text(flag.extra_info);
+    template.find('#flag-info').text(flag.extra_info);
   }
 
-  template.find("#flag-completed-ts").text(flag.completed_timestamp);
+  template.find('#flag-completed-ts').text(flag.completed_timestamp);
 
   let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
@@ -165,31 +165,31 @@ function createFlagHTML(certName, badge, flag) {
 }
 
 function addAnswerOptions(flag, template) {
-  template.find("#flag-answer").show();
-  template.find("#flag-answer").attr("id", "flag-answer-" + flag.number);
-  template.find("#flag-answer-" + flag.number).addClass("flag-answer");
-  template.find("#flag-answer-" + flag.number).addClass(flag.flag_type);
+  template.find('#flag-answer').show();
+  template.find('#flag-answer').attr('id', 'flag-answer-' + flag.number);
+  template.find('#flag-answer-' + flag.number).addClass('flag-answer');
+  template.find('#flag-answer-' + flag.number).addClass(flag.flag_type);
 
   switch (flag.flag_type) {
-    case "multiplechoice":
+    case 'multiplechoice':
       let mcType = flag.multi_select ? 'checkbox' : 'radio'
       flag.options.forEach(function(o) {
-        let btnSet = "mult-" + flag.number;
-        let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + "</label><br>";
-        template.find("#flag-answer-" + flag.number).append(radioHTML);
+        let btnSet = 'mult-' + flag.number;
+        let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + '</label><br>';
+        template.find('#flag-answer-' + flag.number).append(radioHTML);
       })
       break;
-    case "fillinblank":
-      template.find("#flag-answer-" + flag.number).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
+    case 'fillinblank':
+      template.find('#flag-answer-' + flag.number).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
       break;
-    case "navigator":
+    case 'navigator':
       let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
                         "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
                         "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
-      template.find("#flag-answer-" + flag.number).append(uploadHTML);
+      template.find('#flag-answer-' + flag.number).append(uploadHTML);
       break;
     default:
-      stream("Unknown flag type provided");
+      stream('Unknown flag type provided');
   }
 }
 
@@ -214,18 +214,18 @@ function showRelevantFlags() {
 
 function getAnswers() {
   let answers = {}
-  $(".flag-answer").each(function(i, set) {
-    if ($(set).parent().find("#flag-status").html().charCodeAt(0) == 9989) {
+  $('.flag-answer').each(function(i, set) {
+    if ($(set).parent().find('#flag-status').html().charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
       return;
     }
-    let flagNum = $(set).attr("id").split("-")[2];
-    let type = $(set).attr("class").split(" ")[1];
+    let flagNum = $(set).attr('id').split('-')[2];
+    let type = $(set).attr('class').split(' ')[1];
     let answer = [];
 
     switch (type) {
-      case "multiplechoice":
-        answer = $(set).find("input:checked");
+      case 'multiplechoice':
+        answer = $(set).find('input:checked');
         if (answer.length > 1) {
         //        multiselect multiple choice
           let arr = [];
@@ -239,17 +239,17 @@ function getAnswers() {
           answer = answer.val();
         }
         else {
-          answer = "";
+          answer = '';
         }
         break;
-      case "fillinblank":
-        answer = $(set).find("input:not([type=checkbox],[type=radio],[type=file])").val();
+      case 'fillinblank':
+        answer = $(set).find('input:not([type=checkbox],[type=radio],[type=file])').val();
         break;
-      case "navigator":
+      case 'navigator':
         answer = layerFileData[flagNum];
         break;
       default:
-        stream("Unknown flag type provided");
+        stream('Unknown flag type provided');
     }
     answers[flagNum] = answer;
   })
@@ -278,7 +278,7 @@ function displayCert(code, completedBadges, totalBadges) {
       return a.toString().length - b.toString().length;
     });
     code = code.join(' ');
-    document.getElementById("alert-modal").style.display="block";
+    document.getElementById('alert-modal').style.display='block';
     let alert_text = "Congratulations! You've completed the certification! The code for the certification is below:\n\n" + btoa(code);
     $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
     $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
@@ -290,7 +290,7 @@ function checkAnswers() {
   let answers = allAnswered();
   if (answers) {
     let selectedCert = $('#certification-name option:selected').attr('value');
-    restRequest('POST', {"name":selectedCert, "answers":answers}, update, '/plugin/training/flags');
+    restRequest('POST', {'name':selectedCert, 'answers':answers}, update, '/plugin/training/flags');
   }
 }
 
@@ -301,7 +301,7 @@ function allAnswered() {
   for (var a in answers) {
     complete = complete && answers[a];
   }
-  if (complete || confirm("There are still unanswered questions, are you absolutely sure you want to submit?")) {
+  if (complete || confirm('There are still unanswered questions, are you absolutely sure you want to submit?')) {
     return answers
   }
   else {
@@ -310,15 +310,15 @@ function allAnswered() {
 }
 
 function uploadLayer(btn) {
-  $(btn).siblings("#layer-upload").click();
+  $(btn).siblings('#layer-upload').click();
 }
 
-$("body").on("change", "input.layer-upload", async function (event){
+$('body').on('change', 'input.layer-upload', async function (event){
   if(event.currentTarget) {
     let file = event.currentTarget.files[0];
-    let parentId = $(this).parent().attr("id").split("-")[2];
+    let parentId = $(this).parent().attr('id').split('-')[2];
     if(file && file.name){
-      $(this).siblings("#layer-upload-filename").html(file.name);
+      $(this).siblings('#layer-upload-filename').html(file.name);
       try {
         layerFileData[parentId] = await readUploadedFileAsText(file)
       } catch (e) {
@@ -326,7 +326,7 @@ $("body").on("change", "input.layer-upload", async function (event){
       }
     }
     else {
-      $(this).siblings("#layer-upload-filename").html("");
+      $(this).siblings('#layer-upload-filename').html('');
       delete layerFileData[parentId];
     }
   }
@@ -338,7 +338,7 @@ function readUploadedFileAsText(inputFile) {
   return new Promise((resolve, reject) => {
     temporaryFileReader.onerror = () => {
       temporaryFileReader.abort();
-      reject(new DOMException("Problem parsing input file."));
+      reject(new DOMException('Problem parsing input file.'));
     };
 
     temporaryFileReader.onload = () => {
@@ -353,7 +353,7 @@ function trainingSendFlagReset() {
   if(!selectedCert){
     return;
   }
-  restRequest('POST', {"name":selectedCert}, resetCallback, '/plugin/training/reset_flag');
+  restRequest('POST', {'name':selectedCert}, resetCallback, '/plugin/training/reset_flag');
 }
 
 function resetCallback(data) {
