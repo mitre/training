@@ -182,9 +182,9 @@ function addAnswerOptions(flag, template) {
       template.find(`#flag-answer-${flag.number}`).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
       break;
     case 'navigator':
-      let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>" +
-                        "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>" +
-                        "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
+      let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>"
+                        + "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>"
+                        + "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
       template.find(`#flag-answer-${flag.number}`).append(uploadHTML);
       break;
     default:
