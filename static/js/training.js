@@ -1,4 +1,4 @@
-var refresher = setInterval(refresh, 15000);
+let refresher = setInterval(refresh, 15000);
 $('.section-profile').bind('destroyed', () => {
   clearInterval(refresher);
 });
@@ -6,8 +6,8 @@ $(document).ready(() => {
   refresh();
 });
 
-var layerFileData = {};
-var certificate;
+const layerFileData = {};
+let certificate;
 
 function handleCertificateSelectionChange() {
   loadCertification();
@@ -91,20 +91,20 @@ function update(data) {
   flags.empty();
 
   badgeLoop:
-  for (var badgeIdx in data.badges) {
-    var badge = data.badges[badgeIdx];
+  for (const badgeIdx in data.badges) {
+    const badge = data.badges[badgeIdx];
     let badgeComplete = 0;
     const b = $(`#badge-${badge.name}`);
     b.find('.badge-icon').addClass('badge-in-progress');
     b.attr('status', 'progress');
-    for (var flagIdx in badge.flags) {
-      var flag = badge.flags[flagIdx];
+    for (const flagIdx in badge.flags) {
+      const flag = badge.flags[flagIdx];
       const flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
 
       if (flag.completed) {
         flagHTML.find('#flag-status').html('&#x2705;');
 
-        elementsToDisable = flagHTML.find('[data-disable-on-completion="true"]');
+        const elementsToDisable = flagHTML.find('[data-disable-on-completion="true"]');
         elementsToDisable.attr('disabled', true);
         elementsToDisable.filter('button').removeClass('button-success');
 
@@ -196,7 +196,7 @@ function showRelevantFlags() {
   const flags = $('#flags');
   const selected = $('#badges').find('.selected-badge');
   if (selected.length) {
-    var badge_name = selected.find('#badge-name').text();
+    const badge_name = selected.find('#badge-name').text();
     flags.find('li').each(function () {
       if ($(this).attr('badge') === badge_name) {
         $(this).show();
@@ -294,7 +294,7 @@ function allAnswered() {
   const answers = getAnswers();
 
   let complete = true;
-  for (var a in answers) {
+  for (const a in answers) {
     complete = complete && answers[a];
   }
   if (complete || confirm('There are still unanswered questions, are you absolutely sure you want to submit?')) {
