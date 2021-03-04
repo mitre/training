@@ -215,7 +215,8 @@ function showRelevantFlags() {
 function getAnswers() {
   let answers = {};
   $('.flag-answer').each(function (i, set) {
-    if ($(set).parent().find('#flag-status').html().charCodeAt(0) == 9989) {
+    if ($(set).parent().find('#flag-status').html()
+      .charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
       return;
     }
