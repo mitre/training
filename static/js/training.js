@@ -65,8 +65,7 @@ function setCertRefresh() {
   if (certificate.cert_type && certificate.cert_type == 'exam') {
     clearInterval(refresher);
     $('#btn-check-answers').show();
-  }
-  else {
+  } else {
     $('#btn-check-answers').hide();
     refresher = setInterval(refresh, 15000);
   }
@@ -234,12 +233,10 @@ function getAnswers() {
             arr.push(a.value);
           });
           answer = arr;
-        }
-        else if (answer.length == 1) {
+        } else if (answer.length == 1) {
         //        single option multiple choice
           answer = answer.val();
-        }
-        else {
+        } else {
           answer = '';
         }
         break;
@@ -304,8 +301,7 @@ function allAnswered() {
   }
   if (complete || confirm('There are still unanswered questions, are you absolutely sure you want to submit?')) {
     return answers;
-  }
-  else {
+  } else {
     return null;
   }
 }
@@ -325,8 +321,7 @@ $('body').on('change', 'input.layer-upload', async function (event){
       } catch (e) {
         console.warn(e.message);
       }
-    }
-    else {
+    } else {
       $(this).siblings('#layer-upload-filename').html('');
       delete layerFileData[parentId];
     }
