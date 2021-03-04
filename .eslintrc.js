@@ -13,5 +13,19 @@ module.exports = {
         restRequest: "readonly",
         certificates: "readonly",
     },
-    "rules": {}
+    "rules": {
+        "camelcase": "off",
+        "eqeqeq": "off",
+        "func-names": "off",
+        "guard-for-in": "off",
+        "no-alert": "off",
+        "no-case-declarations": "off",
+        "no-console": "off",
+        "no-labels": "off",
+        "no-param-reassign": "off",
+        "no-restricted-globals": "off",
+        "no-restricted-syntax": "off",
+        "no-unused-vars": "off",
+        "no-use-before-define": "off",
+    }
 };
