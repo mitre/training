@@ -21,7 +21,7 @@ function showCertificateSolutionGuideButton() {
 }
 
 function openCertificateSolutionGuide() {
-  let selectedCert = getSelectedCertificateName();
+  const selectedCert = getSelectedCertificateName();
   window.open(
     `/plugin/training/solution-guides/certificates/${selectedCert}`,
     '_blank',
@@ -38,7 +38,7 @@ function openFlagSolutionGuide(certName, badgeName, flagName) {
 function loadCertification() {
   function loadCert(data) {
     data[0].badges.forEach(function (badge) {
-      let template = $('#badge-template').clone();
+      const template = $('#badge-template').clone();
       template.attr('id', `badge-${badge.name}`);
       template.find('#badge-name').text(badge.name);
       template.find('#badge-icon').attr('src', `/training/img/badges/${badge.name}.png`);
@@ -47,7 +47,7 @@ function loadCertification() {
     });
     refresh();
   }
-  let selectedCert = $('#certification-name option:selected').attr('value');
+  const selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
   certificate = certificates.find(function (cert) { return cert.name == selectedCert; });
   setCertDescription();
@@ -76,7 +76,7 @@ function getSelectedCertificateName() {
 }
 
 function refresh() {
-  let selectedCert = $('#certification-name option:selected').attr('value');
+  const selectedCert = $('#certification-name option:selected').attr('value');
   if (!selectedCert) {
     return;
   }
@@ -86,20 +86,20 @@ function refresh() {
 
 function update(data) {
   let completedBadges = 0;
-  let code = [];
-  let flags = $('#flags');
+  const code = [];
+  const flags = $('#flags');
   flags.empty();
 
   badgeLoop:
   for (var badgeIdx in data.badges) {
     var badge = data.badges[badgeIdx];
     let badgeComplete = 0;
-    let b = $(`#badge-${badge.name}`);
+    const b = $(`#badge-${badge.name}`);
     b.find('.badge-icon').addClass('badge-in-progress');
     b.attr('status', 'progress');
     for (var flagIdx in badge.flags) {
       var flag = badge.flags[flagIdx];
-      let flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
+      const flagHTML = createFlagHTML(getSelectedCertificateName(), badge, flag);
 
       if (flag.completed) {
         flagHTML.find('#flag-status').html('&#x2705;');
@@ -134,7 +134,7 @@ function update(data) {
 }
 
 function createFlagHTML(certName, badge, flag) {
-  let template = $('#flag-template').clone();
+  const template = $('#flag-template').clone();
   template.removeAttr('id');
 
   template.attr('badge', badge.name);
@@ -154,7 +154,7 @@ function createFlagHTML(certName, badge, flag) {
 
   template.find('#flag-completed-ts').text(flag.completed_timestamp);
 
-  let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
+  const btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
     'click',
     function (e) { openFlagSolutionGuide(certName, badge.name, flag.name); },
@@ -171,10 +171,10 @@ function addAnswerOptions(flag, template) {
 
   switch (flag.flag_type) {
     case 'multiplechoice':
-      let mcType = flag.multi_select ? 'checkbox' : 'radio';
+      const mcType = flag.multi_select ? 'checkbox' : 'radio';
       flag.options.forEach(function (o) {
-        let btnSet = `mult-${flag.number}`;
-        let radioHTML = `<label><input data-disable-on-completion='true' type='${mcType}' name='${btnSet}' value='${o}'>${o}</label><br>`;
+        const btnSet = `mult-${flag.number}`;
+        const radioHTML = `<label><input data-disable-on-completion='true' type='${mcType}' name='${btnSet}' value='${o}'>${o}</label><br>`;
         template.find(`#flag-answer-${flag.number}`).append(radioHTML);
       });
       break;
@@ -182,7 +182,7 @@ function addAnswerOptions(flag, template) {
       template.find(`#flag-answer-${flag.number}`).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
       break;
     case 'navigator':
-      let uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>"
+      const uploadHTML = "<input data-disable-on-completion='true' id='layer-upload' class='layer-upload' type='file' accept='.json' hidden>"
                         + "<button data-disable-on-completion='true' class='button-success atomic-button' onclick='uploadLayer(this)'>Upload Layer</button>"
                         + "<p id='layer-upload-filename' style='margin:0px; padding:10px 0px;'></p>";
       template.find(`#flag-answer-${flag.number}`).append(uploadHTML);
@@ -193,8 +193,8 @@ function addAnswerOptions(flag, template) {
 }
 
 function showRelevantFlags() {
-  let flags = $('#flags');
-  let selected = $('#badges').find('.selected-badge');
+  const flags = $('#flags');
+  const selected = $('#badges').find('.selected-badge');
   if (selected.length) {
     var badge_name = selected.find('#badge-name').text();
     flags.find('li').each(function () {
@@ -212,15 +212,15 @@ function showRelevantFlags() {
 }
 
 function getAnswers() {
-  let answers = {};
+  const answers = {};
   $('.flag-answer').each(function (i, set) {
     if ($(set).parent().find('#flag-status').html()
       .charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
       return;
     }
-    let flagNum = $(set).attr('id').split('-')[2];
-    let type = $(set).attr('class').split(' ')[1];
+    const flagNum = $(set).attr('id').split('-')[2];
+    const type = $(set).attr('class').split(' ')[1];
     let answer = [];
 
     switch (type) {
@@ -228,7 +228,7 @@ function getAnswers() {
         answer = $(set).find('input:checked');
         if (answer.length > 1) {
         //        multiselect multiple choice
-          let arr = [];
+          const arr = [];
           answer.each(function (idx, a) {
             arr.push(a.value);
           });
@@ -277,7 +277,7 @@ function displayCert(code, completedBadges, totalBadges) {
     });
     code = code.join(' ');
     document.getElementById('alert-modal').style.display = 'block';
-    let alert_text = `Congratulations! You've completed the certification! The code for the certification is below:\n\n${btoa(code)}`;
+    const alert_text = `Congratulations! You've completed the certification! The code for the certification is below:\n\n${btoa(code)}`;
     $('#alert-text').html(alert_text).css('white-space', 'pre-wrap');
     $('#alert-text').html(alert_text).css('word-wrap', 'break-word');
     clearInterval(refresher);
@@ -285,15 +285,15 @@ function displayCert(code, completedBadges, totalBadges) {
 }
 
 function checkAnswers() {
-  let answers = allAnswered();
+  const answers = allAnswered();
   if (answers) {
-    let selectedCert = $('#certification-name option:selected').attr('value');
+    const selectedCert = $('#certification-name option:selected').attr('value');
     restRequest('POST', { name: selectedCert, answers }, update, '/plugin/training/flags');
   }
 }
 
 function allAnswered() {
-  let answers = getAnswers();
+  const answers = getAnswers();
 
   let complete = true;
   for (var a in answers) {
@@ -311,8 +311,8 @@ function uploadLayer(btn) {
 
 $('body').on('change', 'input.layer-upload', async function (event) {
   if (event.currentTarget) {
-    let file = event.currentTarget.files[0];
-    let parentId = $(this).parent().attr('id').split('-')[2];
+    const file = event.currentTarget.files[0];
+    const parentId = $(this).parent().attr('id').split('-')[2];
     if (file && file.name) {
       $(this).siblings('#layer-upload-filename').html(file.name);
       try {
@@ -344,7 +344,7 @@ function readUploadedFileAsText(inputFile) {
 }
 
 function trainingSendFlagReset() {
-  let selectedCert = $('#certification-name option:selected').attr('value');
+  const selectedCert = $('#certification-name option:selected').attr('value');
   if (!selectedCert) {
     return;
   }
