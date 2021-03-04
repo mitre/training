@@ -49,11 +49,11 @@ function loadCertification(){
   }
   let selectedCert = $('#certification-name option:selected').attr('value');
   stream('Hover over each flag to get adversary emulation tips & tricks!');
-  certificate = certificates.find(function(cert){ return cert.name == selectedCert});
+  certificate = certificates.find(function(cert){ return cert.name == selectedCert;});
   setCertDescription();
   setCertRefresh();
   $('#badges').empty();
-  restRequest('POST', {'index':'certifications','name':selectedCert}, loadCert)
+  restRequest('POST', {'index':'certifications','name':selectedCert}, loadCert);
 }
 
 function setCertDescription() {
@@ -82,7 +82,7 @@ function refresh(){
     return;
   }
   $('#training-disclaimers').hide();
-  restRequest('POST', {'name':selectedCert, 'answers':{}}, update, '/plugin/training/flags')
+  restRequest('POST', {'name':selectedCert, 'answers':{}}, update, '/plugin/training/flags');
 }
 
 function update(data){
@@ -127,7 +127,7 @@ function update(data){
       b.find('.badge-icon').removeClass('badge-in-progress');
       b.find('.badge-icon').addClass('badge-completed');
       b.attr('status', 'completed');
-      completedBadges += 1
+      completedBadges += 1;
     }
   }
   showRelevantFlags();
@@ -158,10 +158,10 @@ function createFlagHTML(certName, badge, flag) {
   let btnViewFlagSolutionGuide = template.find('#btn-view-flag-solution-guide');
   btnViewFlagSolutionGuide.on(
     'click',
-    function(e) { openFlagSolutionGuide(certName, badge.name, flag.name) }
+    function(e) { openFlagSolutionGuide(certName, badge.name, flag.name); }
   );
 
-  return template
+  return template;
 }
 
 function addAnswerOptions(flag, template) {
@@ -172,12 +172,12 @@ function addAnswerOptions(flag, template) {
 
   switch (flag.flag_type) {
     case 'multiplechoice':
-      let mcType = flag.multi_select ? 'checkbox' : 'radio'
+      let mcType = flag.multi_select ? 'checkbox' : 'radio';
       flag.options.forEach(function(o) {
         let btnSet = 'mult-' + flag.number;
         let radioHTML = "<label><input data-disable-on-completion='true' type='" + mcType + "' name='" + btnSet + "' value='" + o + "'>" + o + '</label><br>';
         template.find('#flag-answer-' + flag.number).append(radioHTML);
-      })
+      });
       break;
     case 'fillinblank':
       template.find('#flag-answer-' + flag.number).append("<input data-disable-on-completion='true' class='fill-in-the-blank'>");
@@ -213,7 +213,7 @@ function showRelevantFlags() {
 }
 
 function getAnswers() {
-  let answers = {}
+  let answers = {};
   $('.flag-answer').each(function(i, set) {
     if ($(set).parent().find('#flag-status').html().charCodeAt(0) == 9989) {
       //        skip flags that have already been completed
@@ -230,9 +230,9 @@ function getAnswers() {
         //        multiselect multiple choice
           let arr = [];
           answer.each(function(idx, a) {
-            arr.push(a.value)
-          })
-          answer = arr
+            arr.push(a.value);
+          });
+          answer = arr;
         }
         else if (answer.length == 1) {
         //        single option multiple choice
@@ -252,7 +252,7 @@ function getAnswers() {
         stream('Unknown flag type provided');
     }
     answers[flagNum] = answer;
-  })
+  });
   return answers;
 }
 
@@ -295,17 +295,17 @@ function checkAnswers() {
 }
 
 function allAnswered() {
-  let answers = getAnswers()
+  let answers = getAnswers();
 
-  let complete = true
+  let complete = true;
   for (var a in answers) {
     complete = complete && answers[a];
   }
   if (complete || confirm('There are still unanswered questions, are you absolutely sure you want to submit?')) {
-    return answers
+    return answers;
   }
   else {
-    return null
+    return null;
   }
 }
 
@@ -320,9 +320,9 @@ $('body').on('change', 'input.layer-upload', async function (event){
     if(file && file.name){
       $(this).siblings('#layer-upload-filename').html(file.name);
       try {
-        layerFileData[parentId] = await readUploadedFileAsText(file)
+        layerFileData[parentId] = await readUploadedFileAsText(file);
       } catch (e) {
-        console.warn(e.message)
+        console.warn(e.message);
       }
     }
     else {
