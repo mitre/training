@@ -3,7 +3,10 @@ from plugins.training.app.c_flag import Flag
 
 class PluginsMockFlag0(Flag):
     name = 'Mock plugin'
-    challenge = 'Enable the mock plugin. Then run an operation against the "simulation" group using the Hunter profile.'
+    challenge = (
+        'Enable the mock plugin. Then run an operation against the "simulation" group using the Hunter profile. '
+        '(Hint: check default.yml for running plugins.)'
+    )
     extra_info = (
         'Testing out attacks ahead of time ensures a high chance of success during a real operation. This can be '
         'cumbersome if the test requires a test lab with varying operating systems. Simulating the responses of '

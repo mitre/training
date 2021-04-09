@@ -9,7 +9,8 @@ class AgentsFlag1(Flag):
     challenge = (
         'Demonstrate your ability to deploy an agent on a remote host. The agent should successfully '
         'beacon back to this server instance. This agent should be run on an operating system that is NOT '
-        'the same as what is hosting the server. It is OK to use a virtual box to complete this challenge.'
+        'the same as what is hosting the server (Hint: If running caldera on any flavor of Linux, use a '
+        'Windows or Mac for remote host). It is OK to use a virtual box to complete this challenge.'
     )
 
     extra_info = (
