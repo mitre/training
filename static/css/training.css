@@ -11,16 +11,28 @@
 .flex-row {
     flex-direction: row;
 }
+
+.flex-col {
+    flex-direction: column;
+}
+
 .flex {
     display: flex;
 }
 
+.text-left {
+    text-align: left;
+}
+
+
+/*
+    PLUGIN STYLES
+*/
 .plugin-container {
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	background-color: var(--color-gray)
-	color: var(--color-white)
+    background-color: var(--color-gray);
+    color: var(--color-white);
     margin-top: 50px;
-    text-align: center;
     padding: 25px;
     border-radius: 25px;
     max-width: 100%;
@@ -32,4 +44,10 @@
 .plugin-header {
     font-size: 1.5rem;
     line-height: 2rem;
+    color: var(--color-white);
+    margin-top: auto;
+}
+
+select {
+    width: auto;
 }

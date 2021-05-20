@@ -1,34 +1,41 @@
 <link rel="stylesheet" href="/training/css/training.css">
-<script src="/training/js/alpine.min.js" defer></script>
+<script src="/training/js/alpine.min.js"></script>
 
 <div id="training" class="section-profile">
-    <div class="plugin-container">
-        <div class="flex justify-between mt-2" x-data="{selectedCert:''}">
-            <div class="flex flex-row items-center">
-                <label class="plugin-header" for="training-cert-select">Training</label>
-                <span class="flex items-center">
-                      <span class="text-colors-white text-2xl ml-1">
-                        <select x-model="selectedCert" id="training-cert-select"
-                                class="h-auto rounded bg-caldera-grayish cursor-pointer">
-                          <option disabled value="">Choose a certificate</option>
-                            {% for cert in certificates %}
+    <div class="plugin-container" x-data="{selectedCert:''}">
+        <div class="flex flex-col mt-2">
+            <div class="flex flex-col text-left">
+                <h1 class="plugin-header">Training</h1>
+                <div class="flex flex-row items-center">
+                    <label for="training-cert-select" class="text-lg mt-2 mr-1">Choose a certificate:</label>
+                    <span class="flex items-center">
+                        <span class="text-colors-white text-2xl ml-1">
+                            <select x-model="selectedCert" id="training-cert-select"
+                                    class="h-auto rounded bg-caldera-grayish cursor-pointer">
+                                <option disabled selected value="">Choose a certificate</option>
+                                {% for cert in certificates %}
                                 <option value="{{ cert.name }}">{{ cert.name }}</option>
-                            {% endfor %}}
-                        </select>
-                      </span>
-                     </span>
+                                {% endfor %}}
+                            </select>
+                        </span>
+                    </span>
+                </div>
             </div>
-            <template x-if="selectedCert"><p x-text="selectedCert"></p></template>
+            <template x-if="selectedCert">
+                <div class="flex flex-col text-left">
+                    <div class="badge-container">
+
+                    </div>
+                    <div class="flag-status-container"></div>
+                    <div class="flag-container"></div>
+                </div>
+            </template>
         </div>
     </div>
 </div>
 
 <script>
-    var certificates = {{ certificates | tojson }}
-
-
-
-
+    var certificates = {{certificates | tojson }}
 
 </script>
 <script src="/training/js/training.js"></script>
