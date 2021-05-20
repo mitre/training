@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="/training/css/training.css">
+<script src="/training/js/training.js"></script>
 <script src="/training/js/alpine.min.js"></script>
 
 <div id="training" class="section-profile">
-    <div class="plugin-container" x-data="{selectedCert:''}">
+    <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value))">
         <div class="flex flex-col mt-2">
             <div class="flex flex-col text-left">
                 <h1 class="plugin-header">Training</h1>
@@ -21,21 +22,42 @@
                     </span>
                 </div>
             </div>
-            <template x-if="selectedCert">
+            <template x-if="badgeList">
                 <div class="flex flex-col text-left">
-                    <div class="badge-container">
-
+                    <div class="badge-container flex flex-row flex-wrap">
+                        <div class="flex flex-row flex-wrap items-start w-full justify-evenly">
+                            <div class="flex items-center flex-col hover:bg-caldera-primary rounded"
+<!--                            <template x-for="badge in badgeList" :key="badge">-->
+<!--                                <p x-text="badgeList.length"></p>-->
+                                <!--                                <button class="flex flex-col justify-center items-center text-base text-colors-white mt-3 p-1 ml-1 mr-1 w-20"-->
+                                <!--                                        x-bind:class="{'font-bold': selectedBadge === badge}"-->
+                                <!--                                        x-bind:value="selectedBadge"-->
+                                <!--                                        x-on:click="(selectedBadge === badge) ? selectedBadge = '' : selectedBadge = badge">-->
+                                <!--                                    <span class="flex flex-col justify-center items-center">-->
+                                <!--                                          <span class="z-0 absolute w-14 fill-current"-->
+                                <!--                                                x-bind:class="badge.completed ? 'text-caldera-yellow' : ''">-->
+                                <!--                                               <svg xmlns="http://www.w3.org/2000/svg" fill="current"-->
+                                <!--                                                    viewBox="0 0 24 24" stroke="currentColor"><path-->
+                                <!--                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+                                <!--                                                       d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>-->
+                                <!--                                              </span>-->
+                                <!--                                              <img x-bind:alt="badge.name" class="w-6 z-10"-->
+                                <!--                                                   onerror="this.src='/training/img/badges/defaultlock.png'"-->
+                                <!--                                                   x-bind:src="badge.icon_src"/>-->
+                                <!--                                            </span>-->
+                                <!--                                    <span class="hover:bg-caldera-primary rounded pl-1 pr-1 text-xs mt-4"-->
+                                <!--                                          x-bind:class="badge.completed ? 'bg-caldera-yellow text-caldera-grayish' : ''"-->
+                                <!--                                          x-text="badge.name">-->
+                                <!--                                          </span>-->
+                                <!--                                </button>-->
+<!--                            </template>-->
+<!--                        </div>-->
                     </div>
-                    <div class="flag-status-container"></div>
-                    <div class="flag-container"></div>
                 </div>
+                <div class="flag-status-container"></div>
+                <div class="flag-container"></div>
             </template>
         </div>
     </div>
 </div>
 
-<script>
-    var certificates = {{certificates | tojson }}
-
-</script>
-<script src="/training/js/training.js"></script>
