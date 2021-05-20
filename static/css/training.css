@@ -1,197 +1,35 @@
-.flag-box {
-    position: relative;
-}
-.flag-box h1 {
-    bottom: 0;
-    right: 0;
-    margin: 20px;
-    position:absolute;
-    font-size: 10px;
-}
-@media only screen and (min-width: 700px) {
-    .flag-box h1 {
-        font-size: 20px;
-    }
-}
-@media only screen and (min-width: 900px) {
-    .flag-box h1 {
-        font-size: 30px;
-    }
-}
-@media only screen and (min-width: 1400px) {
-    .flag-box h1 {
-        font-size: 40px;
-    }
-}
-#flag-challenge {
-    word-break: break-word;
-}
-.flag-box p {
-    font-size:13px;
-    opacity:0.7;
-    text-align: left;
-    padding-left: 25px;
-    padding-right: 25px;
-}
-.flag-box h3 {
-    padding-top: 10px;
-    margin: 0;
-    opacity: 0.5;
-}
-.flag-box h4 {
-    text-transform: uppercase;
-    padding-top: 10px;
-    opacity: 0.8;
-}
-.flag-bottom {
-    bottom: 0;
-    position: absolute;
-}
-.badge-icon {
-    position: relative;
-    padding: 2px;
-    background-color: grey;
-    border-radius: 25px;
-    width: 75px;
-    margin: 3px;
-    text-align: center;
-    opacity: 0.3;
-    overflow: hidden;
-}
-.badge-icon p {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 10px;
-}
-.badge-icon img {
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid black;
-}
-div.badge-in-progress {
-    opacity: 0.75;
-    background-color: steelblue;
-}
-div.badge-completed{
-    opacity: 1.0;
-    background-color: darkgreen;
-}
-.flip-card {
-    height: 975px;
-    background-color: transparent;
-    perspective: 1000px;
-    width: 30%;
-    color: white;
-    padding: 20px;
-    margin: 5px;
-    min-height: 350px;
-    position: relative;
-}
-@media only screen and (min-width: 700px) {
-    .flip-card {
-        height: 800px;
-        width: 30%;
-    }
-}
-@media only screen and (min-width: 900px) {
-    .flip-card {
-        height: 600px;
-        width: 30%;
-    }
-}
-@media only screen and (min-width: 1400px) {
-    .flip-card {
-        height: 400px;
-        width: 25%;
-    }
-}
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-.flip-card:hover .flip-card-inner[data-flip="true"] {
-  transform: rotateY(180deg);
-}
-.flip-card:hover .flip-card-inner[data-flip="false"] .flip-card-front .flag-reset-button{
-  z-index: 1;
-}
-.flip-card:hover .flip-card-inner[data-flip="true"] .flip-card-back .flag-reset-button{
-    z-index: 1;
-}
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.flip-card-front h3, .flip-card-front h4, .flip-card-front p, .flip-card-front h1 {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.flip-card-front {
-    background-color: black;
-    border: 2px solid var(--navbar-color);
-    border-radius: 10px;
-}
-.flip-card-back {
-  background-color: var(--navbar-color);
-  color: white;
-  transform: rotateY(180deg);
-  border-radius: 10px;
-}
-#selected-badge-icon {
-  padding: 2px;
-  margin: 0px;
-  border-style: solid;
-  border-color: white;
-}
-.training-disclaimer-important {
-    background: var(--navbar-color);
-    vertical-align: middle;
-    padding: 10px 0;
-    font-size: 15px;
-}
-.flag-box .flag-reset-button {
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-    color: grey;
-    font-size: 25;
-    margin-right: 10px;
-}
-.flag-answer {
-    padding: 0px 20px;
-    text-align: left;
-}
-input[type="radio"] {
-    width: auto;
-    margin: 5px 10px;
-    vertical-align: sub;
-}
-input[type="checkbox"] {
-    margin: 5px 10px;
-}
-input.fill-in-the-blank {
-    width: 95%;
-    text-align: left;
-}
-input.fill-in-the-blank:disabled {
-    width: 95%;
-    text-align: left;
-    background-color: rgba(239, 239, 239, 0.3);
-}
-input.layer-upload + .layer-upload-label {
-    cursor: pointer;
+:root {
+    --default-font: 'Veranda', sans-serif;
+    --color-white: white;
+    --color-gray: rgb(21, 21, 21);
 }
 
-.solution-content {
-    background-color: black;
-    color: white;
-    font-family: Verdana,sans-serif;
+.items-center {
+    align-items: center;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+.flex {
+    display: flex;
+}
+
+.plugin-container {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	background-color: var(--color-gray)
+	color: var(--color-white)
+    margin-top: 50px;
+    text-align: center;
+    padding: 25px;
+    border-radius: 25px;
+    max-width: 100%;
+    display: flex;
+    position: relative;
+    border: 2px solid var(--navbar-color);
+}
+
+.plugin-header {
+    font-size: 1.5rem;
+    line-height: 2rem;
 }

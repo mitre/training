@@ -1,83 +1,34 @@
 <link rel="stylesheet" href="/training/css/training.css">
+<script src="/training/js/alpine.min.js" defer></script>
 
 <div id="training" class="section-profile">
-    <div class="row">
-        <div class="topleft duk-icon"><img onclick="removeSection('training')" src="/gui/img/x.png"></div>
-        <div class="bottomright duk-icon"><img onclick="toggleSidebar('training-sidebar')" src="/gui/img/expand.png"></div>
-        <div id="training-sidebar" class="column section-border" style="flex:25%;">
-            <img src="/training/img/certification.png">
-            <h4>Training</h4>
-            <p class="section-description">
-                To the right you will find virtual flags, similar to a capture-the-flag event. As you work through
-                each one, more flags will be displayed. Complete all the flags and you will receive a proof of
-                completion. The flags will automatically update (within 15 seconds)
-                as you work through the challenges. Each time you complete a section, a badge (below) will be activated.
-            </p>
-            <br>
-            <div id="cert-select-wrapper" style="display:flex">
-                <select id="certification-name" style="margin-top:-15px;flex:90%" onchange="handleCertificateSelectionChange()">
-                    <option value="" disabled selected>Select a certificate</option>
-                    {% for cert in certificates %}
-                        <option value="{{ cert.name }}">{{ cert.name }}</option>
-                    {% endfor %}}
-                </select>
-                <div style="flex:5%;margin-top:-30px;cursor:pointer" onclick="document.getElementById('training-cert-description-modal').style.display='block'"><p style="border:solid;border-radius:25px;font-size:16px">?</p></div>
+    <div class="plugin-container">
+        <div class="flex justify-between mt-2" x-data="{selectedCert:''}">
+            <div class="flex flex-row items-center">
+                <label class="plugin-header" for="training-cert-select">Training</label>
+                <span class="flex items-center">
+                      <span class="text-colors-white text-2xl ml-1">
+                        <select x-model="selectedCert" id="training-cert-select"
+                                class="h-auto rounded bg-caldera-grayish cursor-pointer">
+                          <option disabled value="">Choose a certificate</option>
+                            {% for cert in certificates %}
+                                <option value="{{ cert.name }}">{{ cert.name }}</option>
+                            {% endfor %}}
+                        </select>
+                      </span>
+                     </span>
             </div>
-            <button id="btn-check-answers" class="button-success atomic-button" style="display:none" onclick="checkAnswers()" >Check Answers</button>
-            <button id="btn-view-certificate-solution-guide" class="button-success atomic-button" hidden onclick="openCertificateSolutionGuide()">View Solution Guide</button>
-            <ul id="badges" class="profile-tests" style="padding-inline-start: 0px"></ul>
-        </div>
-        <div class="column" style="flex:75%;">
-            <div id="banner-container" class="row" style="display: none;"></div>
-            <ul id="flags" class="profile-tests"></ul>
+            <template x-if="selectedCert"><p x-text="selectedCert"></p></template>
         </div>
     </div>
 </div>
-
-<div id="training-cert-description-modal" class="modal" style="display:none">
-    <div class="modal-content" style="width:60%">
-        <div class="container">
-            <div class="row duk-modal">
-                <span onclick="document.getElementById('training-cert-description-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <div class="column" style="flex:60%">
-                    <h3>Select a certification</h3>
-                    <p style="text-align:center;color:white;white-space:pre-wrap">Select a cert first to see information regarding it.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<li id="flag-template" class="flag-box flip-card" style="display: none">
-    <div class="flip-card-inner" data-flip="true">
-        <div class="flip-card-front">
-            <div class="flag-reset-button" onclick="trainingSendFlagReset()" style="display: none">&#8635;</div>
-            <h3 id="flag-number"></h3>
-            <h4 id="flag-name"></h4>
-            <p id="flag-challenge" class="flag-challenge" style="white-space: pre-line"></p>
-            <div id="flag-answer" style="display: none"></div>
-            <center>
-                <h1 id="flag-status"></h1>
-            </center>
-            <br>
-            <b><p id="flag-completed-ts" class="flag-bottom"></p></b>
-        </div>
-        <div class="flip-card-back">
-            <div class="flag-reset-button" onclick="trainingSendFlagReset()" style="display: none">&#8635;</div>
-            <p id="flag-info" style="white-space: pre-line"></p>
-            <button id="btn-view-flag-solution-guide" data-disable-on-completion="false" class="atomic-button">View Solution Guide</button>
-        </div>
-    </div>
-</li>
-
-<li id="badge-template" style="margin:10px;display:none" onclick="selectBadge(this)">
-    <div class="badge-icon">
-        <b><p id="badge-name"></p></b>
-        <img id="badge-icon"/>
-    </div>
-</li>
 
 <script>
     var certificates = {{ certificates | tojson }}
+
+
+
+
+
 </script>
 <script src="/training/js/training.js"></script>
