@@ -26,7 +26,7 @@
                 <div class="flex flex-col text-left">
                     <div class="flex flex-row flex-wrap">
                         <div class="flex flex-row flex-wrap items-start w-full justify-evenly">
-                            <div class="flex items-center flex-row rounded">
+                            <div class="flex items-center flex-row flex-wrap rounded">
                                 <template x-for="badge in badgeList" :key="badge">
                                     <button class="badge-container" x-bind:class="{'font-bold': selectedBadge === badge}"
                                             x-bind:value="selectedBadge"
@@ -48,8 +48,8 @@
                                                        onerror="this.src='/training/img/badges/defaultlock.png'"
                                                        x-bind:src="badge.icon_src"/>
                                                 </span>
-                                        <span class="hover:bg-caldera-primary rounded pl-1 pr-1 text-xs mt-4"
-                                              x-bind:class="badge.completed ? 'bg-caldera-yellow text-caldera-grayish' : ''"
+                                        <span class="badge-text hover:bg-caldera-primary rounded"
+                                              x-bind:class="badge.completed ? 'badge-completed-text' : ''"
                                               x-text="badge.name"></span>
                                     </button>
                                 </template>

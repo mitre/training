@@ -98,19 +98,35 @@ select {
 }
 
 .badge-icon-img {
-    z-index: 10;
+    /*Important styles to override those from shared.css*/
     width: 1.5rem !important;
-    max-width: 100%;
     height: auto !important;
+    border: none !important;
+    background-color: initial !important;
+    z-index: 10;
+    max-width: 100%;
     display: block;
     vertical-align: middle;
     border-radius: 0;
-    background-color: initial;
-    border: none;
     margin-bottom: 0;
-    margin-top: 0.50rem;
+    margin-top: 0.85rem;
 }
 
 .badge-completed {
     color: var(--color-yellow);
+}
+
+.badge-completed-text {
+    background-color: var(--color-yellow);
+    color: var(--color-gray) !important;
+}
+
+.badge-text {
+    text-decoration: none;
+    color: var(--color-white);
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
 }
