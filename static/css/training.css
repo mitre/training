@@ -9,6 +9,14 @@
     align-items: center;
 }
 
+.justify-center {
+    justify-content: center;
+}
+
+.justify-start {
+    justify-content: start;
+}
+
 .flex-wrap {
     flex-wrap: wrap;
 }
@@ -29,6 +37,9 @@
     text-align: left;
 }
 
+.overflow-hidden {
+    overflow: hidden;
+}
 
 /*
     PLUGIN STYLES
@@ -58,10 +69,6 @@ select {
     width: auto;
 }
 
-.badge-container {
-    color: var(--color-white);
-}
-
 .hover\:bg-caldera-primary:hover {
     background-color: var(--navbar-color);
 }
@@ -70,7 +77,7 @@ select {
     border-radius: 0.25rem;
 }
 
-.badge-container {
+.badge-container-button {
     color: var(--color-white);
     width: 5rem !important;
     padding: 0.25rem;
@@ -86,7 +93,7 @@ select {
     border: none;
 }
 
-.badge-container:hover {
+.badge-container-button:hover {
     background-color: var(--navbar-color);
 }
 
@@ -109,10 +116,10 @@ select {
     vertical-align: middle;
     border-radius: 0;
     margin-bottom: 0;
-    margin-top: 0.85rem;
+    margin-top: 0.5rem;
 }
 
-.badge-completed {
+.badge-completed, .status-flag-completed {
     color: var(--color-yellow);
 }
 
@@ -129,4 +136,91 @@ select {
     margin-top: 1rem;
     font-size: 0.75rem;
     line-height: 1rem;
+}
+
+.status-flag {
+    padding: 0.5rem;
+    color: var(--color-white);
+}
+
+.status-flag svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.flag-card-container {
+    box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+    .flag-card-container {
+        width: 100%;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .flag-card-container {
+        width: 33.333333%;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .flag-card-container {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+
+.flag-card {
+    margin: 0.5rem;
+    background-color: var(--navbar-color);
+    min-height: 18rem;
+    border-width: 2px;
+    border-color: var(--navbar-color);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    width: 100%;
+}
+
+.flag-card-completed {
+    border-color: var(--navbar-color);
+    border-style: solid;
+    background-color: initial !important;
+}
+
+.flag-show-more {
+    height: 18rem;
+}
+
+.flag-card-title {
+    padding: 0.5rem;
+    background-color: var(--navbar-color);
+    color: var(--color-white);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    text-align: left;
+}
+
+.flag-card-title span {
+    width: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.flag-card-title-name {
+    width: 83.333333%;
+}
+
+.flag-card-title-badge {
+    width: 16.666667%;
+}
+.flag-card-title-badge span {
+    width: 5rem;
+    padding: 0.25rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
 }

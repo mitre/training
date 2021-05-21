@@ -1,9 +1,23 @@
+function flagData() {
+    return {
+        showMore: false,
+        toggleShowMore(v) {
+            this.showMore = !this.showMore
+            return !this.showMore;
+        }
+        // onTextInput(e) {
+        //     this.flag.completed = (this.flag.answer && this.flag.answer === e.target.value);
+        // }
+    }
+}
+
 function trainingData() {
     return {
         selectedCert: '',
         selectedBadge: '',
         badgeList: [],
         completedBadges: 0,
+        visibleFlagList: [],
         flagList: [],
         completedFlags: 0,
         resetData() {
@@ -20,7 +34,6 @@ function trainingData() {
             let certificateCodeList = [];
 
             data.badges.forEach((badge) => {
-                console.log('BADGE', badge.name)
                 let iconSrc = `/training/img/badges/${badge.name}.png`;
                 let isBadgeCompleted = false;
                 let badgeCompletedFlags = 0;
@@ -30,7 +43,8 @@ function trainingData() {
                         ...flag,
                         badge_name: badge.name,
                         badge_icon: iconSrc,
-                        cert_name: this.selectedCert
+                        cert_name: this.selectedCert,
+                        showMore: false
                     });
                     certificateCodeList.push(flag.code);
                 });
@@ -49,11 +63,9 @@ function trainingData() {
                 this.certificateCode = this.getCertificateCode(certificateCodeList);
             }
             this.visibleFlagList = this.flagList;
-            console.log('COMPLETED GET FLAGS', this.badgeList)
         },
         getTraining(selectedCert) {
             this.selectedCert = selectedCert;
-            console.log('ELLO', this.selectedCert)
             fetch('/plugin/training/flags', {
                 method: 'POST',
                 headers: {
@@ -63,7 +75,6 @@ function trainingData() {
             }).then(r => {
                 if (r.ok) return r.json(); else console.error('Fetch error:', r)
             }).then((data) => {
-                console.log('success', data);
                 this.getFlags(data);
                 return true;
             }).catch(e => console.error(e));
