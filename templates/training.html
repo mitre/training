@@ -4,7 +4,7 @@
 
 <div id="training" class="section-profile">
     <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value))">
-        <div class="flex flex-col mt-2">
+        <div class="flex flex-col mt-2 w-100">
             <div class="flex flex-col text-left">
                 <h1 class="plugin-header">Training</h1>
                 <div class="flex flex-row items-center">
@@ -69,7 +69,8 @@
                     <div class="flex flex-row flex-wrap justify-center w-full justify-evenly">
                     <div class="flag-card-container">
                         <template x-for="flag in visibleFlagList" :key="flag">
-                            <div class="flag-card rounded flex flex-col justify-start overflow-hidden"
+                            <div class="flag-card">
+                            <div class="flag-card-content rounded flex flex-col justify-start overflow-hidden"
                                  x-bind:class="[flag.completed ? 'flag-card-completed' : '', flag.showMore ? 'flag-show-more' : '']">
                                     <div class="flag-card-title flex justify-evenly align-center">
                                         <div class="flex justify-start items-center flag-card-title-name">
@@ -123,6 +124,7 @@
 <!--                                        </div>-->
 <!--                                    </div>-->
                                 </div>
+                            </div>
 <!--                                <div class="bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary">-->
 <!--                                    <button x-if="!showMore" class="flex justify-center p-2 w-full"-->
 <!--                                            x-on:click="showMore = true">-->

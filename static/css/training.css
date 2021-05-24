@@ -5,6 +5,10 @@
     --color-yellow: rgb(248, 193, 69);
 }
 
+.w-100 {
+    width: 100%;
+}
+
 .items-center {
     align-items: center;
 }
@@ -149,11 +153,20 @@ select {
 }
 
 .flag-card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+}
+
+.flag-card {
+    display: flex;
+    justify-content: center;
     box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
-    .flag-card-container {
+    .flag-card {
         width: 100%;
         font-size: 0.875rem;
         line-height: 1.25rem;
@@ -161,7 +174,7 @@ select {
 }
 
 @media (min-width: 768px) {
-    .flag-card-container {
+    .flag-card {
         width: 33.333333%;
         font-size: 1.125rem;
         line-height: 1.75rem;
@@ -169,13 +182,14 @@ select {
 }
 
 @media (min-width: 1024px) {
-    .flag-card-container {
+    .flag-card {
+        width: 25%;
         font-size: 1.5rem;
         line-height: 2rem;
     }
 }
 
-.flag-card {
+.flag-card-content {
     margin: 0.5rem;
     background-color: var(--navbar-color);
     min-height: 18rem;
@@ -185,6 +199,7 @@ select {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .flag-card-completed {
