@@ -1,16 +1,3 @@
-function flagData() {
-    return {
-        showMore: false,
-        toggleShowMore(v) {
-            this.showMore = !this.showMore
-            return !this.showMore;
-        }
-        // onTextInput(e) {
-        //     this.flag.completed = (this.flag.answer && this.flag.answer === e.target.value);
-        // }
-    }
-}
-
 function trainingData() {
     return {
         selectedCert: '',
@@ -63,6 +50,7 @@ function trainingData() {
                 this.certificateCode = this.getCertificateCode(certificateCodeList);
             }
             this.visibleFlagList = this.flagList;
+            console.log('data', this.flagList);
         },
         getTraining(selectedCert) {
             this.selectedCert = selectedCert;

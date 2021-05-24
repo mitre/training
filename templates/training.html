@@ -24,7 +24,7 @@
             </div>
             <div class="flex flex-col text-left">
                 <template x-if="badgeList">
-                    <div class="badge-container flex flex-row flex-wrap w-full justify-evenly">
+                    <div class="badge-container justify-evenly flex flex-row flex-wrap w-full justify-evenly">
                         <template x-for="badge in badgeList" :key="badge">
                             <button class="badge-container-button" x-bind:class="{'font-bold': selectedBadge === badge}"
                                     x-bind:value="selectedBadge"
@@ -67,13 +67,13 @@
                         </template>
                     </div>
                     <div class="flex flex-row flex-wrap justify-center w-full justify-evenly">
-                    <div class="flag-card-container">
-                        <template x-for="flag in visibleFlagList" :key="flag">
-                            <div class="flag-card">
-                            <div class="flag-card-content rounded flex flex-col justify-start overflow-hidden"
-                                 x-bind:class="[flag.completed ? 'flag-card-completed' : '', flag.showMore ? 'flag-show-more' : '']">
-                                    <div class="flag-card-title flex justify-evenly align-center">
-                                        <div class="flex justify-start items-center flag-card-title-name">
+                        <div class="flag-card-container">
+                            <template x-for="flag in visibleFlagList" :key="flag">
+                                <div class="flag-card flex flex-col rounded" x-bind:class="[flag.completed ? 'flag-card-completed' : '', flag.showMore ? 'flag-show-more' : '']">
+                                    <div class="flag-card-wrapper">
+                                        <div class="flag-card-content flex flex-col justify-start overflow-hidden">
+                                            <div class="flag-card-title flex justify-evenly align-center">
+                                                <div class="flex justify-start items-center flag-card-title-name">
                                           <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                  fill="currentColor">
@@ -82,11 +82,11 @@
                                                     clip-rule="evenodd"/>
                                             </svg>
                                           </span>
-                                            <p x-text="flag.name"></p>
-                                        </div>
-                                        <div class="flex justify-end items-center flag-card-title-badge">
+                                                    <p x-text="flag.name"></p>
+                                                </div>
+                                                <div class="flex justify-end items-center flag-card-title-badge">
                                             <span class="flex flex-col justify-center items-center">
-                                                  <span class="badge-icon-container">
+                                                  <span class="flag-badge-icon-container">
                                                        <svg xmlns="http://www.w3.org/2000/svg"
                                                             fill="current"
                                                             viewBox="0 0 24 24"
@@ -101,55 +101,62 @@
                                                            onerror="this.src='/training/img/badges/defaultlock.png'"
                                                            x-bind:src="flag.badge_icon"/>
                                             </span>
+                                                </div>
+                                            </div>
+                                            <!--                                        FLAG CHALLENGE TEXT-->
+                                            <div class="flag-card-text flex flex-col justify-center">
+                                                <div>
+                                                    <div class="flex flex-col justify-center text-left">
+                                                        <p x-text="flag.challenge"></p>
+                                                        <p x-text="flag.extra_info"></p>
+                                                        <template x-if="flag.code.includes('text-entry')">
+                                                            <label x-bind:for="flag.code">Write text here:</label>
+                                                            <input x-bind:disabled="flag.completed"
+                                                                   class="text-colors-black pl-1 pr-2"
+                                                                   x-bind:id="flag.code"
+                                                                   placeholder="type here"
+                                                                   x-on:input="onTextInput"/>
+                                                        </template>
+                                                        <div class="flex flex-col items-center p-2">
+                                                            <a class="underline hover:text-colors-gray-500"
+                                                               target="_blank"
+                                                               x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`">View
+                                                                Solution Guide</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
-<!--                                    <div class="flex flex-col justify-center p-2 text-sm break-words">-->
-<!--                                        <div>-->
-<!--                                            <div class="flex flex-col justify-center text-left pl-2 pr-2">-->
-<!--                                                <p class="text-sm" x-text="flag.challenge"></p>-->
-<!--                                                <p class="text-sm" x-text="flag.extra_info"></p>-->
-<!--                                                <div x-if="flag.code.includes('text-entry')">-->
-<!--                                                    <label x-bind:for="flag.code">Write text here:</label>-->
-<!--                                                    <input x-bind:disabled="flag.completed"-->
-<!--                                                           class="text-colors-black pl-1 pr-2" x-bind:id="flag.code"-->
-<!--                                                           placeholder="type here"-->
-<!--                                                           x-on:input="onTextInput"/>-->
-<!--                                                </div>-->
-<!--                                                <div class="flex flex-col items-center p-2">-->
-<!--                                                    <a class="underline hover:text-colors-gray-500" target="_blank"-->
-<!--                                                       x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`">View-->
-<!--                                                        Solution Guide</a>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                    <!--                                        SHOW MORE BUTTON-->
+                                    <div class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
+                                        <template x-if="!flag.showMore">
+                                            <span x-on:click="flag.showMore = true">
+                                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                   stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M19 9l-7 7-7-7"/>
+                                              </svg>
+                                            </span>
+                                        </template>
+                                        <!--          SHOW LESS BUTTON-->
+                                        <template x-if="flag.showMore">
+                                                <span x-on:click="flag.showMore = false">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                       viewBox="0 0 24 24"
+                                                       stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M5 15l7-7 7 7"/>
+                                                  </svg>
+                                                </span>
+                                        </template>
+                                    </div>
+
                                 </div>
-                            </div>
-<!--                                <div class="bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary">-->
-<!--                                    <button x-if="!showMore" class="flex justify-center p-2 w-full"-->
-<!--                                            x-on:click="showMore = true">-->
-<!--                                    <span class="w-4">-->
-<!--                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"-->
-<!--                                           stroke="currentColor">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-<!--                                              d="M19 9l-7 7-7-7"/>-->
-<!--                                      </svg>-->
-<!--                                    </span>-->
-<!--                                    </button>-->
-<!--                                    &lt;!&ndash;          SHOW LESS BUTTON&ndash;&gt;-->
-<!--                                    <button x-if="showMore" class="flex justify-center p-2 w-full"-->
-<!--                                            x-on:click="showMore = false">-->
-<!--                                    <span class="w-4">-->
-<!--                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"-->
-<!--                                           stroke="currentColor">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-<!--                                              d="M5 15l7-7 7 7"/>-->
-<!--                                      </svg>-->
-<!--                                    </span>-->
-<!--                                    </button>-->
-<!--                                </div>-->
-                        </template>
-                    </div>
+                            </template>
+                        </div>
                     </div>
                 </template>
             </div>

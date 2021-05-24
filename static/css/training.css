@@ -21,6 +21,10 @@
     justify-content: start;
 }
 
+.justify-evenly {
+    justify-content: space-evenly;
+}
+
 .flex-wrap {
     flex-wrap: wrap;
 }
@@ -163,6 +167,19 @@ select {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
+    margin: 0.5rem;
+    border-width: 2px;
+    border-color: var(--navbar-color);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border-style: solid;
+    background-color: initial !important;
+}
+
+.flag-card-completed {
+    color: var(--color-yellow);
+    background-color: var(--navbar-color);
 }
 
 @media (min-width: 640px) {
@@ -176,7 +193,7 @@ select {
 @media (min-width: 768px) {
     .flag-card {
         width: 33.333333%;
-        font-size: 1.125rem;
+        font-size: 1rem;
         line-height: 1.75rem;
     }
 }
@@ -184,36 +201,23 @@ select {
 @media (min-width: 1024px) {
     .flag-card {
         width: 25%;
-        font-size: 1.5rem;
+        font-size: 0.9rem;
         line-height: 2rem;
     }
 }
 
 .flag-card-content {
-    margin: 0.5rem;
-    background-color: var(--navbar-color);
-    min-height: 18rem;
-    border-width: 2px;
-    border-color: var(--navbar-color);
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.flag-card-completed {
-    border-color: var(--navbar-color);
-    border-style: solid;
-    background-color: initial !important;
+    height: 18rem;
+    width: 100%
 }
 
 .flag-show-more {
-    height: 18rem;
+    min-height: 18rem;
+    height: auto;
 }
 
 .flag-card-title {
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem;
     background-color: var(--navbar-color);
     color: var(--color-white);
     font-size: 1.125rem;
@@ -233,9 +237,31 @@ select {
 .flag-card-title-badge {
     width: 16.666667%;
 }
+
 .flag-card-title-badge span {
     width: 5rem;
     padding: 0.25rem;
     margin-left: 0.25rem;
     margin-right: 0.25rem;
+}
+
+.flag-badge-icon-container {
+    z-index: 0;
+    width: 2.5rem !important;
+    fill: currentColor;
+    position: absolute;
+}
+
+.flag-card-text {
+    overflow-wrap: break-word;
+    padding: 0 0.5rem;
+}
+
+.flag-show-more-button {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.flag-show-more-button span {
+    width: 1rem;
 }
