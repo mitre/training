@@ -143,7 +143,7 @@ select {
 }
 
 .badge-completed, .status-flag-completed {
-    color: var(--color-yellow);
+    color: var(--color-yellow) !important;
 }
 
 .badge-completed-text {
@@ -191,9 +191,12 @@ select {
     background-color: initial !important;
 }
 
-.flag-card-completed {
+.flag-card-completed .flag-card-wrapper {
     color: var(--color-yellow);
-    background-color: var(--navbar-color);
+}
+
+.flag-card-completed {
+    background-color: var(--navbar-color) !important;
 }
 
 @media (min-width: 640px) {
