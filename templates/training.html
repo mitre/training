@@ -69,9 +69,11 @@
                     <div class="flex flex-row flex-wrap justify-center w-full justify-evenly">
                         <div class="flag-card-container">
                             <template x-for="flag in visibleFlagList" :key="flag">
-                                <div class="flag-card flex flex-col rounded" x-bind:class="[flag.completed ? 'flag-card-completed' : '', flag.showMore ? 'flag-show-more' : '']">
+                                <div class="flag-card flex flex-col rounded"
+                                     x-bind:class="flag.completed ? 'flag-card-completed' : ''">
                                     <div class="flag-card-wrapper">
-                                        <div class="flag-card-content flex flex-col justify-start overflow-hidden">
+                                        <div class="flag-card-content flex flex-col justify-start overflow-hidden"
+                                             x-bind:class="flag.showMore ? 'flag-show-more' : ''">
                                             <div class="flag-card-title flex justify-evenly align-center">
                                                 <div class="flex justify-start items-center flag-card-title-name">
                                           <span>
@@ -130,9 +132,10 @@
 
                                     </div>
                                     <!--                                        SHOW MORE BUTTON-->
-                                    <div class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
+                                    <div x-on:click="flag.showMore = !flag.showMore"
+                                         class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
                                         <template x-if="!flag.showMore">
-                                            <span x-on:click="flag.showMore = true">
+                                            <span>
                                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                    stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -142,7 +145,7 @@
                                         </template>
                                         <!--          SHOW LESS BUTTON-->
                                         <template x-if="flag.showMore">
-                                                <span x-on:click="flag.showMore = false">
+                                                <span>
                                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                        viewBox="0 0 24 24"
                                                        stroke="currentColor">

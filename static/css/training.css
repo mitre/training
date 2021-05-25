@@ -165,15 +165,14 @@ select {
 
 .flag-card {
     display: flex;
-    justify-content: center;
     box-sizing: border-box;
-    margin: 0.5rem;
+    margin: 0.25rem;
     border-width: 2px;
+    border-style: solid;
     border-color: var(--navbar-color);
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-    border-style: solid;
     background-color: initial !important;
 }
 
@@ -200,7 +199,7 @@ select {
 
 @media (min-width: 1024px) {
     .flag-card {
-        width: 25%;
+        width: 24%;
         font-size: 0.9rem;
         line-height: 2rem;
     }

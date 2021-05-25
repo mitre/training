@@ -50,7 +50,6 @@ function trainingData() {
                 this.certificateCode = this.getCertificateCode(certificateCodeList);
             }
             this.visibleFlagList = this.flagList;
-            console.log('data', this.flagList);
         },
         getTraining(selectedCert) {
             this.selectedCert = selectedCert;
