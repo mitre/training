@@ -21,6 +21,10 @@
     justify-content: start;
 }
 
+.justify-between {
+    justify-content: space-between;
+}
+
 .justify-evenly {
     justify-content: space-evenly;
 }
@@ -71,6 +75,12 @@
     line-height: 2rem;
     color: var(--color-white);
     margin-top: auto;
+}
+
+.plugin-x-button {
+    width: 1.5rem;
+    height: fit-content;
+    cursor: pointer;
 }
 
 .certificate-select {
@@ -163,7 +173,7 @@ select {
 
 .flag-card-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-flow: row wrap;
     box-sizing: border-box;
 }
