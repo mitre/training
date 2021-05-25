@@ -73,6 +73,11 @@
     margin-top: auto;
 }
 
+.certificate-select {
+    width: 100% !important;
+    margin: 0.5rem !important;
+}
+
 select {
     width: auto;
 }

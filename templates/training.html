@@ -3,7 +3,7 @@
 <script src="/training/js/alpine.min.js"></script>
 
 <div id="training" class="section-profile">
-    <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value))">
+    <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value)), $watch('selectedBadge', value => onSelectBadge(value))">
         <div class="flex flex-col mt-2 w-100">
             <div class="flex flex-col text-left">
                 <h1 class="plugin-header">Training</h1>
@@ -12,10 +12,10 @@
                     <span class="flex items-center">
                         <span class="text-colors-white text-2xl ml-1">
                             <select x-model="selectedCert" id="training-cert-select"
-                                    class="h-auto rounded bg-caldera-grayish cursor-pointer">
-                                <option disabled selected value="">Choose a certificate</option>
+                                    class="rounded bg-caldera-grayish cursor-pointer certificate-select">
+                                <option selected>Choose a certificate</option>
                                 {% for cert in certificates %}
-                                <option value="{{ cert.name }}">{{ cert.name }}</option>
+                                    <option value="{{ cert.name }}" x-on:select="selectedCert=cert">{{ cert.name }}</option>
                                 {% endfor %}}
                             </select>
                         </span>
@@ -27,7 +27,7 @@
                     <div class="badge-container justify-evenly flex flex-row flex-wrap w-full justify-evenly">
                         <template x-for="badge in badgeList" :key="badge">
                             <button class="badge-container-button" x-bind:class="{'font-bold': selectedBadge === badge}"
-                                    x-bind:value="selectedBadge"
+                                    x-bind:value="badge"
                                     x-on:click="(selectedBadge === badge) ? selectedBadge = '' : selectedBadge = badge">
                                         <span class="flex flex-col justify-center items-center">
                                               <span class="badge-icon-container"
@@ -54,28 +54,29 @@
                     </div>
                 </template>
                 <template x-if="visibleFlagList">
-                    <div class="flag-status-container flex flex-row flex-wrap w-full justify-evenly">
-                        <template x-for="flag in visibleFlagList" :key="flag">
-                            <span class="status-flag" x-bind:class="flag.completed ? 'status-flag-completed' : ''">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                   fill="currentColor">
-                                <path fill-rule="evenodd"
-                                      d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                                      clip-rule="evenodd"/>
-                              </svg>
-                            </span>
-                        </template>
-                    </div>
-                    <div class="flex flex-row flex-wrap justify-center w-full justify-evenly">
-                        <div class="flag-card-container">
+                    <div>
+                        <div class="flag-status-container flex flex-row flex-wrap w-full justify-center">
                             <template x-for="flag in visibleFlagList" :key="flag">
-                                <div class="flag-card flex flex-col rounded"
-                                     x-bind:class="flag.completed ? 'flag-card-completed' : ''">
-                                    <div class="flag-card-wrapper">
-                                        <div class="flag-card-content flex flex-col justify-start overflow-hidden"
-                                             x-bind:class="flag.showMore ? 'flag-show-more' : ''">
-                                            <div class="flag-card-title flex justify-evenly align-center">
-                                                <div class="flex justify-start items-center flag-card-title-name">
+                                <span class="status-flag" x-bind:class="flag.completed ? 'status-flag-completed' : ''">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                       fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
+                                          clip-rule="evenodd"/>
+                                  </svg>
+                                </span>
+                            </template>
+                        </div>
+                        <div class="flex flex-row flex-wrap justify-center w-full justify-evenly">
+                            <div class="flag-card-container">
+                                <template x-for="flag in visibleFlagList" :key="flag">
+                                    <div class="flag-card flex flex-col rounded"
+                                         x-bind:class="flag.completed ? 'flag-card-completed' : ''">
+                                        <div class="flag-card-wrapper">
+                                            <div class="flag-card-content flex flex-col justify-start overflow-hidden"
+                                                 x-bind:class="flag.showMore ? 'flag-show-more' : ''">
+                                                <div class="flag-card-title flex justify-evenly align-center">
+                                                    <div class="flex justify-start items-center flag-card-title-name">
                                           <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                  fill="currentColor">
@@ -84,9 +85,9 @@
                                                     clip-rule="evenodd"/>
                                             </svg>
                                           </span>
-                                                    <p x-text="flag.name"></p>
-                                                </div>
-                                                <div class="flex justify-end items-center flag-card-title-badge">
+                                                        <p x-text="flag.name"></p>
+                                                    </div>
+                                                    <div class="flex justify-end items-center flag-card-title-badge">
                                             <span class="flex flex-col justify-center items-center">
                                                   <span class="flag-badge-icon-container">
                                                        <svg xmlns="http://www.w3.org/2000/svg"
@@ -103,48 +104,50 @@
                                                            onerror="this.src='/training/img/badges/defaultlock.png'"
                                                            x-bind:src="flag.badge_icon"/>
                                             </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--                                        FLAG CHALLENGE TEXT-->
-                                            <div class="flag-card-text flex flex-col justify-center">
-                                                <div>
-                                                    <div class="flex flex-col justify-center text-left">
-                                                        <p x-text="flag.challenge"></p>
-                                                        <p x-text="flag.extra_info"></p>
-                                                        <template x-if="flag.code.includes('text-entry')">
-                                                            <label x-bind:for="flag.code">Write text here:</label>
-                                                            <input x-bind:disabled="flag.completed"
-                                                                   class="text-colors-black pl-1 pr-2"
-                                                                   x-bind:id="flag.code"
-                                                                   placeholder="type here"
-                                                                   x-on:input="onTextInput"/>
-                                                        </template>
-                                                        <div class="flex flex-col items-center p-2">
-                                                            <a class="underline hover:text-colors-gray-500"
-                                                               target="_blank"
-                                                               x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`">View
-                                                                Solution Guide</a>
+                                                <!--                                        FLAG CHALLENGE TEXT-->
+                                                <div class="flag-card-text flex flex-col justify-center">
+                                                    <div>
+                                                        <div class="flex flex-col justify-center text-left">
+                                                            <p x-text="flag.challenge"></p>
+                                                            <p x-text="flag.extra_info"></p>
+                                                            <template x-if="flag.code.includes('text-entry')">
+                                                                <span>
+                                                                    <label x-bind:for="flag.code">Write text here:</label>
+                                                                    <input x-bind:disabled="flag.completed"
+                                                                           class="text-colors-black pl-1 pr-2"
+                                                                           x-bind:id="flag.code"
+                                                                           placeholder="type here"
+                                                                           x-on:input="onTextInput"/>
+                                                                </span>
+                                                            </template>
+                                                            <div class="flex flex-col items-center p-2">
+                                                                <a class="underline hover:text-colors-gray-500"
+                                                                   target="_blank"
+                                                                   x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`">View
+                                                                    Solution Guide</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                    <!--                                        SHOW MORE BUTTON-->
-                                    <div x-on:click="flag.showMore = !flag.showMore"
-                                         class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
-                                        <template x-if="!flag.showMore">
-                                            <span>
-                                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                   stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M19 9l-7 7-7-7"/>
-                                              </svg>
-                                            </span>
-                                        </template>
-                                        <!--          SHOW LESS BUTTON-->
-                                        <template x-if="flag.showMore">
+                                        </div>
+                                        <!--                                        SHOW MORE BUTTON-->
+                                        <div x-on:click="flag.showMore = !flag.showMore"
+                                             class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
+                                            <template x-if="!flag.showMore">
+                                                <span>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                       stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M19 9l-7 7-7-7"/>
+                                                  </svg>
+                                                </span>
+                                            </template>
+                                            <!--          SHOW LESS BUTTON-->
+                                            <template x-if="flag.showMore">
                                                 <span>
                                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                        viewBox="0 0 24 24"
@@ -154,11 +157,11 @@
                                                           d="M5 15l7-7 7 7"/>
                                                   </svg>
                                                 </span>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
-
-                                </div>
-                            </template>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </template>

@@ -15,6 +15,13 @@ function trainingData() {
             this.completedCertificate = false;
             this.certificateCode = '';
         },
+        onSelectBadge(badge) {
+            if (badge) {
+                console.log('SELECTED BADGE', badge);
+                this.selectedBadge = badge;
+                this.visibleFlagList = this.flagList.filter(flag => flag.badge_name === this.selectedBadge.name);
+            } else this.visibleFlagList = this.flagList;
+        },
         getFlags(data) {
             if (!data) return;
             this.resetData();
