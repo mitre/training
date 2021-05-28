@@ -6,7 +6,6 @@ function trainingData() {
     visibleFlagList: [],
     completedFlags: 0,
     completedBadges: 0,
-    visibleFlagList: [],
     flagList: [],
     completedCertificate: false,
     certificateCode: '',
@@ -69,6 +68,7 @@ function trainingData() {
       this.visibleFlagList = this.flagList;
     },
     getTraining(selectedCert) {
+      if (this.refresher) clearInterval(this.refresher);
       this.selectedCert = selectedCert;
       fetch('/plugin/training/flags', {
         method: 'POST',
@@ -80,7 +80,9 @@ function trainingData() {
         if (r.ok) return r.json();
         return console.error('Fetch error:', r);
       }).then((data) => {
-        this.getFlags(data);
+        this.getFlags(data).then(() => {
+          this.refresher = setInterval(() => this.getTraining(this.selectedCert), 15000);
+        });
         return true;
       }).catch((e) => console.error(e));
     },
