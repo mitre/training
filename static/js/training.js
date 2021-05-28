@@ -27,9 +27,9 @@ function trainingData() {
       } else this.visibleFlagList = this.flagList;
     },
     getCertificateCode(certificateCodeList) {
-        let code = certificateCodeList.sort((a, b) => a.toString().length - b.toString().length);
-        code = code.join(' ');
-        return btoa(code);
+      let code = certificateCodeList.sort((a, b) => a.toString().length - b.toString().length);
+      code = code.join(' ');
+      return btoa(code);
     },
     async getFlags(data) {
       if (!data) return;
