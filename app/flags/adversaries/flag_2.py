@@ -12,9 +12,9 @@ class AdversariesFlag2(Flag):
      entirely."""
 
     async def verify(self, services):
-        check1, check2, check3 = False, False, False
         for a in await services.get('data_svc').locate('abilities', dict(name='My test ability')):
             check1 = a.tactic == 'discovery'
-            check2 = a.payloads is not None
-            check3 = a.cleanup is not None
-        return all([check1, check2, check3])
+            check2 = any(executor.cleanup and executor.payloads for executor in a.executors)
+            if check1 and check2:
+                return True
+        return False
