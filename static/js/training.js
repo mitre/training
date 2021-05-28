@@ -31,7 +31,7 @@ function trainingData() {
         code = code.join(' ');
         return btoa(code);
     },
-    getFlags(data) {
+    async getFlags(data) {
       if (!data) return;
       this.resetData();
       const certificateCodeList = [];
