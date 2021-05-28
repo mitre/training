@@ -4,7 +4,7 @@
 
 <div id="training" class="section-profile">
     <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value)), $watch('selectedBadge', value => onSelectBadge(value))">
-        <div class="flex flex-col mt-2 w-100">
+        <div class="flex flex-col w-100">
             <div class="flex flex-col text-left">
                 <div class="flex flex-row justify-between">
                     <h1 class="plugin-header">Training</h1>
@@ -14,19 +14,30 @@
                         </svg>
                     </span>
                 </div>
-                <div class="flex flex-row items-center">
-                    <label for="training-cert-select" class="text-lg mt-2 mr-1">Choose a certificate:</label>
-                    <span class="flex items-center">
-                        <span class="text-colors-white text-2xl ml-1">
+                <div class="flex flex-row flex-wrap items-center">
+                    <div class="certificate-select">
+                        <label for="training-cert-select">Choose a certificate:</label>
+                        <span class="flex items-center">
                             <select x-model="selectedCert" id="training-cert-select"
-                                    class="rounded bg-caldera-grayish cursor-pointer certificate-select">
+                                    class="rounded cursor-pointer certificate-select">
                                 <option selected>Choose a certificate</option>
                                 {% for cert in certificates %}
                                     <option value="{{ cert.name }}" x-on:select="selectedCert=cert">{{ cert.name }}</option>
                                 {% endfor %}}
                             </select>
                         </span>
-                    </span>
+                    </div>
+                    <template x-if="completedCertificate">
+                        <div>
+                            <label for="certificate-code">Certificate code:</label>
+                            <span class="flex items-center">
+                                <input id="certificate-code" type="text" readonly
+                                       class="rounded cursor-pointer certificate-code-input"
+                                       x-bind:value="certificateCode"
+                                       aria-label="Certificate code"/>
+                            </span>
+                        </div>
+                    </template>
                 </div>
             </div>
             <div class="flex flex-col text-left">
@@ -140,7 +151,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--                                        SHOW MORE BUTTON-->
+                                        <!--             SHOW MORE BUTTON-->
                                         <div x-on:click="flag.showMore = !flag.showMore"
                                              class="flag-show-more-button flex justify-center bg-gradient-to-b via-caldera-grayish to-colors-black hover:bg-caldera-primary w-full">
                                             <template x-if="!flag.showMore">

@@ -3,17 +3,21 @@ function trainingData() {
     selectedCert: '',
     selectedBadge: '',
     badgeList: [],
+    visibleFlagList: [],
+    completedFlags: 0,
     completedBadges: 0,
     visibleFlagList: [],
     flagList: [],
-    completedFlags: 0,
+    completedCertificate: false,
+    certificateCode: '',
+    refresher: null,
     resetData() {
       this.badgeList = [];
-      this.flagList = [];
+      this.visibleFlagList = [];
       this.completedFlags = 0;
       this.completedBadges = 0;
-      this.completedCertificate = false;
-      this.certificateCode = '';
+      this.flagList = [];
+      this.visibleFlagList = [];
     },
     onSelectBadge(badge) {
       if (badge) {
@@ -22,6 +26,11 @@ function trainingData() {
           (flag) => flag.badge_name === this.selectedBadge.name,
         );
       } else this.visibleFlagList = this.flagList;
+    },
+    getCertificateCode(certificateCodeList) {
+        let code = certificateCodeList.sort((a, b) => a.toString().length - b.toString().length);
+        code = code.join(' ');
+        return btoa(code);
     },
     getFlags(data) {
       if (!data) return;

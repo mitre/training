@@ -84,12 +84,18 @@
 }
 
 .certificate-select {
-    width: 100% !important;
-    margin: 0.5rem !important;
+    padding-right: 2rem;
+    width: 20rem;
 }
 
 select {
     width: auto;
+}
+
+.certificate-code-input {
+    width: 100% !important;
+    margin: 0.5rem !important;
+    color: black;
 }
 
 .hover\:bg-caldera-primary:hover {
@@ -97,7 +103,7 @@ select {
 }
 
 .rounded {
-    border-radius: 0.25rem;
+    border-radius: 0.25rem !important;
 }
 
 .badge-container-button {
