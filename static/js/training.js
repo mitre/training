@@ -12,11 +12,9 @@ function trainingData() {
     refresher: null,
     resetData() {
       this.badgeList = [];
-      this.visibleFlagList = [];
       this.completedFlags = 0;
       this.completedBadges = 0;
       this.flagList = [];
-      this.visibleFlagList = [];
     },
     onSelectBadge(badge) {
       if (badge) {
@@ -65,7 +63,7 @@ function trainingData() {
         this.completedCertificate = true;
         this.certificateCode = this.getCertificateCode(certificateCodeList);
       }
-      this.visibleFlagList = this.flagList;
+      if (!this.selectedBadge) this.visibleFlagList = this.flagList;
     },
     getTraining(selectedCert) {
       if (this.refresher) clearInterval(this.refresher);
