@@ -44,9 +44,10 @@
                 <template x-if="badgeList">
                     <div class="badge-container justify-evenly flex flex-row flex-wrap w-full justify-evenly">
                         <template x-for="badge in badgeList" :key="badge">
-                            <button class="badge-container-button" x-bind:class="{'font-bold': selectedBadge === badge}"
-                                    x-bind:value="badge"
-                                    x-on:click="(selectedBadge === badge) ? selectedBadge = '' : selectedBadge = badge">
+                            <button class="badge-container-button"
+                                    x-on:click="(selectedBadge == badge) ? selectedBadge = '' : selectedBadge = badge"
+                                    x-bind:class="(selectedBadge == badge) ? 'selected-badge' : ''"
+                                    x-bind:value="badge">
                                         <span class="flex flex-col justify-center items-center">
                                               <span class="badge-icon-container"
                                                     x-bind:class="badge.completed ? 'badge-completed' : ''">
