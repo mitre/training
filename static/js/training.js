@@ -1,5 +1,14 @@
+/*
+
+Data object & functions to be used by Alpine.js x-data in training.html
+
+*/
+
 function trainingData() {
   return {
+    /*
+    Variables
+    */
     selectedCert: '',
     selectedBadge: '',
     badgeList: [],
@@ -34,6 +43,7 @@ function trainingData() {
       this.resetData();
       const certificateCodeList = [];
 
+      // Fetch flag from API and compares it to previous data, rather than completely override (for variables like showMore)
       data.badges.forEach((badge) => {
         const iconSrc = `/training/img/badges/${badge.name}.png`;
         let isBadgeCompleted = false;
@@ -65,6 +75,13 @@ function trainingData() {
       }
       if (!this.selectedBadge) this.visibleFlagList = this.flagList;
     },
+
+    /*
+    getTraining() makes call to get flags, and if successful, does the following:
+    1) sets a refresher() to fetch flags again after set interval
+    2) check if certificate is complete
+    3) updates visibleFlagList
+    */
     getTraining(selectedCert) {
       if (this.refresher) clearInterval(this.refresher);
       this.selectedCert = selectedCert;
@@ -73,8 +90,11 @@ function trainingData() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: this.selectedCert, answers: {} }),
-      }).then((r) => {
+            body: JSON.stringify({
+                name: this.selectedCert, answers: {}
+            }),
+        })
+          .then((r) => {
         if (r.ok) return r.json();
         return console.error('Fetch error:', r);
       }).then((data) => {
