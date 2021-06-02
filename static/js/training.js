@@ -25,7 +25,13 @@ function trainingData() {
       this.completedBadges = 0;
       this.flagList = [];
     },
-    onSelectBadge(badge) {
+
+    /*
+    onSelectBadge() is called by $watch in training.html, when the
+    variable selectedBadge is updated,
+    and updates the list of visible flags as well
+    */
+    onSelectBadge(badge = this.selectedBadge) {
       if (badge) {
         this.selectedBadge = badge;
         this.visibleFlagList = this.flagList.filter(
@@ -33,17 +39,26 @@ function trainingData() {
         );
       } else this.visibleFlagList = this.flagList;
     },
-    getCertificateCode(certificateCodeList) {
-      let code = certificateCodeList.sort((a, b) => a.toString().length - b.toString().length);
-      code = code.join(' ');
-      return btoa(code);
+
+    /*
+    Check if certificate is complete, and generate code if completed
+    */
+    checkCertificateCompletion(certificateCodeList) {
+      if (this.completedBadges === this.badgeList.length) {
+        this.completedCertificate = true;
+        let code = certificateCodeList.sort((a, b) => a.toString().length - b.toString().length);
+        code = code.join(' ');
+        this.certificateCode = btoa(code);
+      }
     },
+
     async getFlags(data) {
       if (!data) return;
-      this.resetData();
       const certificateCodeList = [];
+      this.resetData();
 
-      // Fetch flag from API and compares it to previous data, rather than completely override (for variables like showMore)
+      // Fetch flag from API and compares it to previous data,
+      // rather than completely override (for variables like showMore)
       data.badges.forEach((badge) => {
         const iconSrc = `/training/img/badges/${badge.name}.png`;
         let isBadgeCompleted = false;
@@ -69,18 +84,13 @@ function trainingData() {
         this.completedFlags += badgeCompletedFlags;
       });
 
-      if (this.completedBadges === this.badgeList.length) {
-        this.completedCertificate = true;
-        this.certificateCode = this.getCertificateCode(certificateCodeList);
-      }
-      if (!this.selectedBadge) this.visibleFlagList = this.flagList;
+      this.checkCertificateCompletion(certificateCodeList);
+      this.onSelectBadge();
     },
 
     /*
-    getTraining() makes call to get flags, and if successful, does the following:
-    1) sets a refresher() to fetch flags again after set interval
-    2) check if certificate is complete
-    3) updates visibleFlagList
+    getTraining() makes call to get flags, and if successful, sets a refresher() to
+    fetch flags again after set interval
     */
     getTraining(selectedCert) {
       if (this.refresher) clearInterval(this.refresher);
@@ -90,19 +100,19 @@ function trainingData() {
         headers: {
           'Content-Type': 'application/json',
         },
-            body: JSON.stringify({
-                name: this.selectedCert, answers: {}
-            }),
-        })
-          .then((r) => {
-        if (r.ok) return r.json();
-        return console.error('Fetch error:', r);
-      }).then((data) => {
-        this.getFlags(data).then(() => {
-          this.refresher = setInterval(() => this.getTraining(this.selectedCert), 15000);
-        });
-        return true;
-      }).catch((e) => console.error(e));
+        body: JSON.stringify({
+          name: this.selectedCert, answers: {}
+        }),
+      })
+        .then((r) => {
+          if (r.ok) return r.json();
+          return console.error('Fetch error:', r);
+        }).then((data) => {
+          this.getFlags(data).then(() => {
+            this.refresher = setInterval(() => this.getTraining(this.selectedCert), 15000);
+          });
+          return true;
+        }).catch((e) => console.error(e));
     },
   };
 }
