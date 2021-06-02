@@ -3,7 +3,7 @@
 <script src="/training/js/alpine.min.js"></script>
 
 <div id="training" class="section-profile">
-    <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value)), $watch('selectedBadge', value => onSelectBadge(value))">
+    <div class="plugin-container" x-data="trainingData()" x-init="$watch('selectedCert', value => getTraining(value)), $watch('selectedBadge', value => updateVisibleFlags(value))">
         <div class="flex flex-col w-100">
             <div class="flex flex-col text-left">
                 <div class="flex flex-row justify-between">
@@ -46,7 +46,7 @@
                         <template x-for="badge in badgeList" :key="badge">
                             <button class="badge-container-button"
                                     x-on:click="(selectedBadge == badge) ? selectedBadge = '' : selectedBadge = badge"
-                                    x-bind:class="(selectedBadge == badge) ? 'selected-badge' : ''"
+                                    x-bind:class="(selectedBadge.name == badge.name) ? 'selected-badge' : ''"
                                     x-bind:value="badge">
                                         <span class="flex flex-col justify-center items-center">
                                               <span class="badge-icon-container"
