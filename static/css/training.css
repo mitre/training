@@ -1,197 +1,314 @@
-.flag-box {
-    position: relative;
+:root {
+    --default-font: 'Veranda', sans-serif;
+    --color-white: white;
+    --color-gray: rgb(21, 21, 21);
+    --color-yellow: rgb(248, 193, 69);
 }
-.flag-box h1 {
-    bottom: 0;
-    right: 0;
-    margin: 20px;
-    position:absolute;
-    font-size: 10px;
+
+.w-100 {
+    width: 100%;
 }
-@media only screen and (min-width: 700px) {
-    .flag-box h1 {
-        font-size: 20px;
-    }
+
+.items-center {
+    align-items: center;
 }
-@media only screen and (min-width: 900px) {
-    .flag-box h1 {
-        font-size: 30px;
-    }
+
+.justify-center {
+    justify-content: center;
 }
-@media only screen and (min-width: 1400px) {
-    .flag-box h1 {
-        font-size: 40px;
-    }
+
+.justify-start {
+    justify-content: start;
 }
-#flag-challenge {
-    word-break: break-word;
+
+.justify-between {
+    justify-content: space-between;
 }
-.flag-box p {
-    font-size:13px;
-    opacity:0.7;
+
+.justify-evenly {
+    justify-content: space-evenly;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex {
+    display: flex;
+}
+
+.text-left {
     text-align: left;
-    padding-left: 25px;
-    padding-right: 25px;
 }
-.flag-box h3 {
-    padding-top: 10px;
-    margin: 0;
-    opacity: 0.5;
-}
-.flag-box h4 {
-    text-transform: uppercase;
-    padding-top: 10px;
-    opacity: 0.8;
-}
-.flag-bottom {
-    bottom: 0;
-    position: absolute;
-}
-.badge-icon {
-    position: relative;
-    padding: 2px;
-    background-color: grey;
-    border-radius: 25px;
-    width: 75px;
-    margin: 3px;
-    text-align: center;
-    opacity: 0.3;
+
+.overflow-hidden {
     overflow: hidden;
 }
-.badge-icon p {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 10px;
-}
-.badge-icon img {
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid black;
-}
-div.badge-in-progress {
-    opacity: 0.75;
-    background-color: steelblue;
-}
-div.badge-completed{
-    opacity: 1.0;
-    background-color: darkgreen;
-}
-.flip-card {
-    height: 975px;
-    background-color: transparent;
-    perspective: 1000px;
-    width: 30%;
-    color: white;
-    padding: 20px;
-    margin: 5px;
-    min-height: 350px;
+
+/*
+    PLUGIN STYLES
+*/
+.plugin-container {
+    font-size: 16px;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background-color: var(--color-gray);
+    color: var(--color-white);
+    margin-top: 50px;
+    padding: 25px;
+    border-radius: 25px;
+    max-width: 100%;
+    display: flex;
     position: relative;
-}
-@media only screen and (min-width: 700px) {
-    .flip-card {
-        height: 800px;
-        width: 30%;
-    }
-}
-@media only screen and (min-width: 900px) {
-    .flip-card {
-        height: 600px;
-        width: 30%;
-    }
-}
-@media only screen and (min-width: 1400px) {
-    .flip-card {
-        height: 400px;
-        width: 25%;
-    }
-}
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-.flip-card:hover .flip-card-inner[data-flip="true"] {
-  transform: rotateY(180deg);
-}
-.flip-card:hover .flip-card-inner[data-flip="false"] .flip-card-front .flag-reset-button{
-  z-index: 1;
-}
-.flip-card:hover .flip-card-inner[data-flip="true"] .flip-card-back .flag-reset-button{
-    z-index: 1;
-}
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.flip-card-front h3, .flip-card-front h4, .flip-card-front p, .flip-card-front h1 {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.flip-card-front {
-    background-color: black;
     border: 2px solid var(--navbar-color);
-    border-radius: 10px;
 }
-.flip-card-back {
-  background-color: var(--navbar-color);
-  color: white;
-  transform: rotateY(180deg);
-  border-radius: 10px;
+
+.plugin-header {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: var(--color-white);
+    margin-top: auto;
 }
-#selected-badge-icon {
-  padding: 2px;
-  margin: 0px;
-  border-style: solid;
-  border-color: white;
-}
-.training-disclaimer-important {
-    background: var(--navbar-color);
-    vertical-align: middle;
-    padding: 10px 0;
-    font-size: 15px;
-}
-.flag-box .flag-reset-button {
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-    color: grey;
-    font-size: 25;
-    margin-right: 10px;
-}
-.flag-answer {
-    padding: 0px 20px;
-    text-align: left;
-}
-input[type="radio"] {
-    width: auto;
-    margin: 5px 10px;
-    vertical-align: sub;
-}
-input[type="checkbox"] {
-    margin: 5px 10px;
-}
-input.fill-in-the-blank {
-    width: 95%;
-    text-align: left;
-}
-input.fill-in-the-blank:disabled {
-    width: 95%;
-    text-align: left;
-    background-color: rgba(239, 239, 239, 0.3);
-}
-input.layer-upload + .layer-upload-label {
+
+.plugin-x-button {
+    width: 1.5rem;
+    height: fit-content;
     cursor: pointer;
 }
 
-.solution-content {
-    background-color: black;
-    color: white;
-    font-family: Verdana,sans-serif;
+.certificate-select {
+    padding-right: 2rem;
+    width: 20rem;
+}
+
+select {
+    width: auto;
+}
+
+.certificate-code-input {
+    width: 100% !important;
+    margin: 0.5rem !important;
+    color: black;
+}
+
+.copy-button {
+    cursor: pointer;
+    padding: 3px;
+    border: none;
+    display: flex;
+    align-items: center;
+    width: 30% !important;
+    justify-content: center;
+    height: 30px;
+}
+
+.copy-button span {
+    color: black;
+}
+
+.copy-button svg {
+    width: 24px;
+}
+
+.hover\:bg-caldera-primary:hover {
+    background-color: var(--navbar-color);
+}
+
+.rounded {
+    border-radius: 0.25rem !important;
+}
+
+.badge-container-button {
+    color: var(--color-white);
+    width: 5rem !important;
+    padding: 0.25rem;
+    margin: 0.75rem 0.25rem 0 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: initial;
+    border: none;
+}
+
+.badge-container-button:hover {
+    background-color: var(--navbar-color);
+}
+
+.badge-icon-container {
+    z-index: 0;
+    width: 3.5rem !important;
+    fill: currentColor;
+    position: absolute;
+}
+
+.badge-icon-img {
+    /*Important styles to override those from shared.css*/
+    width: 1.5rem !important;
+    height: auto !important;
+    border: none !important;
+    background-color: initial !important;
+    z-index: 10;
+    max-width: 100%;
+    display: block;
+    vertical-align: middle;
+    border-radius: 0;
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
+.badge-completed, .status-flag-completed {
+    color: var(--color-yellow) !important;
+}
+
+.badge-completed-text {
+    background-color: var(--color-yellow);
+    color: var(--color-gray) !important;
+}
+
+.badge-text {
+    text-decoration: none;
+    color: var(--color-white);
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.selected-badge {
+    font-weight: bold;
+    background-color: var(--navbar-color);
+}
+
+.status-flag {
+    padding: 0.5rem;
+    color: var(--color-white);
+}
+
+.status-flag svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.flag-card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+}
+
+.flag-card {
+    display: flex;
+    box-sizing: border-box;
+    margin: 0.25rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--navbar-color);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    background-color: initial !important;
+}
+
+.flag-card-completed .flag-card-wrapper {
+    color: var(--color-yellow);
+}
+
+.flag-card-completed {
+    background-color: var(--navbar-color) !important;
+}
+
+@media (min-width: 640px) {
+    .flag-card {
+        width: 100%;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .flag-card {
+        width: 33.333333%;
+        font-size: 1rem;
+        line-height: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .flag-card {
+        width: 24%;
+        font-size: 0.9rem;
+        line-height: 2rem;
+    }
+}
+
+.flag-card-content {
+    height: 18rem;
+    width: 100%
+}
+
+.flag-show-more {
+    min-height: 18rem;
+    height: auto;
+}
+
+.flag-card-title {
+    padding: 0.25rem 0.5rem;
+    background-color: var(--navbar-color);
+    color: var(--color-white);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    text-align: left;
+}
+
+.flag-card-title span {
+    width: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.flag-card-title-name {
+    width: 83.333333%;
+}
+
+.flag-card-title-badge {
+    width: 16.666667%;
+}
+
+.flag-card-title-badge span {
+    width: 5rem;
+    padding: 0.25rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.flag-badge-icon-container {
+    z-index: 0;
+    width: 2.5rem !important;
+    fill: currentColor;
+    position: absolute;
+}
+
+.flag-card-text {
+    overflow-wrap: break-word;
+    padding: 0 0.5rem;
+}
+
+.flag-show-more-button {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.flag-show-more-button span {
+    width: 1rem;
 }
