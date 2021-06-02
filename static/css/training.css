@@ -98,6 +98,25 @@ select {
     color: black;
 }
 
+.copy-button {
+    cursor: pointer;
+    padding: 3px;
+    border: none;
+    display: flex;
+    align-items: center;
+    width: 30% !important;
+    justify-content: center;
+    height: 30px;
+}
+
+.copy-button span {
+    color: black;
+}
+
+.copy-button svg {
+    width: 24px;
+}
+
 .hover\:bg-caldera-primary:hover {
     background-color: var(--navbar-color);
 }

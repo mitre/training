@@ -153,5 +153,11 @@ function trainingData() {
           return true;
         }).catch((e) => console.error(e));
     },
+
+    copyCode() {
+      document.getElementById('certificate-code').select();
+      document.execCommand('copy');
+      document.getElementById('copy-text').innerHTML = 'Copied!';
+    }
   };
 }
