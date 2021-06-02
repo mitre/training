@@ -59,6 +59,7 @@ function trainingData() {
         );
         code = code.join(' ');
         this.certificateCode = btoa(code);
+        this.confetti();
       }
     },
 
@@ -158,6 +159,41 @@ function trainingData() {
       document.getElementById('certificate-code').select();
       document.execCommand('copy');
       document.getElementById('copy-text').innerHTML = 'Copied!';
+    },
+
+    // Source: https://github.com/catdad/canvas-confetti
+    confetti() {
+      const canvas = document.getElementById('canvas');
+
+      const confettiCanon = confetti.create(canvas, {
+        resize: true,
+        useWorker: true
+      });
+      // do this for 30 seconds
+      var duration = 30 * 1000;
+      var end = Date.now() + duration;
+
+      (function frame() {
+        // launch a few confetti from the left edge
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        // and launch a few from the right edge
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        // keep going until we are out of time
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
     }
   };
 }
