@@ -167,26 +167,26 @@ function trainingData() {
 
       const confettiCanon = confetti.create(canvas, {
         resize: true,
-        useWorker: true
+        useWorker: true,
       });
       // do this for 30 seconds
-      var duration = 30 * 1000;
-      var end = Date.now() + duration;
+      const duration = 30 * 1000;
+      const end = Date.now() + duration;
 
       (function frame() {
         // launch a few confetti from the left edge
-        confetti({
+        confettiCanon({
           particleCount: 7,
           angle: 60,
           spread: 55,
-          origin: { x: 0 }
+          origin: { x: 0 },
         });
         // and launch a few from the right edge
-        confetti({
+        confettiCanon({
           particleCount: 7,
           angle: 120,
           spread: 55,
-          origin: { x: 1 }
+          origin: { x: 1 },
         });
 
         // keep going until we are out of time
