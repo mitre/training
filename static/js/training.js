@@ -165,6 +165,7 @@ function trainingData() {
     confetti() {
       const canvas = document.getElementById('canvas');
 
+      // eslint-disable-next-line
       const confettiCanon = confetti.create(canvas, {
         resize: true,
         useWorker: true,
@@ -194,6 +195,6 @@ function trainingData() {
           requestAnimationFrame(frame);
         }
       }());
-    }
+    },
   };
 }
