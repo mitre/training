@@ -107,15 +107,15 @@ class Flag(BaseObject):
         return op.ran_ability_id('02fb7fa9-8886-4330-9e65-fa7bb1bc5271')
 
     @staticmethod
-    def _is_unauth_process_detected(op):
-        operation_traits = set(f.trait for f in op.all_facts())
+    async def _is_unauth_process_detected(op):
+        operation_traits = set(f.trait for f in await op.all_facts())
         return op.ran_ability_id('3b4640bc-eacb-407a-a997-105e39788781') and \
             'remote.port.unauthorized' in operation_traits and \
             'host.pid.unauthorized' in operation_traits
 
     @staticmethod
-    def _is_file_found(op):
-        operation_traits = set(f.trait for f in op.all_facts())
+    async def _is_file_found(op):
+        operation_traits = set(f.trait for f in await op.all_facts())
         return op.ran_ability_id('f9b3eff0-e11c-48de-9338-1578b351b14b') and \
             'file.malicious.hash' in operation_traits and \
             'host.malicious.file' in operation_traits

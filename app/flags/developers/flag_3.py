@@ -19,7 +19,7 @@ class DevelopersFlag3(Flag):
 
         for op in await services.get('data_svc').locate('operations'):
             if op.finish:
-                found_fact = [fact for fact in op.all_facts() if fact.trait == 'host.ip.ipv6'
+                found_fact = [fact for fact in await op.all_facts() if fact.trait == 'host.ip.ipv6'
                               and len(fact.value.split(':')) == 8 and _valid_ipv6(fact.value.split(':'))]
                 if len(found_fact) > 0:
                     return True

@@ -16,6 +16,6 @@ class AutonomousBlue2(Flag):
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE,
                                                                    name='Blue Autonomous')):
-            if self._is_file_found(op) and is_file_deleted(op):
+            if await self._is_file_found(op) and is_file_deleted(op):
                 return True
         return False

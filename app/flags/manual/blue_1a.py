@@ -18,7 +18,7 @@ class ManualBlue1a(Flag):
             for op in await services.get('data_svc').locate('operations',
                                                             match=dict(access=BaseWorld.Access.BLUE,
                                                                        name='Blue Manual')):
-                if self._is_unauth_process_detected(op):
+                if await self._is_unauth_process_detected(op):
                     return True
             return False
 

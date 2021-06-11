@@ -29,4 +29,3 @@ class ManualBlue3b(Flag):
                                                              self.additional_fields['adversary_id'],
                                                              self.additional_fields['agent_group'],
                                                              is_flag_satisfied)
-

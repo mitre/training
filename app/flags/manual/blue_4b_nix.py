@@ -21,7 +21,7 @@ class ManualBlue4bNix(Flag):
             return False
 
         def is_cronjob_found(op):
-            operation_traits = set(f.trait for f in op.all_facts())
+            operation_traits = set(f.trait for f in await op.all_facts())
             return op.ran_ability_id('ee54384f-cfbc-4228-9dc1-cc5632307afb') and \
                 'host.user.name' in operation_traits and \
                 'host.new.cronjob' in operation_traits
@@ -30,4 +30,3 @@ class ManualBlue4bNix(Flag):
                                                              self.additional_fields['adversary_id'],
                                                              self.additional_fields['agent_group'],
                                                              is_flag_satisfied)
-

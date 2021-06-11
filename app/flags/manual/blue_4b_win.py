@@ -23,10 +23,9 @@ class ManualBlue4bWin(Flag):
 
         def is_cronjob_found(op):
             return op.ran_ability_id('8bc73098-54d1-4f69-abd5-271e3e2da5df') and \
-                   'host.new.schtask' in set(f.trait for f in op.all_facts())
+                   'host.new.schtask' in set(f.trait for f in await op.all_facts())
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],
                                                              self.additional_fields['agent_group'],
                                                              is_flag_satisfied)
-
