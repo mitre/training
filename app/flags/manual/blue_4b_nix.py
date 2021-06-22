@@ -16,11 +16,11 @@ class ManualBlue4bNix(Flag):
         async def is_flag_satisfied():
             for op in await services.get('data_svc').locate('operations', match=dict(access=BaseWorld.Access.BLUE,
                                                                                      name='Blue Manual')):
-                if is_cronjob_found(op):
+                if await is_cronjob_found(op):
                     return True
             return False
 
-        def is_cronjob_found(op):
+        async def is_cronjob_found(op):
             operation_traits = set(f.trait for f in await op.all_facts())
             return op.ran_ability_id('ee54384f-cfbc-4228-9dc1-cc5632307afb') and \
                 'host.user.name' in operation_traits and \
