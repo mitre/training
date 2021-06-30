@@ -11,6 +11,6 @@ class ManualBlue2b(Flag):
     async def verify(self, services):
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Manual')):
-            if self._is_file_found(op):
+            if await self._is_file_found(op):
                 return True
         return False

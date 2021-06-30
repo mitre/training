@@ -12,6 +12,6 @@ class AutonomousBlue1(Flag):
     async def verify(self, services):
         for op in await services.get('data_svc').locate('operations',
                                                         match=dict(access=BaseWorld.Access.BLUE, name='Blue Autonomous')):
-            if self._is_unauth_process_detected(op) and self._is_unauth_process_killed(op):
+            if await self._is_unauth_process_detected(op) and self._is_unauth_process_killed(op):
                 return True
         return False

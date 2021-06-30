@@ -17,16 +17,15 @@ class ManualBlue5cNix(Flag):
         async def is_flag_satisfied():
             for op in await services.get('data_svc').locate('operations', match=dict(access=BaseWorld.Access.BLUE,
                                                                                      name='Blue Manual')):
-                if is_modified_profile_found(op):
+                if await is_modified_profile_found(op):
                     return True
             return False
 
-        def is_modified_profile_found(op):
+        async def is_modified_profile_found(op):
             return op.ran_ability_id('930236c2-5397-4868-8c7b-72e294a5a376') and \
-                   'has_been_modified' in set(f.trait for f in op.all_facts())
+                   'has_been_modified' in set(f.trait for f in await op.all_facts())
 
         return await BaseFlag.standard_verify_with_operation(services, self.additional_fields['operation_name'],
                                                              self.additional_fields['adversary_id'],
                                                              self.additional_fields['agent_group'],
                                                              is_flag_satisfied)
-
