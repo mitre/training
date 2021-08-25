@@ -18,7 +18,7 @@
     1. Open the Navigate menu.
     1. Select `Campaigns > operations`.
     1. Press the View/Add switch to open the operation creation menu.
-    1. Name the operation "Gameboard - Red".
+    1. Name the operation "Gameboard - Blue".
     1. Press Start to run the operation.
 1. Open the gameboard plugin.
 1. Task complete.
