@@ -1,6 +1,6 @@
 <script src="/training/js/confetti.browser.min.js"></script>
 
-<div id="training" class="section-profile" x-data="trainingData()"
+<div id="trainingPage" class="section-profile" x-data="trainingData()"
      x-init="initTraining(); $watch('selectedCert', value => getTraining(value)); $watch('selectedBadge', value => updateVisibleFlags(value))">
     <template x-if="completedCertificate">
         <div id="canvas" x-init="confetti()"></div>
@@ -9,13 +9,6 @@
         <div class="flex flex-col text-left">
             <div x-ref="trainingHeader" class="flex flex-row justify-between">
                 <h1 class="plugin-header">Training</h1>
-                <span role="button" class="plugin-x-button hover:bg-caldera-primary rounded pl-1"
-                      onclick="removeSection('training')">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </span>
             </div>
             <div class="flex flex-row flex-wrap items-center">
                 <div class="certificate-select">
@@ -417,58 +410,58 @@
     / / TODO
     }
 
-    .w-100 {
+    #trainingPage .w-100 {
         width: 100%;
     }
 
-    .items-center {
+    #trainingPage .items-center {
         align-items: center;
     }
 
-    .justify-center {
+    #trainingPage .justify-center {
         justify-content: center;
     }
 
-    .justify-start {
+    #trainingPage .justify-start {
         justify-content: start;
     }
 
-    .justify-between {
+    #trainingPage .justify-between {
         justify-content: space-between;
     }
 
-    .justify-evenly {
+    #trainingPage .justify-evenly {
         justify-content: space-evenly;
     }
 
-    .flex-wrap {
+    #trainingPage .flex-wrap {
         flex-wrap: wrap;
     }
 
-    .flex-row {
+    #trainingPage .flex-row {
         flex-direction: row;
     }
 
-    .flex-col {
+    #trainingPage .flex-col {
         flex-direction: column;
     }
 
-    .flex {
+    #trainingPage .flex {
         display: flex;
     }
 
-    .text-left {
+    #trainingPage .text-left {
         text-align: left;
     }
 
-    .overflow-hidden {
+    #trainingPage .overflow-hidden {
         overflow: hidden;
     }
 
     /*
         PLUGIN STYLES
     */
-    .plugin-container {
+    #trainingPage .plugin-container {
         font-size: 16px;
         font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         background-color: var(--color-gray);
@@ -482,35 +475,35 @@
         border: 2px solid var(--primary-color);
     }
 
-    .plugin-header {
+    #trainingPage .plugin-header {
         font-size: 1.5rem;
         line-height: 2rem;
         color: var(--color-white);
         margin-top: auto;
     }
 
-    .plugin-x-button {
+    #trainingPage .plugin-x-button {
         width: 1.5rem;
         height: fit-content;
         cursor: pointer;
     }
 
-    .certificate-select {
+    #trainingPage .certificate-select {
         padding-right: 2rem;
         width: 20rem;
     }
 
-    select {
+    #trainingPage select {
         width: auto;
     }
 
-    .certificate-code-input {
+    #trainingPage .certificate-code-input {
         width: 100% !important;
         margin: 0.5rem !important;
         color: black;
     }
 
-    .copy-button {
+    #trainingPage .copy-button {
         cursor: pointer;
         padding: 3px;
         border: none;
@@ -521,23 +514,23 @@
         height: 30px;
     }
 
-    .copy-button span {
+    #trainingPage .copy-button span {
         color: black;
     }
 
-    .copy-button svg {
+    #trainingPage .copy-button svg {
         width: 24px;
     }
 
-    .hover\:bg-caldera-primary:hover {
+    #trainingPage .hover\:bg-caldera-primary:hover {
         background-color: var(--primary-color);
     }
 
-    .rounded {
+    #trainingPage .rounded {
         border-radius: 0.25rem !important;
     }
 
-    .badge-container-button {
+    #trainingPage .badge-container-button {
         color: var(--color-white);
         width: 5rem !important;
         padding: 0.25rem;
@@ -553,18 +546,18 @@
         border: none;
     }
 
-    .badge-container-button:hover {
+    #trainingPage .badge-container-button:hover {
         background-color: var(--primary-color);
     }
 
-    .badge-icon-container {
+    #trainingPage .badge-icon-container {
         z-index: 0;
         width: 3.5rem !important;
         fill: currentColor;
         position: absolute;
     }
 
-    .badge-icon-img {
+    #trainingPage .badge-icon-img {
         /*Important styles to override those from shared.css*/
         width: 1.5rem !important;
         height: auto !important;
@@ -579,16 +572,16 @@
         margin-top: 0.5rem;
     }
 
-    .badge-completed, .status-flag-completed {
+    #trainingPage .badge-completed, .status-flag-completed {
         color: var(--color-yellow) !important;
     }
 
-    .badge-completed-text {
+    #trainingPage .badge-completed-text {
         background-color: var(--color-yellow);
         color: var(--color-gray) !important;
     }
 
-    .badge-text {
+    #trainingPage .badge-text {
         text-decoration: none;
         color: var(--color-white);
         padding-left: 0.25rem;
@@ -598,29 +591,29 @@
         line-height: 1rem;
     }
 
-    .selected-badge {
+    #trainingPage .selected-badge {
         font-weight: bold;
         background-color: var(--primary-color);
     }
 
-    .status-flag {
+    #trainingPage .status-flag {
         padding: 0.5rem;
         color: var(--color-white);
     }
 
-    .status-flag svg {
+    #trainingPage .status-flag svg {
         width: 1.25rem;
         height: 1.25rem;
     }
 
-    .flag-card-container {
+    #trainingPage .flag-card-container {
         display: flex;
         justify-content: space-evenly;
         flex-flow: row wrap;
         box-sizing: border-box;
     }
 
-    .flag-card {
+    #trainingPage .flag-card {
         display: flex;
         box-sizing: border-box;
         margin: 0.25rem;
@@ -633,16 +626,16 @@
         background-color: initial !important;
     }
 
-    .flag-card-completed .flag-card-wrapper {
+    #trainingPage .flag-card-completed .flag-card-wrapper {
         color: var(--color-yellow);
     }
 
-    .flag-card-completed {
+    #trainingPage .flag-card-completed {
         background-color: var(--primary-color) !important;
     }
 
     @media (min-width: 640px) {
-        .flag-card {
+        #trainingPage .flag-card {
             width: 100%;
             font-size: 0.875rem;
             line-height: 1.25rem;
@@ -650,7 +643,7 @@
     }
 
     @media (min-width: 768px) {
-        .flag-card {
+        #trainingPage .flag-card {
             width: 33.333333%;
             font-size: 1rem;
             line-height: 1.75rem;
@@ -658,24 +651,24 @@
     }
 
     @media (min-width: 1024px) {
-        .flag-card {
+        #trainingPage .flag-card {
             width: 24%;
             font-size: 0.9rem;
             line-height: 2rem;
         }
     }
 
-    .flag-card-content {
+    #trainingPage .flag-card-content {
         height: 18rem;
         width: 100%
     }
 
-    .flag-show-more {
+    #trainingPage .flag-show-more {
         min-height: 18rem;
         height: auto;
     }
 
-    .flag-card-title {
+    #trainingPage .flag-card-title {
         padding: 0.25rem 0.5rem;
         background-color: var(--primary-color);
         color: var(--color-white);
@@ -684,44 +677,44 @@
         text-align: left;
     }
 
-    .flag-card-title span {
+    #trainingPage .flag-card-title span {
         width: 1.5rem;
         margin-right: 0.5rem;
     }
 
-    .flag-card-title-name {
+    #trainingPage .flag-card-title-name {
         width: 83.333333%;
     }
 
-    .flag-card-title-badge {
+    #trainingPage .flag-card-title-badge {
         width: 16.666667%;
     }
 
-    .flag-card-title-badge span {
+    #trainingPage .flag-card-title-badge span {
         width: 5rem;
         padding: 0.25rem;
         margin-left: 0.25rem;
         margin-right: 0.25rem;
     }
 
-    .flag-badge-icon-container {
+    #trainingPage .flag-badge-icon-container {
         z-index: 0;
         width: 2.5rem !important;
         fill: currentColor;
         position: absolute;
     }
 
-    .flag-card-text {
+    #trainingPage .flag-card-text {
         overflow-wrap: break-word;
         padding: 0 0.5rem;
     }
 
-    .flag-show-more-button {
+    #trainingPage .flag-show-more-button {
         padding: 0.5rem;
         cursor: pointer;
     }
 
-    .flag-show-more-button span {
+    #trainingPage .flag-show-more-button span {
         width: 1rem;
     }
 </style>
