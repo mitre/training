@@ -405,9 +405,7 @@
         --default-font: 'Veranda', sans-serif;
         --color-white: white;
         --color-gray: rgb(21, 21, 21);
-        --color-yellow: rgb(248, 193, 69);
-        --primary-color: #8B0000;
-    / / TODO
+        --color-complete: white;
     }
 
     #trainingPage .w-100 {
@@ -461,20 +459,6 @@
     /*
         PLUGIN STYLES
     */
-    #trainingPage .plugin-container {
-        font-size: 16px;
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        background-color: var(--color-gray);
-        color: var(--color-white);
-        margin-top: 50px;
-        padding: 25px;
-        border-radius: 25px;
-        max-width: 100%;
-        display: flex;
-        position: relative;
-        border: 2px solid var(--primary-color);
-    }
-
     #trainingPage .plugin-header {
         font-size: 1.5rem;
         line-height: 2rem;
@@ -530,11 +514,14 @@
         border-radius: 0.25rem !important;
     }
 
+    #trainingPage .badge-container {
+        margin: 0.75rem 0;
+    }
+
     #trainingPage .badge-container-button {
         color: var(--color-white);
         width: 5rem !important;
-        padding: 0.25rem;
-        margin: 0.75rem 0.25rem 0 0.25rem;
+        padding: 0.85rem 0.25rem 0.25rem;
         font-size: 1rem;
         line-height: 1.5rem;
         display: flex;
@@ -555,11 +542,12 @@
         width: 3.5rem !important;
         fill: currentColor;
         position: absolute;
+        opacity: 0.8;
     }
 
     #trainingPage .badge-icon-img {
         /*Important styles to override those from shared.css*/
-        width: 1.5rem !important;
+        width: 35% !important;
         height: auto !important;
         border: none !important;
         background-color: initial !important;
@@ -569,15 +557,15 @@
         vertical-align: middle;
         border-radius: 0;
         margin-bottom: 0;
-        margin-top: 0.5rem;
     }
 
     #trainingPage .badge-completed, .status-flag-completed {
-        color: var(--color-yellow) !important;
+        color: var(--color-complete) !important;
+        opacity: 1 !important;
     }
 
     #trainingPage .badge-completed-text {
-        background-color: var(--color-yellow);
+        background-color: var(--color-complete);
         color: var(--color-gray) !important;
     }
 
@@ -594,11 +582,13 @@
     #trainingPage .selected-badge {
         font-weight: bold;
         background-color: var(--primary-color);
+        border-radius: 5px;
     }
 
     #trainingPage .status-flag {
         padding: 0.5rem;
         color: var(--color-white);
+        opacity: 0.5;
     }
 
     #trainingPage .status-flag svg {
@@ -617,21 +607,20 @@
         display: flex;
         box-sizing: border-box;
         margin: 0.25rem;
-        border-width: 2px;
-        border-style: solid;
-        border-color: var(--primary-color);
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
         background-color: initial !important;
-    }
-
-    #trainingPage .flag-card-completed .flag-card-wrapper {
-        color: var(--color-yellow);
+        border: 4.5px solid var(--primary-color);
     }
 
     #trainingPage .flag-card-completed {
         background-color: var(--primary-color) !important;
+    }
+
+    #trainingPage .flag-card-completed .flag-card-title-name .flag-card-wrapper, .flag-card-completed .flag-badge-icon-container {
+        color: var(--color-complete);
+        opacity: 1 !important;
     }
 
     @media (min-width: 640px) {
@@ -675,11 +664,16 @@
         font-size: 1.125rem;
         line-height: 1.75rem;
         text-align: left;
+        border: 2px solid var(--primary-color);
     }
 
-    #trainingPage .flag-card-title span {
+    #trainingPage .flag-card-title div:first-child span{
         width: 1.5rem;
         margin-right: 0.5rem;
+    }
+
+    #trainingPage .flag-card:not(.flag-card-completed) .flag-card-title svg {
+        opacity: 0.5;
     }
 
     #trainingPage .flag-card-title-name {
@@ -693,8 +687,6 @@
     #trainingPage .flag-card-title-badge span {
         width: 5rem;
         padding: 0.25rem;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
     }
 
     #trainingPage .flag-badge-icon-container {
