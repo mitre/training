@@ -5,7 +5,7 @@ class OperationsFlag1(Flag):
     name = 'Stealthy operation'
 
     challenge = (
-        'Run and finish an operation using a jitter of 10/20 and base64 obfuscation. Use the Hunter adversary profile '
+        'Run and finish an operation using a jitter of 10/20 and base64 obfuscation. Use the Ransack adversary profile '
         'provided in the Stockpile plugin again.'
     )
 
