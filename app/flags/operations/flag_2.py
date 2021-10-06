@@ -5,7 +5,7 @@ class OperationsFlag2(Flag):
     name = 'Manual operation'
 
     challenge = (
-        'Run and finish an operation using any adversary profile except Hunter. Run the operation requiring manual '
+        'Run and finish an operation using any adversary profile except Ransack. Run the operation requiring manual '
         'approval. Approve and discard links as desired.'
     )
 

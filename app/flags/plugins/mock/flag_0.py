@@ -4,7 +4,7 @@ from plugins.training.app.c_flag import Flag
 class PluginsMockFlag0(Flag):
     name = 'Mock plugin'
     challenge = (
-        'Enable the mock plugin. Then run an operation against the "simulation" group using the Hunter profile. '
+        'Enable the mock plugin. Then run an operation against the "simulation" group using the Ransack profile. '
         '(Hint: check default.yml for running plugins.)'
     )
     extra_info = (

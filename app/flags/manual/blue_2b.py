@@ -3,8 +3,8 @@ from plugins.training.app.c_flag import Flag
 
 
 class ManualBlue2b(Flag):
-    name = 'Hunt for malicious file on system'
-    challenge = 'Run the appropriate hunt ability in the \'Blue Manual\' operation to find the location of the ' \
+    name = 'Search for malicious file on system'
+    challenge = 'Run the appropriate ability in the \'Blue Manual\' operation to find the location of the ' \
                 'malicious file.'
     extra_info = """"""
 

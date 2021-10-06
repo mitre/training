@@ -3,7 +3,7 @@ from plugins.training.app.c_flag import Flag
 
 class OperationsFlag0(Flag):
     name = 'Basic operation'
-    challenge = 'Run and finish an operation. Use the Hunter adversary profile provided in the Stockpile plugin.'
+    challenge = 'Run and finish an operation. Use the Ransack adversary profile provided in the Stockpile plugin.'
     extra_info = (
         'An autonomous operation uses an adversary profile to pre-configures the attack. Agents and C2 run '
         'without operator interference. This allows operators to run repeatable adversary emulation '
