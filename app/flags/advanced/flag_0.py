@@ -17,7 +17,7 @@ class AdvancedFlag0(Flag):
                  r'(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$'
 
     async def verify(self, services):
-        http_contact = services.get('app_svc').get_config('app.http.contact')
+        http_contact = services.get('app_svc').get_config('app.contact.http')
         return http_contact and AdvancedFlag0.valid_external_http_contact(http_contact)
 
     @staticmethod
