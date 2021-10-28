@@ -1,6 +1,4 @@
-<script src="/training/js/confetti.browser.min.js"></script>
-
-<div id="trainingPage" class="section-profile" x-data="trainingData()"
+<div id="trainingPage" class="section-profile" x-data="alpineTraining()"
      x-init="initTraining(); $watch('selectedCert', value => getTraining(value)); $watch('selectedBadge', value => updateVisibleFlags(value))">
     <template x-if="completedCertificate">
         <div id="canvas" x-init="confetti()"></div>
@@ -10,7 +8,7 @@
             <div x-ref="trainingHeader" class="flex flex-row justify-between">
                 <h1 class="plugin-header">Training</h1>
             </div>
-            <div class="flex flex-row flex-wrap items-center">
+            <div class="flex flex-row items-center">
                 <div class="certificate-select">
                     <label for="training-cert-select">Choose a certificate:</label>
                     <span class="flex items-center">
@@ -24,9 +22,10 @@
                         </span>
                 </div>
                 <template x-if="completedCertificate">
-                    <div>
-                        <label for="certificate-code">Certificate code:</label>
-                        <span class="flex items-center flex-row">
+                    <div class="flex flex-row flex-wrap">
+                        <div>
+                            <label for="certificate-code">Certificate code:</label>
+                            <span class="flex items-center flex-row">
                                 <input id="certificate-code" type="text" readonly
                                        class="rounded cursor-pointer certificate-code-input"
                                        x-bind:value="certificateCode"
@@ -42,6 +41,11 @@
                                     </span>
                                 </button>
                             </span>
+                        </div>
+                        <div>
+                            <p>Congrats! Send this to caldera@mitre.org. We will validate it and send back an
+                                authenticated code as proof of completion.</p>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -200,7 +204,8 @@
     /*
      *Data object & functions to be used by Alpine.js x-data in training.html
      */
-    function trainingData() {
+
+    function alpineTraining() {
         return {
             /*
             Variables
@@ -667,7 +672,7 @@
         border: 2px solid var(--primary-color);
     }
 
-    #trainingPage .flag-card-title div:first-child span{
+    #trainingPage .flag-card-title div:first-child span {
         width: 1.5rem;
         margin-right: 0.5rem;
     }
