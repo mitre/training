@@ -8,7 +8,7 @@ class AgentsFlag5(Flag):
     challenge = (
         'Using a Stockpile ability, ensure new agents automatically run "whoami" on their first beacon. '
         'Locate the ability that executes this command and enter the ability id as a bootstrap ability '
-        '(Hint: Abilities and their id can be found in the `plugins/stockpile/data/abilities` directory).'
+        '(Hint: Abilities can be found in the `plugins/stockpile/data/abilities` directory).'
     )
 
     extra_info = (
