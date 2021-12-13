@@ -14,7 +14,7 @@ class AdversariesFlag2(Flag):
     async def verify(self, services):
         for a in await services.get('data_svc').locate('abilities', dict(name='My test ability')):
             check1 = a.tactic == 'discovery'
-            check2 = any(executor.cleanup and executor.payloads for executor in a.executors)
+            check2 = any(executor.cleanup and executor.command for executor in a.executors)
             if check1 and check2:
                 return True
         return False
