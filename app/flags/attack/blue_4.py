@@ -11,6 +11,6 @@ class AttackBlue4(Flag):
     extra_info = ''
 
     async def verify(self, services):
-        technique = 'T1570'  # Remote File Copy
+        technique = 'T1570'  # Lateral Tool Transfer
         adv_name = 'blue_quiz_5'
         return await BaseFlag.verify_attack_flag(services, technique, adv_name)
