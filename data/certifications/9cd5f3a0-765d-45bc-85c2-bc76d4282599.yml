@@ -32,5 +32,3 @@ badges:
   response:
     - flags.plugins.response.flag_0.PluginsResponseFlag0
     - flags.plugins.response.flag_1.PluginsResponseFlag1
-  gameboard:
-    - flags.plugins.gameboard.flag_0.PluginsGameboardFlag0
