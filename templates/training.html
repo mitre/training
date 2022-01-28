@@ -111,7 +111,8 @@
             <template x-for="(flag, index) in visibleFlagList" :key="flag.name">
                 <div class="flag-card is-flex is-flex-direction-column rounded">
                     <div class="flag-card-content is-flex is-flex-direction-column overflow-hidden"
-                         x-bind:class="{ 'flag-card-content-active': isCardActive(index), 'flag-show-more': flag.showMore }">
+                         :class="flag.showMore && 'flag-show-more'"
+                         x-bind:class="{ 'flag-card-content-active': isCardActive(index) }">
 
                         <!-- FLAG TITLE -->
 
@@ -225,7 +226,7 @@
             isCardActive(index) {
                 if (this.selectedBadge) {
                     const badgeIndex = this.badgeList.findIndex((badge) => badge.name === this.selectedBadge.name);
-                    if (badgeIndex) {
+                    if (badgeIndex > 0) {
                         const earlierFlags = this.flagList.filter((flag) => flag.badge_name === this.badgeList[badgeIndex - 1].name);
                         if (!earlierFlags[earlierFlags.length - 1].completed) {
                             return false;
@@ -234,7 +235,7 @@
                 }
 
                 return (
-                    (index === 0 && !this.visibleFlagList[0].completed) ||
+                    (index === 0 && this.visibleFlagList.length > 0 && !this.visibleFlagList[0].completed) ||
                     (this.visibleFlagList[index] && !this.visibleFlagList[index].completed && this.visibleFlagList[index - 1].completed)
                 );
             },
