@@ -1,13 +1,12 @@
 <div id="trainingPage" class="section-profile" x-data="alpineTraining()"
      x-init="initTraining(); $watch('selectedCert', value => getTraining(value)); $watch('selectedBadge', value => updateVisibleFlags(value))">
-    
-    <!-- CONFETTI -->
 
+    <!-- CONFETTI -->
     <template x-if="completedCertificate">
-        <div id="canvas" x-init="confetti()"></div>
+        <canvas id="confettiCanvas"></canvas>
     </template>
 
-    <div>
+    <div class="z-index-1">
         <div>
             <div x-ref="trainingHeader">
                 <h2>Training</h2>
@@ -25,7 +24,7 @@
                         <select x-model="selectedCert">
                             <option default disabled value="">---</option>
                             {% for cert in certificates %}
-                                <option>{{ cert.name }}</option>
+                            <option>{{ cert.name }}</option>
                             {% endfor %}}
                         </select>
                     </div>
@@ -41,9 +40,9 @@
                 <div class="field has-addons">
                     <div class="control">
                         <input id="certificatecode" type="text" readonly
-                            class="input is-small"
-                            x-model="certificateCode"
-                            aria-label="Certificate code"/>
+                               class="input is-small"
+                               x-model="certificateCode"
+                               aria-label="Certificate code"/>
                     </div>
                     <div class="control">
                         <a class="button is-small" x-on:click="copyCode()">
@@ -55,8 +54,8 @@
                     </div>
                 </div>
                 <p>
-                    Congrats! Send this code to 
-                    <a x-bind:href="'mailto:caldera@mitre.org?subject=Training%20Completed!&body=I%20finished%20the%20CALDERA%20Training!%20My%20certificate%20code:%20'+ certificateCode">caldera@mitre.org</a>. 
+                    Congrats! Send this code to
+                    <a x-bind:href="'mailto:caldera@mitre.org?subject=Training%20Completed!&body=I%20finished%20the%20CALDERA%20Training!%20My%20certificate%20code:%20'+ certificateCode">caldera@mitre.org</a>.
                     We will validate it and send back an authenticated code as proof of completion.
                 </p>
             </div>
@@ -72,25 +71,25 @@
                             x-bind:class="{ 'selected-badge': selectedBadge.name === badge.name }">
                         <span class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
                             <span class="badge-icon-container"
-                                x-bind:class="badge.completed ? 'badge-completed' : ''">
+                                  x-bind:class="badge.completed ? 'badge-completed' : ''">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                    fill="current"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                     fill="current"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor">
                                     <path stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                 </svg>
                             </span>
                             <img x-bind:alt="badge.name"
-                                class="badge-icon-img"
-                                onerror="this.src='/training/img/badges/defaultlock.png'"
-                                x-bind:src="badge.icon_src"/>
+                                 class="badge-icon-img"
+                                 onerror="this.src='/training/img/badges/defaultlock.png'"
+                                 x-bind:src="badge.icon_src"/>
                         </span>
                         <span class="badge-text hover:bg-caldera-primary rounded"
-                                x-bind:class="{ 'badge-completed-text': badge.completed }"
-                                x-text="badge.name"></span>
+                              x-bind:class="{ 'badge-completed-text': badge.completed }"
+                              x-text="badge.name"></span>
                     </button>
                 </template>
             </div>
@@ -111,40 +110,43 @@
         <div class="flag-card-container">
             <template x-for="(flag, index) in visibleFlagList" :key="flag.name">
                 <div class="flag-card is-flex is-flex-direction-column rounded">
-                    <div class="flag-card-content is-flex is-flex-direction-column overflow-hidden" x-bind:class="{ 'flag-card-content-active': isCardActive(index), 'flag-show-more': flag.showMore }">
-                        
+                    <div class="flag-card-content is-flex is-flex-direction-column overflow-hidden"
+                         :class="flag.showMore && 'flag-show-more'"
+                         x-bind:class="{ 'flag-card-content-active': isCardActive(index) }">
+
                         <!-- FLAG TITLE -->
 
-                        <div class="flag-card-title is-flex is-justify-content-space-evenly align-center" x-bind:class="{ 'flag-card-title-active': flag.completed || isCardActive(index) }">
+                        <div class="flag-card-title is-flex is-justify-content-space-evenly align-center"
+                             x-bind:class="{ 'flag-card-title-active': flag.completed || isCardActive(index) }">
                             <div class="is-flex is-justify-content-start is-align-items-center flag-card-title-name">
                                 <span class="icon" x-bind:class="flag.completed ? 'flag-icon-completed' : ''">
                                     <em x-bind:class="flag.completed ? 'fas fa-flag' : 'far fa-flag'"></em>
                                 </span>
                                 <p x-text="flag.name"></p>
                             </div>
-                            <a class="icon has-tooltip-left solution-guide-link" 
-                                x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`" 
-                                target="_blank"
-                                data-tooltip="Solution Guide">
+                            <a class="icon has-tooltip-left solution-guide-link"
+                               x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`"
+                               target="_blank"
+                               data-tooltip="Solution Guide">
                                 <em class="far fa-question-circle"></em>
                             </a>
                             <div class="is-flex is-align-items-center flag-card-title-badge">
                                 <span class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
                                     <span class="flag-badge-icon-container">
                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                            fill="current"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor">
+                                             fill="current"
+                                             viewBox="0 0 24 24"
+                                             stroke="currentColor">
                                             <path stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                         </svg>
                                     </span>
                                     <img x-bind:alt="flag.badge_name"
-                                        class="badge-icon-img"
-                                        onerror="this.src='/training/img/badges/defaultlock.png'"
-                                        x-bind:src="flag.badge_icon"/>
+                                         class="badge-icon-img"
+                                         onerror="this.src='/training/img/badges/defaultlock.png'"
+                                         x-bind:src="flag.badge_icon"/>
                                 </span>
                             </div>
                         </div>
@@ -160,10 +162,10 @@
                                         <span>
                                             <label x-bind:for="flag.code">Write text here:</label>
                                             <input x-bind:disabled="flag.completed"
-                                                    class="text-colors-black pl-1 pr-2"
-                                                    x-bind:id="flag.code"
-                                                    placeholder="type here"
-                                                    x-on:input="onTextInput"/>
+                                                   class="text-colors-black pl-1 pr-2"
+                                                   x-bind:id="flag.code"
+                                                   placeholder="type here"
+                                                   x-on:input="onTextInput"/>
                                         </span>
                                     </template>
                                 </div>
@@ -198,6 +200,7 @@
             completedCertificate: false,
             certificateCodeList: [],
             certificateCode: '',
+            end: 0,
 
             async initTraining() {
                 function sleep(ms) {
@@ -223,7 +226,7 @@
             isCardActive(index) {
                 if (this.selectedBadge) {
                     const badgeIndex = this.badgeList.findIndex((badge) => badge.name === this.selectedBadge.name);
-                    if (badgeIndex) {
+                    if (badgeIndex > 0) {
                         const earlierFlags = this.flagList.filter((flag) => flag.badge_name === this.badgeList[badgeIndex - 1].name);
                         if (!earlierFlags[earlierFlags.length - 1].completed) {
                             return false;
@@ -232,7 +235,7 @@
                 }
 
                 return (
-                    (index === 0 && !this.visibleFlagList[0].completed) || 
+                    (index === 0 && this.visibleFlagList.length > 0 && !this.visibleFlagList[0].completed) ||
                     (this.visibleFlagList[index] && !this.visibleFlagList[index].completed && this.visibleFlagList[index - 1].completed)
                 );
             },
@@ -248,7 +251,9 @@
                     this.visibleFlagList = this.flagList.filter(
                         (flag) => flag.badge_name === this.selectedBadge.name,
                     );
-                } else this.visibleFlagList = this.flagList;
+                } else {
+                    this.visibleFlagList = this.flagList;
+                }
             },
 
             /*
@@ -262,6 +267,9 @@
                     );
                     code = code.join(' ');
                     this.certificateCode = btoa(code);
+
+                    const duration = 10000;
+                    if (this.end === 0) this.end = Date.now() + duration; // spray confetti for 10 seconds
                     this.confetti();
                 }
             },
@@ -335,10 +343,10 @@
             getTraining() {
                 if (!this.selectedCert) return;
                 apiV2('POST', '/plugin/training/flags', {
-                    name: this.selectedCert, 
+                    name: this.selectedCert,
                     answers: {},
                 }).then((data) => {
-                    this.getFlags(data)
+                    this.getFlags(data);
                     this.updateVisibleFlags(this.selectedBadge);
                     this.checkCertificateCompletion();
                 }).catch((e) => console.error(e));
@@ -352,38 +360,35 @@
 
             // Source: https://github.com/catdad/canvas-confetti
             confetti() {
-                const canvas = document.getElementById('canvas');
-
+                const canvas = document.getElementById('confettiCanvas');
+                if (!canvas || !confetti) return;
                 // eslint-disable-next-line
                 const confettiCanon = confetti.create(canvas, {
                     resize: true,
                     useWorker: true,
                 });
-                // do this for 3 seconds
-                const duration = 3 * 1000;
-                const end = Date.now() + duration;
 
-                (function frame() {
+                const frame = () => {
                     // launch a few confetti from the left edge
                     confettiCanon({
-                        particleCount: 7,
+                        particleCount: 100,
                         angle: 60,
                         spread: 55,
                         origin: {x: 0},
                     });
                     // and launch a few from the right edge
                     confettiCanon({
-                        particleCount: 7,
+                        particleCount: 100,
                         angle: 120,
                         spread: 55,
                         origin: {x: 1},
                     });
+                };
 
-                    // keep going until we are out of time
-                    if (Date.now() < end) {
-                        requestAnimationFrame(frame);
-                    }
-                }());
+                // keep going until we are out of time
+                if (Date.now() < this.end) {
+                    requestAnimationFrame(frame);
+                }
             },
         };
     }
@@ -393,6 +398,18 @@
     #select-certificate {
         max-width: 800px;
         margin: 0 auto;
+    }
+
+    #trainingPage .z-index-1 * {
+        z-index: 1
+    }
+
+    #trainingPage canvas {
+        position: fixed;
+        z-index: 0;
+        width: 85%;
+        height: 100%;
+        top: 0;
     }
 
     #trainingPage .overflow-hidden {
