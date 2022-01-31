@@ -111,8 +111,7 @@
             <template x-for="(flag, index) in visibleFlagList" :key="flag.name">
                 <div class="flag-card is-flex is-flex-direction-column rounded">
                     <div class="flag-card-content is-flex is-flex-direction-column overflow-hidden"
-                         :class="flag.showMore && 'flag-show-more'"
-                         x-bind:class="{ 'flag-card-content-active': isCardActive(index) }">
+                         x-bind:class="{ 'flag-card-content-active': isCardActive(index), 'flag-show-more': flag.showMore }">
 
                         <!-- FLAG TITLE -->
 
@@ -598,7 +597,7 @@
         background-color: #272727;
     }
 
-    #trainingPage .flag-card-content-active {
+    #trainingPage .flag-card-text-active {
         border: 2px solid var(--primary-color);
         border-bottom: none;
     }
