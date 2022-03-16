@@ -1,7 +1,7 @@
-1. Open the Navigate menu.
-1. Select `Campaigns > agents`.
-1. In the agents table, click on the PID button for a row (opens a window).
-1. In the `Sleep` row, click on the `30/60` value in the right column (text will become editable)
-1. Enter a different `min/max` value (e.g., `50/100`)
-1. Press the `Save` button
-1. Task completed
+1. In the left-handside navigation, select `Campaigns > agents`.
+1. In the `Agents` table, click on a row with an agent to open `Agent Details` window.
+1. Under `Sleep Timer`, click on `30/60` values (text will become editable).
+1. Enter a different `min` and `max` into the input box for `Sleep Timer` (e.g. `25` and `45`).
+1. Enter a different value into the input box for `Group` (e.g. `blue`).
+1. Press the `Save Settings` button.
+1. Task completed.
