@@ -6,7 +6,7 @@
 1. Give the operation a name.
 1. Press Basic Options to open the basic options list.
 1. Select a group from the agent group dropdown, or use all groups.
-1. Select the "Hunter" adversary from the adversary dropdown.
+1. Select the "Ransack" adversary from the adversary dropdown.
 1. Select "Auto close operation" from the keep open or close dropdown.
 1. Press Stealth to open the stealth options list.
 1. Select "base64 obfuscation" from the obfuscation dropdown.
