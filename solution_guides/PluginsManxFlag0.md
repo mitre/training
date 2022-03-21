@@ -18,14 +18,14 @@
 1. In the remote shell, type `whoami` and press enter.
 1. In the remote shell, type `uname -a` and press enter.
 
-### Running Hunter operation
+### Running Ransack operation
 1. Open the Navigate menu.
 1. Select `Campaigns > operations`.
 1. Press the toggle button so that it changes from View to Add
 1. Enter an operation name of `Manx Flag 0`
 1. Click on `Basic Options`
 1. Select `red` from the groups list
-1. Select `Hunter` from the adversary list
+1. Select `Ransack` from the adversary list
 1. Select `Auto-close operation` from the close options list.
 1. Press the `Start` button.
 1. Wait for the operation to complete. The operation status will change to `FINISHED`. This may take several minutes.
