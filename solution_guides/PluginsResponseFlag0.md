@@ -1,6 +1,6 @@
 1. Log into CALDERA as a `blue` group user (by default, the username is `blue`).
 1. In the left-handside navigation, select `CAMPAIGNS > agents`.
-1. Press the button `+Deploy an agent`.
+1. Press the button `+ Deploy an agent`.
 1. Choose `Sandcat` agent.
 1. Under Platform, choose Linux.
 1. Update the `app.contact.http` value to specify an IP address of the CALDERA server that is reachable from the remote system (e.g. `10.0.2.2`). Keep the port value unchanged.
