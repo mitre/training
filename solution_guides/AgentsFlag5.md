@@ -4,7 +4,7 @@
 1. Open `plugins/stockpile/data/abilities/discovery/c0da588f-79f0-4263-8998-7496b1a40596.yml`.
   in a text editor and confirm that it runs `whoami` as a command.
 1. Copy the `name` portion of the yml ability file to your clipboard: (it should say `Identify active user`).
-1. In CALDERA browser window, select `Campaigns > agents`.
+1. In CALDERA browser window, select `CAMPAIGNS > agents`.
 1. Press the `Configuration` button to open `Agent Configuration` window.
 1. Click the `+` next to Bootstrap Abilities.
 1. Text search box opens below.

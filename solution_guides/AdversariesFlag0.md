@@ -1,5 +1,5 @@
-1. Select `Campaigns > adversaries`.
-1. In the `Adversary Profiles` window that opens, click the `+New Profile` button. This opens `Create a profile` dialog. 
+1. Select `CAMPAIGNS > adversaries`.
+1. In the `Adversary Profiles` window that opens, click the `+ New Profile` button. This opens `Create a profile` dialog. 
 1. Enter `Certifiable` for a Profile name.
 1. Enter `Training adversary` for the Profile Description.
 1. Click `Create`.

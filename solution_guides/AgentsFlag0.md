@@ -1,4 +1,4 @@
-1. In the left-handside navigation, select `Campaigns > agents`.
+1. In the left-handside navigation, select `CAMPAIGNS > agents`.
 1. Press the button `+Deploy an agent`.
 1. Choose `Sandcat` agent.
 1. Under Platform, choose your Operating System: Linux, Windows, or Darwin (MacOS).
@@ -7,5 +7,5 @@
 1. Outside of CALDERA, open a terminal window with a shell.
 1. Paste the copied command into the shell and execute it.
 1. Go back to CALDERA and close the agent options window.
-1. Wait for the agent to appear in the agents table.
+1. Wait for the agent to appear in the `Agents` table.
 1. Task completed.

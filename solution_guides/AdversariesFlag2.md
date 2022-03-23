@@ -1,4 +1,4 @@
-1. Select `Campaigns > abilities`.
+1. Select `CAMPAIGNS > abilities`.
 1. Press `+ Create an Ability` button.
 1. In the `Create an Ability` dialog box, enter `My test ability` in the `Name` text box.
 1. Enter `My description` under Description.

@@ -1,5 +1,5 @@
 1. First, ensure that an agent is deployed and is responsive.
-1. Select `Campaigns > operations`.
+1. Select `CAMPAIGNS > operations`.
 1. Click the `+ Create Operation` button to open the `Start New Operation` menu.
 1. Give the operation a name.
 1. Select the `Ransack` adversary from the `Adversary` dropdown.
