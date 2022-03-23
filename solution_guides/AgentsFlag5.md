@@ -6,7 +6,7 @@
 1. Copy the `name` portion of the yml ability file to your clipboard: (it should say `Identify active user`).
 1. In CALDERA browser window, select `Campaigns > agents`.
 1. Press the `Configuration` button to open `Agent Configuration` window.
-1. Click the '+' next to Bootstrap Abilities.
+1. Click the `+` next to Bootstrap Abilities.
 1. Text search box opens below.
 1. Paste the ability name in the text search box and click to select the found ability.
 1. Press the `Save` button.
