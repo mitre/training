@@ -1,18 +1,11 @@
-1. Open the Navigate menu.
-1. Select `Campaigns > adversaries`.
-1. In the _Adversary Profiles_ window that opens, ensure that the toggle button says `View`.
-1. In the drop-down, select the `Certifiable` adversary profile.
-1. Press the `+ add ability` button on the right side of the window.
-1. In the window that appears, enter the following information:
-    1. Press the `generate new id` button.
-    1. Enter `My test ability` in the `name` text box.
-    1. Enter `discovery` in the `tactic` text box.
-1. Press the `add executor` button on the right and enter/select the following information:
-    1. Select `darwin` as the platform from the drop-down.
-    1. Select `sh` as the executor from the drop-down.
-    1. Select `sandcat.go-darwin` from the payloads box.
-    1. Enter `whoami` in the command text box.
-    1. Enter `ifconfig -a` in the cleanup command text box.
-1. Press the `Add to Adversary` button
-1. Press the `Save` button on the left side of the _Adversary Profiles_ window.
+1. Select `CAMPAIGNS > abilities`.
+1. Press `+ Create an Ability` button.
+1. In the `Create an Ability` dialog box, enter `My test ability` in the `Name` text box.
+1. Enter `My description` under Description.
+1. Enter `discovery` in the `Tactic` text box.
+1. Below the `Create an Ability` dialog, under `Executors`, select `darwin` as the platform from the drop-down.
+1. Select `sh` as the executor from the drop-down.
+1. Enter `whoami` in the command text box.
+1. Press `+ Add Cleanup Command` button and enter `ifconfig -a` in the textbox.
+1. Press the `Save` button, and then `Close`.
 1. Task completed.
