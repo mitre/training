@@ -124,6 +124,7 @@
                                 <p x-text="flag.name"></p>
                             </div>
                             <a class="icon has-tooltip-left solution-guide-link"
+                               x-bind:class="flag.has_solution_guide ? '' : 'hidden'"
                                x-bind:href="`/plugin/training/solution-guides/certificates/${flag.cert_name}/badges/${flag.badge_name}/flags/${flag.name}`"
                                target="_blank"
                                data-tooltip="Solution Guide">
@@ -426,6 +427,11 @@
     #trainingPage .solution-guide-link {
         color: white;
         cursor: pointer;
+    }
+
+    #trainingPage .hidden {
+        pointer-events: none;
+        color: grey;
     }
 
     #trainingPage .badge-container {

@@ -39,7 +39,8 @@ class Flag(BaseObject):
         return dict(number=self.number, name=self.name, challenge=self.challenge, completed=self.completed,
                     extra_info=self.extra_info, code=self.calculate_code(),
                     completed_timestamp=self._convert_timestamp(),
-                    resettable=self._is_resettable())
+                    resettable=self._is_resettable(),
+                    has_solution_guide = self.has_solution_guide)
 
     @property
     def solution_guide_filename(self):
