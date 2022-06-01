@@ -64,12 +64,12 @@
         <!-- BADGES -->
 
         <template x-if="badgeList">
-            <div class="is-flex is-justify-content-space-evenly">
+            <div class="is-flex is-justify-content-space-evenly mt-3">
                 <template x-for="(badge, index) in badgeList" :key="index">
                     <button class="badge-container-button"
                             x-on:click="(selectedBadge === badge) ? selectedBadge = '' : selectedBadge = badge"
                             x-bind:class="{ 'selected-badge': selectedBadge.name === badge.name }">
-                        <span class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+                        <span class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center p-2">
                             <span class="badge-icon-container"
                                   x-bind:class="badge.completed ? 'badge-completed' : ''">
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@
 
                         <!-- FLAG TITLE -->
 
-                        <div class="flag-card-title is-flex is-justify-content-space-evenly align-center"
+                        <div class="flag-card-title is-flex is-justify-content-space-evenly is-align-items-center"
                              x-bind:class="{ 'flag-card-title-active': flag.completed || isCardActive(index) }">
                             <div class="is-flex is-justify-content-start is-align-items-center flag-card-title-name">
                                 <span class="icon" x-bind:class="flag.completed ? 'flag-icon-completed' : ''">
@@ -129,24 +129,22 @@
                                data-tooltip="Solution Guide">
                                 <em class="far fa-question-circle"></em>
                             </a>
-                            <div class="is-flex is-align-items-center flag-card-title-badge">
-                                <span class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
-                                    <span class="flag-badge-icon-container">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             fill="current"
-                                             viewBox="0 0 24 24"
-                                             stroke="currentColor">
-                                            <path stroke-linecap="round"
-                                                  stroke-linejoin="round"
-                                                  stroke-width="2"
-                                                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                        </svg>
-                                    </span>
-                                    <img x-bind:alt="flag.badge_name"
-                                         class="badge-icon-img"
-                                         onerror="this.src='/training/img/badges/defaultlock.png'"
-                                         x-bind:src="flag.badge_icon"/>
+                            <div class="is-flex is-justify-content-center is-align-items-center flag-card-title-badge">
+                                <span class="flag-badge-icon-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                            fill="current"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                        <path stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
                                 </span>
+                                <img x-bind:alt="flag.badge_name"
+                                        class="badge-icon-img"
+                                        onerror="this.src='/training/img/badges/defaultlock.png'"
+                                        x-bind:src="flag.badge_icon"/>
                             </div>
                         </div>
 
@@ -461,7 +459,7 @@
 
     #trainingPage .badge-icon-img {
         /*Important styles to override those from shared.css*/
-        width: 35% !important;
+        width: 20px !important;
         height: auto !important;
         border: none !important;
         background-color: initial !important;
@@ -579,16 +577,12 @@
         width: 16.666667%;
     }
 
-    #trainingPage .flag-card-title-badge span {
-        width: 5rem;
-        padding: 0.25rem;
-    }
-
     #trainingPage .flag-badge-icon-container {
         z-index: 0;
-        width: 2.5rem !important;
         fill: currentColor;
         position: absolute;
+        width: 35px;
+        padding-top: 6px;
     }
 
     #trainingPage .flag-card-text {
