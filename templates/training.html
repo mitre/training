@@ -35,7 +35,7 @@
         <!-- CERT COMPLETION CODE -->
 
         <template x-if="completedCertificate">
-            <div class="content is-flex is-align-items-center is-flex-direction-column">
+            <div class="content is-flex is-align-items-center is-flex-direction-column mt-4">
                 <h3>🎉 Certificate complete! 🎉</h3>
                 <div class="field has-addons">
                     <div class="control">
@@ -54,10 +54,9 @@
                     </div>
                 </div>
                 <p>
-                    Congrats! Send this code to
-                    <a x-bind:href="'mailto:caldera@mitre.org?subject=Training%20Completed!&body=I%20finished%20the%20CALDERA%20Training!%20My%20certificate%20code:%20'+ certificateCode">caldera@mitre.org</a>.
-                    We will validate it and send back an authenticated code as proof of completion.
+                    Congrats! Fill out the form to validate your code and get a certificate of completion.
                 </p>
+                <a class="button fancy-button" href="https://forms.office.com/g/mEeuSUBTda" target="_blank">Get your certificate 🎓 </a>
             </div>
         </template>
 
