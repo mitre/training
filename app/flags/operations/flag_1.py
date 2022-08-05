@@ -5,7 +5,7 @@ class OperationsFlag1(Flag):
     name = 'Stealthy operation'
 
     challenge = (
-        'Run and finish an operation using a jitter of 10/20 and base64 obfuscation. Use the Ransack adversary profile '
+        'Run and finish an operation using a jitter of 10/20 and base64 obfuscation. Use the Check adversary profile '
         'provided in the Stockpile plugin again.'
     )
 
@@ -19,7 +19,7 @@ class OperationsFlag1(Flag):
 
     async def verify(self, services):
         for op in await services.get('data_svc').locate('operations'):
-            if op.finish and op.adversary.adversary_id == 'de07f52d-9928-4071-9142-cb1d3bd851e8' \
+            if op.finish and op.adversary.adversary_id == '01d77744-2515-401a-a497-d9f7241aac3c' \
                     and op.obfuscator == 'base64' and op.jitter == '10/20':
                 return True
         return False
