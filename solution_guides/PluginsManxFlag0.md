@@ -14,11 +14,11 @@
     1. Select the Agent session from the `Select a session` dropdown. This should populate the remote shell window with a prompt.
     1. In the remote shell, type `whoami` and press enter.
     1. In the remote shell, type `uname -a` and press enter.
-1. Run `Ransack` operation:
+1. Run `Check` operation:
     1. In the left-handside navigation, select `CAMPAIGNS > operations`.
     1. Click the `+ Create Operation` button to open the `Start New Operation` menu.
     1. Give the operation a name.
-    1. Select the `Ransack` adversary from the `Adversary` dropdown.
+    1. Select the `Check` adversary from the `Adversary` dropdown.
     1. Select `basic` from the `Fact source` menu.
     1. Press `ADVANCED` to open the advanced options dialog.
     1. Select `Auto close operation` from the `Auto-close`radio group.
