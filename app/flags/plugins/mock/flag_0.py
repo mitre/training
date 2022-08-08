@@ -4,7 +4,7 @@ from plugins.training.app.c_flag import Flag
 class PluginsMockFlag0(Flag):
     name = 'Mock plugin'
     challenge = (
-        'Enable the mock plugin. Then run an operation against the "simulation" group using the Ransack profile. '
+        'Enable the mock plugin. Then run an operation against the "simulation" group using the Check profile. '
         '(Hint: check default.yml for running plugins.)'
     )
     extra_info = (
@@ -16,6 +16,6 @@ class PluginsMockFlag0(Flag):
     async def verify(self, services):
         if await services.get('data_svc').locate('plugins', dict(name='mock', enabled=True)):
             for op in await services.get('data_svc').locate('operations', dict(group='simulation')):
-                if op.finish and op.adversary.adversary_id == 'de07f52d-9928-4071-9142-cb1d3bd851e8':
+                if op.finish and op.adversary.adversary_id == '01d77744-2515-401a-a497-d9f7241aac3c':
                     return True
         return False

@@ -5,7 +5,7 @@ class OperationsFlag2(Flag):
     name = 'Manual operation'
 
     challenge = (
-        'Run and finish an operation using any adversary profile except Ransack. Run the operation requiring manual '
+        'Run and finish an operation using any adversary profile except Check. Run the operation requiring manual '
         'approval. Approve and discard links as desired.'
     )
 
@@ -17,6 +17,6 @@ class OperationsFlag2(Flag):
 
     async def verify(self, services):
         for op in await services.get('data_svc').locate('operations'):
-            if op.finish and op.adversary.adversary_id != 'de07f52d-9928-4071-9142-cb1d3bd851e8' and not op.autonomous:
+            if op.finish and op.adversary.adversary_id != '01d77744-2515-401a-a497-d9f7241aac3c' and not op.autonomous:
                 return True
         return False

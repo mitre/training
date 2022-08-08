@@ -6,7 +6,7 @@ class PluginsManxFlag0(Flag):
 
     challenge = (
         'Start a new Manx agent on your localhost. Then send at least 2 commands to it through the '
-        'reverse-shell session. Then run a normal operation against the agent using the Ransack profile.'
+        'reverse-shell session. Then run a normal operation against the agent using the Check profile.'
     )
 
     extra_info = (
@@ -22,7 +22,7 @@ class PluginsManxFlag0(Flag):
             if len(history) > 1:
                 check1 = True
             for op in await services.get('data_svc').locate('operations'):
-                if op.adversary.adversary_id != 'de07f52d-9928-4071-9142-cb1d3bd851e8':
+                if op.adversary.adversary_id != '01d77744-2515-401a-a497-d9f7241aac3c':
                     continue
                 for op_agent in op.agents:
                     if op_agent.paw == agent.paw and op.finish:
