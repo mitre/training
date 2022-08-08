@@ -18,7 +18,7 @@ class PluginsManxFlag0(Flag):
     async def verify(self, services):
         check1, check2 = False, False
         for agent in await services.get('data_svc').locate('agents', dict(contact='tcp')):
-            history = [entry for entry in services.get('contact_svc').report['WEBSOCKET'] if entry['paw'] == agent.paw]
+            history = [entry for entry in services.get('contact_svc').report['websocket'] if entry['paw'] == agent.paw]
             if len(history) > 1:
                 check1 = True
             for op in await services.get('data_svc').locate('operations'):

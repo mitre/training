@@ -2,7 +2,7 @@
 1. Select `CAMPAIGNS > operations`.
 1. Click the `+ Create Operation` button to open the `Start New Operation` menu.
 1. Give the operation a name.
-1. Select the `Ransack` adversary from the `Adversary` dropdown.
+1. Select the `Check` adversary from the `Adversary` dropdown.
 1. Select `basic` from the `Fact source` menu.
 1. Press `ADVANCED` to open the advanced options dialog.
 1. In the `Obfuscators` button group, choose `base64`.
