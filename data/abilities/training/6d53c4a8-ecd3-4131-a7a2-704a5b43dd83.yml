@@ -7,7 +7,7 @@
     attack_id: x
     name: x
   platforms:
-    linux:
+    freebsd,linux:
       sh:
         command: |
           nc -nlv 7011 &

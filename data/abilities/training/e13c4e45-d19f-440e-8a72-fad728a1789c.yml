@@ -7,7 +7,7 @@
     attack_id: x
     name: x
   platforms:
-    linux:
+    freebsd,linux:
       sh:
         command: |
           rm -f /var/mail/victim
