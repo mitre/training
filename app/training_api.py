@@ -81,6 +81,11 @@ class TrainingApi(BaseService):
                 logging.error(e)
         return web.json_response(dict(badges=[b.display for b in badges]))
 
+    async def retrieve_certs(self, request):
+        access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
+        certifications = await self.data_svc.locate('certifications', match=access)
+        return web.json_response(dict(certificates=[cert.display for cert in certifications]))
+
     async def reset_flag(self, request):
         """
         Allows cert takers to reset the latest flag if something went wrong with running the automatic operation.
