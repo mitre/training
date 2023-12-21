@@ -326,7 +326,7 @@ function playConfetti() {
 }
 
 #trainingPage .hover\:bg-caldera-primary:hover {
-  background-color: var(--primary-color);
+  background-color: #8b0000 !important;
 }
 
 #trainingPage .rounded {
@@ -348,7 +348,7 @@ function playConfetti() {
 }
 
 #trainingPage .badge-container-button {
-  color: var(--color-white);
+  color: #ffffff;
   width: 5rem !important;
   padding: 0.85rem 0.25rem 0.25rem;
   font-size: 1rem;
@@ -363,7 +363,7 @@ function playConfetti() {
 }
 
 #trainingPage .badge-container-button:hover {
-  background-color: var(--primary-color);
+  background-color: #8b0000 !important;
 }
 
 #trainingPage .badge-icon-container {
@@ -388,13 +388,13 @@ function playConfetti() {
 }
 
 #trainingPage .badge-completed-text {
-  background-color: var(--color-complete);
-  color: var(--color-gray) !important;
+  background-color: #8b0000 !important;
+  color: gray !important;
 }
 
 #trainingPage .badge-text {
   text-decoration: none;
-  color: var(--color-white);
+  color: #ffffff;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   margin-top: 1rem;
@@ -404,7 +404,7 @@ function playConfetti() {
 
 #trainingPage .selected-badge {
   font-weight: bold;
-  background-color: var(--primary-color);
+  background-color: #8b0000 !important;
   border-radius: 5px;
 }
 
@@ -467,14 +467,14 @@ function playConfetti() {
 #trainingPage .flag-card-title {
   padding: 5px;
   background-color: #202020;
-  color: var(--color-white);
+  color: #ffffff;
   font-size: 1.125rem;
   line-height: 1.75rem;
   text-align: left;
 }
 
 #trainingPage .flag-card-title-active {
-  background-color: var(--primary-color);
+  background-color: #8b0000;
 }
 
 #trainingPage .flag-card-title div:first-child span {
@@ -509,7 +509,7 @@ function playConfetti() {
 }
 
 #trainingPage .flag-card-content-active {
-  border: 2px solid var(--primary-color);
+  border: 2px solid #8b0000;
   border-bottom: none;
 }
 
@@ -521,7 +521,7 @@ function playConfetti() {
 }
 
 #trainingPage .flag-show-more-active {
-  border: 2px solid var(--primary-color);
+  border: 2px solid #8b0000;
   border-top: none;
 }
 
