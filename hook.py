@@ -10,7 +10,7 @@ from plugins.training.app.c_exam import Exam
 from plugins.training.app.training_api import TrainingApi
 
 name = 'Training'
-description = 'A certification course to become a CALDERA SME'
+description = 'A certification course to become a Caldera SME'
 address = '/plugin/training/gui'
 
 
