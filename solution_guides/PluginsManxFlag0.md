@@ -7,7 +7,7 @@
     1. Update the `app.contact.tcp` value to specify an IP address of `127.0.0.1` (keep the port). This is for the agent communication channel.
     1. In the `sh` text area labeled `A reverse-shell agent which communicates via the TCP contact`, click the `Copy` button to copy the displayed shell command to your clipboard. 
 1. Run two remote shell commands:
-    1. On your local system and outside of CALDERA, open a shell in a terminal.
+    1. On your local system and outside of Caldera, open a shell in a terminal.
     1. Paste the copied command and execute it.
     1. Wait for the agent to appear in the `Agents` table.
     1. In the left-handside navigation, select `PLUGINS > manx`

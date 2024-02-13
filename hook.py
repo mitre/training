@@ -10,7 +10,7 @@ from plugins.training.app.c_exam import Exam
 from plugins.training.app.training_api import TrainingApi
 
 name = 'Training'
-description = 'A certification course to become a CALDERA SME'
+description = 'A certification course to become a Caldera SME'
 address = '/plugin/training/gui'
 
 
@@ -21,8 +21,9 @@ async def enable(services):
 
     training_api = TrainingApi(services)
     app = services.get('app_svc').application
-    app.router.add_static('/training', 'plugins/training/static/', append_version=True)
+    app.router.add_static('/plugin/training/assets', 'plugins/training/static/', append_version=True)
     app.router.add_route('GET', '/plugin/training/gui', training_api.splash)
+    app.router.add_route('GET', '/plugin/training/certs', training_api.retrieve_certs)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
     app.router.add_route('POST', '/plugin/training/reset_flag', training_api.reset_flag)
 
