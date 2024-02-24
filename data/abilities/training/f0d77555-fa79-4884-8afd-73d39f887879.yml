@@ -7,7 +7,7 @@
     attack_id: x
     name: x
   platforms:
-    linux:
+    freebsd,linux:
       sh:
         command: |
           mv ./phish_email.txt /var/mail/victim

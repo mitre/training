@@ -7,7 +7,7 @@
     name: x
   repeatable: False
   platforms:
-    linux:
+    freebsd,linux:
       sh:
         command: |
           touch ~/.bashrc;
