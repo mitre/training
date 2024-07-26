@@ -2,8 +2,7 @@
 
 The training plugin provides a certification course to become a Caldera subject matter expert (SME)
 
-If you earn a code, send it to caldera at mitre dot org and we will validate it as proof of completion.
-
+If you earn a code, submit it through this Microsoft Form for a certificate: https://forms.office.com/g/sYRNDuxCjC.
 ## Development
 
 ### JavaScript:
