@@ -26,6 +26,10 @@ async def enable(services):
     app.router.add_route('GET', '/plugin/training/certs', training_api.retrieve_certs)
     app.router.add_route('POST', '/plugin/training/flags', training_api.retrieve_flags)
     app.router.add_route('POST', '/plugin/training/reset_flag', training_api.reset_flag)
+    app.router.add_route('POST', '/plugin/training/certificate/issue', training_api.issue_certificate)
+    app.router.add_route('GET',  '/plugin/training/certificate/download', training_api.download_certificate)
+    app.router.add_route('POST', '/plugin/training/certificate/reset', training_api.reset_issuance)
+    app.router.add_route('POST', '/plugin/training/certificate/issue-bytes', training_api.issue_certificate_bytes)
 
     app.router.add_route(
         'GET',

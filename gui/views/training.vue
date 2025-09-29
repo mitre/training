@@ -3,57 +3,89 @@ import { ref, watch, onMounted, inject, onBeforeUnmount } from "vue";
 const $api = inject("$api");
 
 const selectedCert = ref("");
-const selectedBadge = ref("");
+const selectedBadge = ref(null);
 const badgeList = ref([]);
 const visibleFlagList = ref([]);
 const completedFlags = ref(0);
 const completedBadges = ref(0);
 const flagList = ref([]);
 const completedCertificate = ref(false);
-const certificateCode = ref("");
-const certificateCodeList = ref([]);
 const end = ref(0);
 const certificates = ref([
   { name: "User Certificate" },
   { name: "Blue Certificate" },
 ]);
-let updateInterval = ref();
 
-// Simulating Alpine's initTraining with Vue's onMounted
-onBeforeUnmount(() => {
-  if (updateInterval) clearInterval(updateInterval);
-});
+const learnerName = ref(localStorage.getItem('trainingCertName') || '');
+const showIssueModal = ref(false);
+
+onBeforeUnmount(() => { /* nothing now */ });
 
 onMounted(async () => {
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
-  let confettiScript = document.createElement("script");
-  confettiScript.setAttribute(
-    "src",
-    "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"
-  );
+
+  const confettiScript = document.createElement("script");
+  confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js";
   document.head.appendChild(confettiScript);
-  if (updateInterval) clearInterval(updateInterval);
-  updateInterval = setInterval(async () => {
-    getTraining();
-  }, "3000");
+
+  if (selectedCert.value) getTraining();
 });
 
-watch(selectedCert, (newValue) => {
-  getTraining();
+// keep only this watcher which resets UI and fetches
+watch(selectedCert, () => {
+  completedCertificate.value = false;
+  end.value = 0;
+  selectedBadge.value = null;
+  visibleFlagList.value = [];
+  badgeList.value = [];
+  flagList.value = [];
+  completedFlags.value = 0;
+  completedBadges.value = 0;
+  if (selectedCert.value) getTraining();
 });
 
 watch(selectedBadge, (newValue) => {
   updateVisibleFlags(newValue);
 });
 
+function saveNameLocally() {
+  const n = learnerName.value.trim();
+  if (n) localStorage.setItem('trainingCertName', n);
+}
+
+async function issueCertificate() {
+  const name = learnerName.value.trim();
+  if (!name) return alert('Enter your full name exactly as you want it on the certificate.');
+  saveNameLocally();
+
+  try {
+    const { data } = await $api.post('/plugin/training/certificate/issue-bytes', {
+      certificate: selectedCert.value,
+      name
+    });
+    // base64 → Blob → download
+    const byteChars = atob(data.pdf_bytes);
+    const byteNums = new Array(byteChars.length);
+    for (let i = 0; i < byteChars.length; i++) byteNums[i] = byteChars.charCodeAt(i);
+    const blob = new Blob([new Uint8Array(byteNums)], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = data.filename || 'Caldera_Certificate.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showIssueModal.value = false;
+  } catch (e) {
+    alert('Could not issue certificate: ' + (e?.response?.data || e));
+  }
+}
+
 const getTraining = () => {
   if (!selectedCert.value) return;
-  $api
-    .post("/plugin/training/flags", {
-      name: selectedCert.value,
-      answers: {},
-    })
+  $api.post("/plugin/training/flags", { name: selectedCert.value, answers: {} })
     .then((data) => {
       getFlags(data.data);
       updateVisibleFlags(selectedBadge.value);
@@ -68,12 +100,11 @@ function getEmptyDataObject() {
     badgeList: [],
     completedFlags: 0,
     completedBadges: 0,
-    certificateCodeList: [],
   };
 }
 
 const updateVisibleFlags = (badge) => {
-  if (badge) {
+  if (badge && badge.name) {
     selectedBadge.value = badge;
     visibleFlagList.value = flagList.value.filter(
       (flag) => flag.badge_name === selectedBadge.value.name
@@ -92,36 +123,29 @@ function isCardActive(index) {
       const earlierFlags = flagList.value.filter(
         (flag) => flag.badge_name === badgeList.value[badgeIndex - 1].name
       );
-      if (!earlierFlags[earlierFlags.length - 1].completed) {
+      if (!earlierFlags.length || !earlierFlags[earlierFlags.length - 1].completed) {
         return false;
       }
     }
   }
-
   return (
-    (index === 0 &&
-      visibleFlagList.value.length > 0 &&
-      !visibleFlagList.value[0].completed) ||
-    (visibleFlagList.value[index] &&
-      !visibleFlagList.value[index].completed &&
-      visibleFlagList.value[index - 1].completed)
+    (index === 0 && visibleFlagList.value.length > 0 && !visibleFlagList.value[0].completed) ||
+    (index > 0 && visibleFlagList.value[index] && !visibleFlagList.value[index].completed &&
+     visibleFlagList.value[index - 1].completed)
   );
 }
 
-function checkCertificateCompletion() {
-  if (completedBadges.value === badgeList.value.length) {
+async function checkCertificateCompletion() {
+  if (badgeList.value.length && completedBadges.value === badgeList.value.length) {
     completedCertificate.value = true;
-    let code = certificateCodeList.value.sort(
-      (a, b) => a.toString().length - b.toString().length
-    );
-    code = code.join(" ");
-    certificateCode.value = btoa(code);
-
     const duration = 10000;
-    if (end.value === 0) end.value = Date.now() + duration; // spray confetti for 10 seconds
+    if (end.value === 0) end.value = Date.now() + duration;
     playConfetti();
+    // optional: auto-open modal if no stored name
+    if (!learnerName.value.trim()) showIssueModal.value = true;
   }
 }
+
 function compareFlags(currentBadge, iconSrc, flag, flagIndex) {
   const updatedFlag = {
     ...flag,
@@ -138,13 +162,13 @@ function compareFlags(currentBadge, iconSrc, flag, flagIndex) {
   }
   return updatedFlag;
 }
+
 function updateFlagData(newData) {
   if (newData) {
     flagList.value = newData.flagList;
     badgeList.value = newData.badgeList;
     completedFlags.value = newData.completedFlags;
     completedBadges.value = newData.completedBadges;
-    certificateCodeList.value = newData.certificateCodeList;
   }
 }
 
@@ -153,8 +177,6 @@ async function getFlags(data) {
   const newData = getEmptyDataObject();
   let runningFlagIndex = 0;
 
-  // Fetch flag from API and compares it to previous data,
-  // rather than completely override (for variables like showMore)
   data.badges.forEach((badge) => {
     const iconSrc = `/plugin/training/assets/img/badges/${badge.name}.png`;
     let isBadgeCompleted = false;
@@ -164,7 +186,6 @@ async function getFlags(data) {
       const currentFlag = compareFlags(badge, iconSrc, flag, runningFlagIndex);
       if (currentFlag.completed) badgeCompletedFlags += 1;
       newData.flagList.push(currentFlag);
-      newData.certificateCodeList.push(currentFlag.code);
       runningFlagIndex += 1;
     });
 
@@ -178,50 +199,28 @@ async function getFlags(data) {
       completed: isBadgeCompleted,
       icon_src: iconSrc,
     });
-    // Keep selected badge so it doesn't get overriden by new data
-    if (selectedBadge.value.name === badge.name) selectedBadge.value = badge;
+
+    if (selectedBadge.value && selectedBadge.value.name === badge.name) {
+      selectedBadge.value = badge;
+    }
     newData.completedFlags += badgeCompletedFlags;
   });
   updateFlagData(newData);
 }
-function copyCode() {
-  document.getElementById("certificatecode").select();
-  document.execCommand("copy");
-  // toast('Code copied', true);
-}
 
 function playConfetti() {
   const canvas = document.getElementById("confettiCanvas");
-  if (!canvas || !confetti) return;
-  // eslint-disable-next-line
-  const confettiCanon = confetti.create(canvas, {
-    resize: true,
-    useWorker: true,
-  });
-
+  if (!canvas || typeof confetti === 'undefined') return;
+  const confettiCanon = confetti.create(canvas, { resize: true, useWorker: true });
   const frame = () => {
-    // launch a few confetti from the left edge
-    confettiCanon({
-      particleCount: 100,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 },
-    });
-    // and launch a few from the right edge
-    confettiCanon({
-      particleCount: 100,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1 },
-    });
+    confettiCanon({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
+    confettiCanon({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
   };
-
-  // keep going until we are out of time
-  if (Date.now() < end.value) {
-    requestAnimationFrame(frame);
-  }
+  const tick = () => { frame(); if (Date.now() < end.value) requestAnimationFrame(tick); };
+  tick();
 }
 </script>
+
 
 <template lang="pug">
 #trainingPage.section-profile
@@ -243,30 +242,19 @@ function playConfetti() {
               option(disabled selected value="") Select a certificate 
               option(v-for="cert in certificates" :value="cert.name" :key="cert.name") {{ cert.name }}
 
-    template(v-if="completedCertificate")
-      .content.is-flex.is-align-items-center.is-flex-direction-column.mt-4
-        h3 🎉 Certificate complete! 🎉
-        .field.has-addons
-          .control
-            input#certificatecode.input.is-small(type="text" readonly v-model="certificateCode" aria-label="Certificate code")
-          .control
-            a.button.is-small(@click="copyCode()")
-              span.icon
-                font-awesome-icon(icon="far fa-copy")
-              span Copy
-        p Congrats! Fill out the form to validate your code and get a certificate of completion.
-        a.button.fancy-button(href="https://forms.office.com/g/sYRNDuxCjC" target="_blank" rel="noopener") Get your certificate 🎓 
-
     template(v-if="badgeList")
       .is-flex.is-justify-content-space-evenly.mt-3
         template(v-for="(badge, index) in badgeList" :key="index")
-          button.badge-container-button(@click="(selectedBadge === badge) ? selectedBadge = '' : selectedBadge = badge" :class="{ 'selected-badge': selectedBadge.name === badge.name }")
+          button.badge-container-button(
+            @click="selectedBadge = (selectedBadge && selectedBadge.name === badge.name) ? '' : badge"
+            :class="{ 'selected-badge': selectedBadge && selectedBadge.name === badge.name }"
+          )
             span.is-flex.is-flex-direction-column.is-justify-content-center.is-align-items-center.p-2
               span.badge-icon-container(:class="badge.completed ? 'badge-completed' : ''")
                 svg(xmlns="http://www.w3.org/2000/svg" fill="current" viewBox="0 0 24 24" stroke="currentColor")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z")
               img(:alt="badge.name" class="badge-icon-img" onerror="this.src='/plugin/training/assets/img/badges/defaultlock.png'" :src="badge.icon_src")
-            span.badge-text.hover.bg-caldera-primary.rounded(:class="{ 'badge-completed-text': badge.completed }")  {{badge.name}}
+            span.badge-text.hover.bg-caldera-primary.rounded(:class="{ 'badge-completed-text': badge.completed }") {{ badge.name }}
 
     .has-text-centered.mt-4.mb-4
       template(v-for="(flag, index) in visibleFlagList" :key="index")
@@ -294,13 +282,30 @@ function playConfetti() {
                 .is-flex.is-flex-direction-column.is-justify-content-center.has-text-left
                   p.has-text-weight-bold() {{ flag.challenge }}
                   p {{ flag.extra_info }}
-                  template(v-if="flag.code.includes('text-entry')")
-                    span
-                      label(:for="flag.code") Write text here:
-                      input(:disabled="flag.completed" class="text-colors-black pl-1 pr-2" :id="flag.code" placeholder="type here" @input="onTextInput")
           .flag-show-more-button.is-flex.is-justify-content-center(@click="flag.showMore = !flag.showMore" :class="{ 'flag-show-more-active': isCardActive(index) }")
             span.icon.is-small
               font-awesome-icon(:icon="flag.showMore ? 'fas fa-chevron-up' : 'fas fa-chevron-down'")
+    template(v-if="completedCertificate")
+      .content.is-flex.is-align-items-center.is-flex-direction-column.mt-4
+        h3 🎉 Certificate complete! 🎉
+        button.button.fancy-button(:disabled="!selectedCert" @click="showIssueModal = true") Get Certificate
+
+    template(v-if="showIssueModal")
+      .modal.is-active
+        .modal-background(@click="showIssueModal=false")
+        .modal-card
+          header.modal-card-head
+            p.modal-card-title Issue Certificate
+          section.modal-card-body
+            label.label Full name (as it should appear)
+            input.input(type="text" v-model="learnerName" placeholder="Jane Q. Doe")
+            p.is-size-7.mt-2 Name is used only for rendering the PDF.
+          footer.modal-card-foot
+            button.button.is-success(@click="issueCertificate") Generate
+            button.button(@click="showIssueModal=false") Cancel
+
+
+
 </template>
 
 <style scoped>

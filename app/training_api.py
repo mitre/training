@@ -1,4 +1,7 @@
 import logging
+import traceback
+
+import os, hashlib, mimetypes, base64
 
 from aiohttp import web
 from aiohttp_jinja2 import template
@@ -7,6 +10,7 @@ from app.utility.base_service import BaseService
 from app.service.auth_svc import for_all_public_methods, check_authorization
 from plugins.training.app import errors
 from plugins.training.app.base_flag import BaseFlag
+from plugins.training.app.c_certificate_service import CertificateService
 
 
 @for_all_public_methods(check_authorization)
@@ -16,6 +20,9 @@ class TrainingApi(BaseService):
         self.auth_svc = services.get('auth_svc')
         self.data_svc = services.get('data_svc')
         self.services = services
+        self.cert_service = CertificateService()
+        self.logger = logging.getLogger('training_api')
+
 
     @template('training.html')
     async def splash(self, request):
@@ -58,6 +65,10 @@ class TrainingApi(BaseService):
 
         return dict(certificate=certificate_list[0])
 
+    def _request_user_id(self, request) -> str:
+        # Stable per-user key: API KEY header or fallback
+        return request.headers.get('X-User-ID') or request.headers.get('KEY') or 'unknown'
+    
     async def retrieve_flags(self, request):
         data = dict(await request.json())
         answers = {}
@@ -104,3 +115,141 @@ class TrainingApi(BaseService):
             except Exception as e:
                 logging.error(e)
         return web.json_response(dict(reset=reset))
+
+    async def can_issue(self, request, cert_name):
+        # Compute completion using same badge/flag iteration you already use in retrieve_flags
+        access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
+        certs = await self.data_svc.locate('certifications', match=access)
+        cert = next((c for c in certs if c.name == cert_name), None)
+        if not cert:
+            raise web.HTTPNotFound(text='Certificate does not exist')
+        
+        # Debugging bypass
+        if os.getenv("TRAINING_CERT_BYPASS") == "1":
+            return cert, True
+    
+        complete = all(f.completed for b in cert.badges for f in b.flags)
+        return cert, complete
+    
+    async def issue_certificate(self, request):
+        """
+        POST /plugin/training/certificate/issue
+        { "certificate": "Caldera User", "name": "Jane Doe" }
+        """
+        try:
+            body = await request.json()
+            cert_name = body.get('certificate')
+            display_name = body.get('name')
+            self.logger.debug("issue_certificate: body=%r", body)
+            if not cert_name or not display_name:
+                raise web.HTTPBadRequest(text='certificate and name required')
+
+            user_id = request.headers.get('X-User-ID') or request.headers.get('KEY') or 'unknown'
+            self.logger.debug("issue_certificate: user_id=%s", user_id)
+
+            # Create a per-instance id from secret (stable across restarts)
+            instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
+            self.logger.debug("issue_certificate: instance_id=%s", instance_id)
+            if not cert_name or not display_name:
+                raise web.HTTPBadRequest(text='certificate and name required')
+
+            cert, complete = await self.can_issue(request, cert_name)
+            cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
+            self.logger.debug("issue_certificate: cert_id=%s complete=%s", cert_id, complete)
+            if not complete:
+                raise web.HTTPForbidden(text='Training not complete')
+
+            if self.cert_service.already_issued(instance_id, user_id, cert_id):
+                # Return existing (idempotent UX)
+                rec = self.cert_service.get_record(instance_id, user_id, cert_id)
+                payload = rec['path']
+                token = self.cert_service.signed_token(payload)
+                return web.json_response({'alreadyIssued': True, 'download': f'/plugin/training/certificate/download?token={token}'})
+
+            # Generate PDF directly
+            path = self.cert_service.issue(instance_id, user_id, cert.name, display_name)
+            self.cert_service.mark_issued(instance_id, user_id, cert_id, path, display_name)
+            token = self.cert_service.signed_token(path)
+            return web.json_response({'alreadyIssued': False, 'download': f'/plugin/training/certificate/download?token={token}'})
+        except web.HTTPException:
+            raise
+        except Exception:
+            logging.exception("issue_certificate failed")
+            raise web.HTTPInternalServerError(text='issue_certificate failed; see server logs')
+
+    async def reset_issuance(self, request):
+        """
+        POST /plugin/training/certificate/reset
+        { "certificate": "Caldera User", "user_id": "<optional override>" }
+        Called by existing reset logic after training reset completes.
+        """
+        body = await request.json()
+        cert_name = body.get('certificate')
+        if not cert_name:
+            raise web.HTTPBadRequest(text='certificate required')
+        user_id = body.get('user_id') or self._request_user_id(request)
+        instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
+
+        # Map cert_name to unique id
+        certs = await self.data_svc.locate('certifications', {})
+        cert = next((c for c in certs if c.name == cert_name), None)
+        cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
+        if not cert:
+            raise web.HTTPNotFound(text='Certificate does not exist')
+        cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
+        self.cert_service.clear_issued_for_user_cert(instance_id, user_id, cert_id)
+        return web.json_response({'ok': True})
+    
+    def _attachment_headers(self, filename: str) -> dict:
+        ctype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+        return {
+            'Content-Type': ctype,
+            'Content-Disposition': f'attachment; filename="{filename}"'
+        }
+        
+    async def download_certificate(self, request):
+        token = request.query.get('token', '')
+        path = self.cert_service.verify_token(token)
+        if not path or not os.path.exists(path):
+            raise web.HTTPNotFound(text='Invalid or expired token')
+
+        # pick a good filename (using existing generator logic)
+        filename = os.path.basename(path)
+        return web.FileResponse(path, headers=self._attachment_headers(filename))
+    
+    async def issue_certificate_bytes(self, request):
+        """
+        POST /plugin/training/certificate/issue-bytes
+        { "certificate": "User Certificate", "name": "Jane Doe" }
+        -> { "filename": "Caldera_User_Certificate_Jane_Doe_20250928.pdf",
+             "pdf_bytes": "<base64>" }
+        """
+        body = await request.json()
+        cert_name = body.get('certificate')
+        display_name = body.get('name')
+        if not cert_name or not display_name:
+            raise web.HTTPBadRequest(text='certificate and name required')
+
+        # auth-ish identity; same as issue_certificate
+        user_id = request.headers.get('X-User-ID') or request.headers.get('KEY') or 'unknown'
+        instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
+
+        cert, complete = await self.can_issue(request, cert_name)
+        cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
+        if not complete:
+            raise web.HTTPForbidden(text='Training not complete')
+
+        # generate fresh PDF (no caching; you can add idempotence if you want)
+        pdf_path = self.cert_service.issue(instance_id, user_id, cert.name, display_name)
+
+        # remember issuance like before
+        self.cert_service.mark_issued(instance_id, user_id, cert_id, pdf_path, display_name)
+
+        # return filename + bytes (Debrief style)
+        with open(pdf_path, 'rb') as f:
+            b64 = base64.b64encode(f.read()).decode('ascii')
+
+        return web.json_response({
+            'filename': os.path.basename(pdf_path),
+            'pdf_bytes': b64
+        })
