@@ -150,8 +150,6 @@ class TrainingApi(BaseService):
             # Create a per-instance id from secret (stable across restarts)
             instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
             self.logger.debug("issue_certificate: instance_id=%s", instance_id)
-            if not cert_name or not display_name:
-                raise web.HTTPBadRequest(text='certificate and name required')
 
             cert, complete = await self.can_issue(request, cert_name)
             cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
