@@ -126,9 +126,9 @@ class CertificateService(BaseObject):
     
     def _build_pdf(self, out_pdf: str, learner_name: str, cert_title: str, date_str: str):
         # Fonts (keep existing register fallback)
-        FONT_H1   = 'CertBold'    if 'CertBold'    in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
-        FONT_H2   = 'CertRegular' if 'CertRegular' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
-        FONT_NAME = 'CertBold'    if 'CertBold'    in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
+        FONT_H1   = 'Helvetica-Bold'
+        FONT_H2   = 'Helvetica'
+        FONT_NAME = 'Helvetica-Bold'
 
         # Landscape letter
         page_w, page_h = landscape(letter)
