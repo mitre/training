@@ -104,35 +104,38 @@ function getEmptyDataObject() {
 }
 
 const updateVisibleFlags = (badge) => {
-  if (badge && badge.name) {
-    selectedBadge.value = badge;
-    visibleFlagList.value = flagList.value.filter(
-      (flag) => flag.badge_name === selectedBadge.value.name
-    );
-  } else {
-    visibleFlagList.value = flagList.value;
-  }
+  const active = badge?.name ? badge : null;
+  selectedBadge.value = active;
+  visibleFlagList.value = active
+    ? flagList.value.filter(f => f.badge_name === active.name)
+    : flagList.value;
 };
 
 function isCardActive(index) {
+  // If a badge is selected, only allow its first incomplete flag
+  // once the *last* flag of the previous badge is completed.
   if (selectedBadge.value) {
     const badgeIndex = badgeList.value.findIndex(
-      (badge) => badge.name === selectedBadge.value.name
+      b => b.name === selectedBadge.value.name
     );
     if (badgeIndex > 0) {
+      const prevBadgeName = badgeList.value[badgeIndex - 1]?.name;
       const earlierFlags = flagList.value.filter(
-        (flag) => flag.badge_name === badgeList.value[badgeIndex - 1].name
+        f => f.badge_name === prevBadgeName
       );
-      if (!earlierFlags.length || !earlierFlags[earlierFlags.length - 1].completed) {
-        return false;
-      }
+      const lastCompleted = earlierFlags.at(-1)?.completed === true; // ← safe even if empty
+      if (!lastCompleted) return false;
     }
   }
-  return (
-    (index === 0 && visibleFlagList.value.length > 0 && !visibleFlagList.value[0].completed) ||
-    (index > 0 && visibleFlagList.value[index] && !visibleFlagList.value[index].completed &&
-     visibleFlagList.value[index - 1].completed)
-  );
+
+  // Gate within the visible list
+  const current = visibleFlagList.value[index];
+  const prev    = visibleFlagList.value.at(index - 1);
+
+  if (index === 0) {
+    return Boolean(current && !current.completed);
+  }
+  return Boolean(current && !current.completed && prev?.completed);
 }
 
 async function checkCertificateCompletion() {
@@ -246,7 +249,7 @@ function playConfetti() {
       .is-flex.is-justify-content-space-evenly.mt-3
         template(v-for="(badge, index) in badgeList" :key="index")
           button.badge-container-button(
-            @click="selectedBadge = (selectedBadge && selectedBadge.name === badge.name) ? '' : badge"
+            @click="selectedBadge = (selectedBadge && selectedBadge.name === badge.name) ? null : badge"
             :class="{ 'selected-badge': selectedBadge && selectedBadge.name === badge.name }"
           )
             span.is-flex.is-flex-direction-column.is-justify-content-center.is-align-items-center.p-2
