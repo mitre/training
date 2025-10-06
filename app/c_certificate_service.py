@@ -94,16 +94,6 @@ class CertificateService(BaseObject):
         s = re.sub(r'\s+', '_', s)                 # spaces -> underscores
         s = re.sub(r'[^A-Za-z0-9._-]', '', s)      # drop weird chars
         return s or 'User'
-
-    def _register_fonts_if_available(self, pdfmetrics, ttfonts):
-        try:
-            if os.path.exists(FONT_REGULAR):
-                pdfmetrics.registerFont(ttfonts.TTFont('CertRegular', FONT_REGULAR))
-            if os.path.exists(FONT_BOLD):
-                pdfmetrics.registerFont(ttfonts.TTFont('CertBold', FONT_BOLD))
-        except Exception:
-            # ignore font registration errors; we’ll fall back to Helvetica
-            pass
     
     def _draw_image_keep_aspect(self, c, path, x, y, target_w=None, target_h=None):
         """Draw image at (x,y) with either target_w or target_h, preserving aspect.
@@ -135,8 +125,7 @@ class CertificateService(BaseObject):
         c.drawCentredString(page_w/2.0, y, text)
     
     def _build_pdf(self, out_pdf: str, learner_name: str, cert_title: str, date_str: str):
-        # Fonts (keep your existing register fallback)
-        self._register_fonts_if_available(pdfmetrics, TTFont)
+        # Fonts (keep existing register fallback)
         FONT_H1   = 'CertBold'    if 'CertBold'    in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
         FONT_H2   = 'CertRegular' if 'CertRegular' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
         FONT_NAME = 'CertBold'    if 'CertBold'    in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
