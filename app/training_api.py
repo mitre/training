@@ -191,7 +191,6 @@ class TrainingApi(BaseService):
         # Map cert_name to unique id
         certs = await self.data_svc.locate('certifications', {})
         cert = next((c for c in certs if c.name == cert_name), None)
-        cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
         if not cert:
             raise web.HTTPNotFound(text='Certificate does not exist')
         cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
