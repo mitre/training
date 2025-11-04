@@ -25,19 +25,47 @@ onBeforeUnmount(() => {
 });
 
 onMounted(async () => {
+  // ✅ Restore previous state before loading data
+  const savedState = localStorage.getItem("trainingState");
+  if (savedState) {
+    try {
+      const parsed = JSON.parse(savedState);
+      selectedCert.value = parsed.selectedCert || "";
+      selectedBadge.value = parsed.selectedBadge || "";
+    } catch (err) {
+      console.warn("Failed to parse saved training state:", err);
+    }
+  }
+
+  // ✅ Existing functionality (keep this intact)
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
+
   let confettiScript = document.createElement("script");
   confettiScript.setAttribute(
     "src",
     "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"
   );
   document.head.appendChild(confettiScript);
+
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(async () => {
     getTraining();
-  }, "3000");
+  }, 3000); // <-- you can also remove the quotes, should be a number not a string
 });
+
+// ✅ New: persist user selections when they change
+watch(
+  [selectedCert, selectedBadge],
+  () => {
+    const state = {
+      selectedCert: selectedCert.value,
+      selectedBadge: selectedBadge.value,
+    };
+    localStorage.setItem("trainingState", JSON.stringify(state));
+  },
+  { deep: true }
+);
 
 watch(selectedCert, (newValue) => {
   getTraining();
