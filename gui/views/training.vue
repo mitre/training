@@ -25,19 +25,8 @@ onBeforeUnmount(() => {
 });
 
 onMounted(async () => {
-  // ✅ Restore previous state before loading data
-  const savedState = localStorage.getItem("trainingState");
-  if (savedState) {
-    try {
-      const parsed = JSON.parse(savedState);
-      selectedCert.value = parsed.selectedCert || "";
-      selectedBadge.value = parsed.selectedBadge || "";
-    } catch (err) {
-      console.warn("Failed to parse saved training state:", err);
-    }
-  }
+  restoreSelections();
 
-  // ✅ Existing functionality (keep this intact)
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
 
@@ -51,18 +40,13 @@ onMounted(async () => {
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(async () => {
     getTraining();
-  }, 3000); // <-- you can also remove the quotes, should be a number not a string
+  }, 3000);
 });
 
-// ✅ New: persist user selections when they change
 watch(
   [selectedCert, selectedBadge],
   () => {
-    const state = {
-      selectedCert: selectedCert.value,
-      selectedBadge: selectedBadge.value,
-    };
-    localStorage.setItem("trainingState", JSON.stringify(state));
+    persistSelections();
   },
   { deep: true }
 );
@@ -74,6 +58,28 @@ watch(selectedCert, (newValue) => {
 watch(selectedBadge, (newValue) => {
   updateVisibleFlags(newValue);
 });
+
+const restoreSelections = () => {
+  const savedState = localStorage.getItem("trainingState");
+  if (savedState) {
+    try {
+      const parsed = JSON.parse(savedState);
+      selectedCert.value = parsed.selectedCert || "";
+      selectedBadge.value = parsed.selectedBadge || "";
+    } catch (err) {
+      console.warn("Failed to parse saved training state:", err);
+    }
+  }
+};
+
+const persistSelections = () => {
+  if (!selectedCert.value || !selectedBadge.value) return;
+  const state = {
+    selectedCert: selectedCert.value,
+    selectedBadge: selectedBadge.value,
+  };
+  localStorage.setItem("trainingState", JSON.stringify(state));
+};
 
 const getTraining = () => {
   if (!selectedCert.value) return;
