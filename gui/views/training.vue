@@ -25,19 +25,31 @@ onBeforeUnmount(() => {
 });
 
 onMounted(async () => {
+  restoreSelections();
+
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
+
   let confettiScript = document.createElement("script");
   confettiScript.setAttribute(
     "src",
     "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"
   );
   document.head.appendChild(confettiScript);
+
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(async () => {
     getTraining();
-  }, "3000");
+  }, 3000);
 });
+
+watch(
+  [selectedCert, selectedBadge],
+  () => {
+    persistSelections();
+  },
+  { deep: true }
+);
 
 watch(selectedCert, (newValue) => {
   getTraining();
@@ -46,6 +58,28 @@ watch(selectedCert, (newValue) => {
 watch(selectedBadge, (newValue) => {
   updateVisibleFlags(newValue);
 });
+
+const restoreSelections = () => {
+  const savedState = localStorage.getItem("trainingState");
+  if (savedState) {
+    try {
+      const parsed = JSON.parse(savedState);
+      selectedCert.value = parsed.selectedCert || "";
+      selectedBadge.value = parsed.selectedBadge || "";
+    } catch (err) {
+      console.warn("Failed to parse saved training state:", err);
+    }
+  }
+};
+
+const persistSelections = () => {
+  if (!selectedCert.value || !selectedBadge.value) return;
+  const state = {
+    selectedCert: selectedCert.value,
+    selectedBadge: selectedBadge.value,
+  };
+  localStorage.setItem("trainingState", JSON.stringify(state));
+};
 
 const getTraining = () => {
   if (!selectedCert.value) return;
