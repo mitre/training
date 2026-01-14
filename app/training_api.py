@@ -75,8 +75,7 @@ class TrainingApi(BaseService):
                             flag.completed = flag.verify(answer)
                     else:
                         flag.completed = await flag.verify(self.services)
-                    if not hasattr(cert, 'cert_type'):
-                        break
+
             except Exception as e:
                 logging.error(e)
         return web.json_response(dict(badges=[b.display for b in badges]))
