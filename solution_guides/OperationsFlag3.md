@@ -1,10 +1,9 @@
 1. First, ensure that an agent is deployed and is responsive.
 1. Select `CAMPAIGNS > operations`.
-1. Click the `+ Create Operation` button to open the `Start New Operation` menu.
+1. Click the `+ New Operation` button to open the `Start New Operation` menu.
 1. Give the operation a name.
 1. Ensure that `No adversary (manual)` is selected from the `Adversary` dropdown.
 1. Select `basic` from the `Fact source` menu.
-1. Press `ADVANCED` to open the advanced options dialog.
 1. Select `Require manual approval` in the `Autonomous` radio group.
 1. In the `Run state`, select `Pause on start` option.
 1. Press `Start` to run the operation.
