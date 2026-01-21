@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch, onMounted, inject, onBeforeUnmount } from "vue";
-const $api = inject("$api");
+import { toast } from "bulma-toast";
 
+const $api = inject("$api");
 const selectedCert = ref("");
 const selectedBadge = ref(null);
 const badgeList = ref([]);
@@ -56,7 +57,17 @@ function saveNameLocally() {
 
 async function issueCertificate() {
   const name = learnerName.value.trim();
-  if (!name) return alert('Enter your full name exactly as you want it on the certificate.');
+  if (!name) {
+    toast({
+      message: "Enter your full name exactly as you want it on the certificate",
+      position: "bottom-right",
+      type: "is-danger",
+      dismissible: true,
+      pauseOnHover: true,
+      duration: 2000,
+    });
+    return;
+  }
   saveNameLocally();
 
   try {
@@ -79,7 +90,14 @@ async function issueCertificate() {
     URL.revokeObjectURL(url);
     showIssueModal.value = false;
   } catch (e) {
-    alert('Could not issue certificate: ' + (e?.response?.data || e));
+    toast({
+      message: 'Could not issue certificate: ' + (e?.response?.data || e),
+      position: "bottom-right",
+      type: "is-danger",
+      dismissible: true,
+      pauseOnHover: true,
+      duration: 2000,
+    });
   }
 }
 
