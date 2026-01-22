@@ -9,16 +9,15 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.colors import Color
 
+
 # Logos
-LOGO_TOP_CENTER    = 'plugins/training/static/templates/mitreCaldera.png'
+LOGO_TOP_CENTER  = 'plugins/training/static/templates/mitreCaldera.png'
 LOGO_BOTTOM_LEFT = 'plugins/training/static/templates/caldera_logo.png'
 
 # Colors to match the screenshot
 WHITE = Color(1, 1, 1)
 GREY  = Color(0.85, 0.85, 0.85)
 RED   = Color(0.86, 0.0, 0.0)     # Caldera-ish red
-
-
 
 SECRET_FILE = 'plugins/training/.secret'
 OUT_DIR     = 'plugins/training/generated_certificates'
@@ -49,6 +48,7 @@ def _load_index():
 def _save_index(idx):
     with open(INDEX_FILE, 'w', encoding='utf-8') as f:
         json.dump(idx, f, indent=2)
+
 
 class CertificateService(BaseObject):
     def __init__(self):
@@ -180,8 +180,10 @@ class CertificateService(BaseObject):
         # “For the successful completion…” line
         c.setFillColor(GREY)
         c.setFont(FONT_H2, 16)
-        line = f"FOR THE SUCCESSFUL COMPLETION OF THE {cert_title.upper()} TRAINING PLUGIN"
-        c.drawCentredString(page_w/2.0, top_y - 180, line)
+        line1 = f"FOR THE SUCCESSFUL COMPLETION OF THE MITRE CALDERA™"
+        c.drawCentredString(page_w/2.0, top_y - 180, line1)
+        line2 = f"TRAINING PLUGIN {cert_title.upper()}"
+        c.drawCentredString(page_w/2.0, top_y - 210, line2)
 
         # Bottom-right “CERTIFICATION DATE:” and date (aligned with bottom-left logo)
         logo_bottom   = 28                 # same y as Caldera logo bottom
@@ -243,11 +245,12 @@ class CertificateService(BaseObject):
         out_pdf = os.path.join(OUT_DIR, base)
 
         # Visible strings
-        display_cert_title = "MITRE Caldera™ User"
+        #display_cert_title = "MITRE Caldera™ User"
+        display_cert_title = cert_name
 
         # Render PDF
         pretty_date = datetime.datetime.now().strftime('%B %d, %Y')
-        self._build_pdf(out_pdf, safe_name, display_cert_title, pretty_date)
+        self._build_pdf(out_pdf, display_name, display_cert_title, pretty_date)
 
         return out_pdf
 
