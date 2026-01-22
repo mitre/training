@@ -10,7 +10,7 @@ from app.utility.base_service import BaseService
 from app.service.auth_svc import for_all_public_methods, check_authorization
 from plugins.training.app import errors
 from plugins.training.app.base_flag import BaseFlag
-from plugins.training.app.c_certificate_service import CertificateService
+from plugins.training.app.certificate_svc import CertificateService
 
 
 @for_all_public_methods(check_authorization)
@@ -117,7 +117,7 @@ class TrainingApi(BaseService):
         return web.json_response(dict(reset=reset))
 
     async def can_issue(self, request, cert_name):
-        # Compute completion using same badge/flag iteration you already use in retrieve_flags
+        # Compute completion using same badge/flag iteration used in retrieve_flags
         access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
         certs = await self.data_svc.locate('certifications', match=access)
         cert = next((c for c in certs if c.name == cert_name), None)
