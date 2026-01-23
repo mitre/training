@@ -23,6 +23,8 @@ const showIssueModal = ref(false);
 onBeforeUnmount(() => { /* nothing now */ });
 
 onMounted(async () => {
+  restoreSelections();
+
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
 
@@ -49,6 +51,14 @@ watch(selectedCert, () => {
 watch(selectedBadge, (newValue) => {
   updateVisibleFlags(newValue);
 });
+  
+watch(
+  [selectedCert, selectedBadge],
+  () => {
+    persistSelections();
+  },
+  { deep: true }
+);
 
 function saveNameLocally() {
   const n = learnerName.value.trim();
@@ -100,6 +110,28 @@ async function issueCertificate() {
     });
   }
 }
+  
+const restoreSelections = () => {
+  const savedState = localStorage.getItem("trainingState");
+  if (savedState) {
+    try {
+      const parsed = JSON.parse(savedState);
+      selectedCert.value = parsed.selectedCert || "";
+      selectedBadge.value = parsed.selectedBadge || "";
+    } catch (err) {
+      console.warn("Failed to parse saved training state:", err);
+    }
+  }
+};
+
+const persistSelections = () => {
+  if (!selectedCert.value || !selectedBadge.value) return;
+  const state = {
+    selectedCert: selectedCert.value,
+    selectedBadge: selectedBadge.value,
+  };
+  localStorage.setItem("trainingState", JSON.stringify(state));
+};
 
 const getTraining = () => {
   if (!selectedCert.value) return;
