@@ -78,8 +78,8 @@ async function issueCertificate() {
     // base64 → Blob → download
     const byteChars = atob(data.pdf_bytes);
     const byteNums = new Array(byteChars.length);
-    for (let i = 0; i < byteChars.length; i++) byteNums[i] = byteChars.charCodeAt(i);
-    const blob = new Blob([new Uint8Array(byteNums)], { type: 'application/pdf' });
+    const byteArray = Uint8Array.from(atob(data.pdf_bytes), c => c.charCodeAt(0));
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
