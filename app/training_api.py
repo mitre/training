@@ -23,7 +23,6 @@ class TrainingApi(BaseService):
         self.cert_service = CertificateService()
         self.logger = logging.getLogger('training_api')
 
-
     @template('training.html')
     async def splash(self, request):
         access = dict(access=tuple(await self.auth_svc.get_permissions(request)))
@@ -144,12 +143,8 @@ class TrainingApi(BaseService):
             if not cert_name or not display_name:
                 raise web.HTTPBadRequest(text='certificate and name required')
 
-            user_id = request.headers.get('X-User-ID') or request.headers.get('KEY') or 'unknown'
+            user_id = self._request_user_id(request)
             self.logger.debug("issue_certificate: user_id=%s", user_id)
-
-            # Create a per-instance id from secret (stable across restarts)
-            instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
-            self.logger.debug("issue_certificate: instance_id=%s", instance_id)
 
             cert, complete = await self.can_issue(request, cert_name)
             cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
@@ -157,22 +152,22 @@ class TrainingApi(BaseService):
             if not complete:
                 raise web.HTTPForbidden(text='Training not complete')
 
-            if self.cert_service.already_issued(instance_id, user_id, cert_id):
+            if self.cert_service.already_issued(user_id, cert_id):
                 # Return existing (idempotent UX)
-                rec = self.cert_service.get_record(instance_id, user_id, cert_id)
+                rec = self.cert_service.get_record(user_id, cert_id)
                 payload = rec['path']
                 token = self.cert_service.signed_token(payload)
                 return web.json_response({'alreadyIssued': True, 'download': f'/plugin/training/certificate/download?token={token}'})
 
             # Generate PDF directly
-            path = self.cert_service.issue(instance_id, user_id, cert.name, display_name)
-            self.cert_service.mark_issued(instance_id, user_id, cert_id, path, display_name)
+            path = self.cert_service.issue(user_id, cert.name, display_name)
+            self.cert_service.mark_issued(user_id, cert_id, path, display_name)
             token = self.cert_service.signed_token(path)
             return web.json_response({'alreadyIssued': False, 'download': f'/plugin/training/certificate/download?token={token}'})
         except web.HTTPException:
             raise
-        except Exception:
-            logging.exception("issue_certificate failed")
+        except Exception as e:
+            logging.exception("issue_certificate failed: {}".format(e))
             raise web.HTTPInternalServerError(text='issue_certificate failed; see server logs')
 
     async def reset_issuance(self, request):
@@ -186,7 +181,6 @@ class TrainingApi(BaseService):
         if not cert_name:
             raise web.HTTPBadRequest(text='certificate required')
         user_id = body.get('user_id') or self._request_user_id(request)
-        instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
 
         # Map cert_name to unique id
         certs = await self.data_svc.locate('certifications', {})
@@ -194,7 +188,7 @@ class TrainingApi(BaseService):
         if not cert:
             raise web.HTTPNotFound(text='Certificate does not exist')
         cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
-        self.cert_service.clear_issued_for_user_cert(instance_id, user_id, cert_id)
+        self.cert_service.clear_issued_for_user_cert(user_id, cert_id)
         return web.json_response({'ok': True})
     
     def _attachment_headers(self, filename: str) -> dict:
@@ -227,20 +221,17 @@ class TrainingApi(BaseService):
         if not cert_name or not display_name:
             raise web.HTTPBadRequest(text='certificate and name required')
 
-        # auth-ish identity; same as issue_certificate
-        user_id = request.headers.get('X-User-ID') or request.headers.get('KEY') or 'unknown'
-        instance_id = hashlib.sha256(self.cert_service.secret).hexdigest()[:12]
-
+        user_id = self._request_user_id(request)
         cert, complete = await self.can_issue(request, cert_name)
         cert_id = getattr(cert, 'unique', None) or getattr(cert, 'identifier', None) or getattr(cert, 'id', None) or cert.name
         if not complete:
             raise web.HTTPForbidden(text='Training not complete')
 
         # generate fresh PDF (no caching; you can add idempotence if you want)
-        pdf_path = self.cert_service.issue(instance_id, user_id, cert.name, display_name)
+        pdf_path = self.cert_service.issue(user_id, cert.name, display_name)
 
         # remember issuance like before
-        self.cert_service.mark_issued(instance_id, user_id, cert_id, pdf_path, display_name)
+        self.cert_service.mark_issued(user_id, cert_id, pdf_path, display_name)
 
         # return filename + bytes (Debrief style)
         with open(pdf_path, 'rb') as f:

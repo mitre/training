@@ -54,26 +54,28 @@ class CertificateService(BaseObject):
     def __init__(self):
         super().__init__()
         self.secret = _load_or_create_secret()
+        # Per-instance id from secret (stable across restarts)
+        self.instance_id = hashlib.sha256(self.secret).hexdigest()[:12]
 
-    def _key(self, instance_id, user_id, cert_id):
-        return f'{instance_id}:{user_id}:{cert_id}'
+    def _key(self, user_id, cert_id):
+        return f'{self.instance_id}:{user_id}:{cert_id}'
 
-    def already_issued(self, instance_id, user_id, cert_id):
+    def already_issued(self, user_id, cert_id):
         idx = _load_index()
-        return self._key(instance_id, user_id, cert_id) in idx
+        return self._key(user_id, cert_id) in idx
 
-    def mark_issued(self, instance_id, user_id, cert_id, path, name):
+    def mark_issued(self, user_id, cert_id, path, name):
         idx = _load_index()
-        idx[self._key(instance_id, user_id, cert_id)] = {
+        idx[self._key(user_id, cert_id)] = {
             'path': path, 
             'name': name, 
             'issued_at': datetime.datetime.utcnow().isoformat()+'Z'
         }
         _save_index(idx)
 
-    def clear_issued_for_user_cert(self, instance_id, user_id, cert_id):
+    def clear_issued_for_user_cert(self, user_id, cert_id):
         idx = _load_index()
-        idx.pop(self._key(instance_id, user_id, cert_id), None)
+        idx.pop(self._key(user_id, cert_id), None)
         _save_index(idx)
 
     def signed_token(self, payload: str) -> str:
@@ -233,7 +235,7 @@ class CertificateService(BaseObject):
         c.showPage()
         c.save()
 
-    def issue(self, instance_id, user_id, cert_name, display_name):
+    def issue(self, user_id, cert_name, display_name):
         """
         Build and return a PDF path. Filename format:
         Caldera_User_Certificate_<Name>_<YYYYMMDD>.pdf
@@ -245,7 +247,6 @@ class CertificateService(BaseObject):
         out_pdf = os.path.join(OUT_DIR, base)
 
         # Visible strings
-        #display_cert_title = "MITRE Caldera™ User"
         display_cert_title = cert_name
 
         # Render PDF
@@ -254,7 +255,7 @@ class CertificateService(BaseObject):
 
         return out_pdf
 
-    def get_record(self, instance_id, user_id, cert_id):
+    def get_record(self, user_id, cert_id):
         # Return issuance record or None.
         idx = _load_index()
-        return idx.get(self._key(instance_id, user_id, cert_id))
+        return idx.get(self._key(user_id, cert_id))
