@@ -5,3 +5,5 @@
 *.history/*
 .idea
 node_modules
+generated_certificates/*
+.secret
