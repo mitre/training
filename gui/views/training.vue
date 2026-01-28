@@ -19,10 +19,12 @@ const certificates = ref([
 
 const learnerName = ref(localStorage.getItem('trainingCertName') || '');
 const showIssueModal = ref(false);
+const skipSelectionWatcher = ref(false);
 
 onBeforeUnmount(() => { /* nothing now */ });
 
 onMounted(async () => {
+  skipSelectionWatcher.value = true;
   restoreSelections();
 
   const res = await $api.get("/plugin/training/certs");
@@ -33,10 +35,13 @@ onMounted(async () => {
   document.head.appendChild(confettiScript);
 
   if (selectedCert.value) getTraining();
+  skipSelectionWatcher.value = false;
 });
 
 // keep only this watcher which resets UI and fetches
 watch(selectedCert, () => {
+  if (skipSelectionWatcher.value) return;
+
   completedCertificate.value = false;
   end.value = 0;
   selectedBadge.value = null;
@@ -121,11 +126,12 @@ const restoreSelections = () => {
     } catch (err) {
       console.warn("Failed to parse saved training state:", err);
     }
+    //if (selectedCert.value) getTraining();
   }
 };
 
 const persistSelections = () => {
-  if (!selectedCert.value || !selectedBadge.value) return;
+  if (!selectedCert.value) return;
   const state = {
     selectedCert: selectedCert.value,
     selectedBadge: selectedBadge.value,
