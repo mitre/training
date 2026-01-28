@@ -24,15 +24,15 @@ const skipSelectionWatcher = ref(false);
 onBeforeUnmount(() => { /* nothing now */ });
 
 onMounted(async () => {
+  const confettiScript = document.createElement("script");
+  confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js";
+  document.head.appendChild(confettiScript);
+
   skipSelectionWatcher.value = true;
   restoreSelections();
 
   const res = await $api.get("/plugin/training/certs");
   certificates.value = res.data.certificates;
-
-  const confettiScript = document.createElement("script");
-  confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js";
-  document.head.appendChild(confettiScript);
 
   if (selectedCert.value) getTraining();
   skipSelectionWatcher.value = false;
@@ -126,7 +126,7 @@ const restoreSelections = () => {
     } catch (err) {
       console.warn("Failed to parse saved training state:", err);
     }
-    //if (selectedCert.value) getTraining();
+    if (selectedCert.value) getTraining();
   }
 };
 
@@ -272,8 +272,8 @@ function playConfetti() {
   if (!canvas || typeof confetti === 'undefined') return;
   const confettiCanon = confetti.create(canvas, { resize: true, useWorker: true });
   const frame = () => {
-    confettiCanon({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
-    confettiCanon({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
+    confettiCanon({ particleCount: 30, angle: 60, spread: 55, origin: { x: 0 } });
+    confettiCanon({ particleCount: 30, angle: 120, spread: 55, origin: { x: 1 } });
   };
   const tick = () => { frame(); if (Date.now() < end.value) requestAnimationFrame(tick); };
   tick();
