@@ -9,6 +9,7 @@ class AgentsBlue3(Flag):
 
     async def verify(self, services):
         for agent in await services.get('data_svc').locate('agents'):
+            print("verify blue agent %s", agent)
             if 'windows' in agent.platform and agent.group == 'blue' and agent.privilege == 'Elevated':
                 return True
         return False

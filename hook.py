@@ -75,6 +75,7 @@ async def _load_flags(data_svc):
                 badge = Badge(name=badge)
                 for number, module in enumerate(flags):
                     module_name, cls_name = ('plugins.training.app.%s' % module).rsplit('.', 1)
+                    print('module name class name: %s, %s', (module_name, cls_name))
                     flag_subclass = getattr(import_module(module_name), cls_name)
                     badge.flags.append(flag_subclass(number=flag_number))
                     flag_number += 1

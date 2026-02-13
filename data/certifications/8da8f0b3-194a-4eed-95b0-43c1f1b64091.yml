@@ -9,7 +9,7 @@ badges:
   autonomous:
     - flags.autonomous.blue_0.AutonomousBlue0
     - flags.autonomous.blue_1.AutonomousBlue1
-    - flags.autonomous.blue_2.AutonomousBlue2
+    #- flags.autonomous.blue_2.AutonomousBlue2
     - flags.autonomous.blue_3.AutonomousBlue3
   manual:
     - flags.manual.blue_0.ManualBlue0

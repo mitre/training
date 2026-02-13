@@ -14,7 +14,7 @@ const certificateCode = ref("");
 const certificateCodeList = ref([]);
 const end = ref(0);
 const certificates = ref([
-  { name: "User Certificate" },
+  { name: "Red Certificate" },
   { name: "Blue Certificate" },
 ]);
 let updateInterval = ref();
