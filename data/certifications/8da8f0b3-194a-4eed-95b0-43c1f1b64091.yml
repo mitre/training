@@ -11,15 +11,15 @@ badges:
     - flags.autonomous.blue_1.AutonomousBlue1
     #- flags.autonomous.blue_2.AutonomousBlue2
     - flags.autonomous.blue_3.AutonomousBlue3
-  manual:
-    - flags.manual.blue_0.ManualBlue0
-    - flags.manual.blue_2a.ManualBlue2a
-    - flags.manual.blue_2b.ManualBlue2b
-    - flags.manual.blue_2c.ManualBlue2c
-    - flags.manual.blue_5a_win.ManualBlue5aWin
-    - flags.manual.blue_5b_win.ManualBlue5bWin
-    - flags.manual.blue_5c_win.ManualBlue5cWin
-    - flags.manual.blue_5d_win.ManualBlue5dWin
+  #manual:
+    #- flags.manual.blue_0.ManualBlue0
+    #- flags.manual.blue_2a.ManualBlue2a
+    #- flags.manual.blue_2b.ManualBlue2b
+    #- flags.manual.blue_2c.ManualBlue2c
+    #- flags.manual.blue_5a_win.ManualBlue5aWin
+    #- flags.manual.blue_5b_win.ManualBlue5bWin
+    #- flags.manual.blue_5c_win.ManualBlue5cWin
+    #- flags.manual.blue_5d_win.ManualBlue5dWin
   attack:
     - flags.attack.blue_0.AttackBlue0
     - flags.attack.blue_1.AttackBlue1
