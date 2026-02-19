@@ -10,6 +10,6 @@ class AttackBlue3(Flag):
     extra_info = ''
 
     async def verify(self, services):
-        technique = 'T1003.001'  # OS Credential Dumping: LSASS Memory
+        technique = 'T1003'  # OS Credential Dumping
         adv_name = 'blue_quiz_4'
         return await BaseFlag.verify_attack_flag(services, technique, adv_name)
