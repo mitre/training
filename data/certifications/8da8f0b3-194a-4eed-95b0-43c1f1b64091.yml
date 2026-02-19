@@ -4,8 +4,8 @@ badges:
   agents:
     - flags.agents.blue_0.AgentsBlue0
     - flags.agents.blue_1.AgentsBlue1
-    #- flags.agents.blue_2.AgentsBlue2
-    #- flags.agents.blue_3.AgentsBlue3
+    - flags.agents.blue_2.AgentsBlue2
+    - flags.agents.blue_3.AgentsBlue3
   autonomous:
     - flags.autonomous.blue_0.AutonomousBlue0
     - flags.autonomous.blue_1.AutonomousBlue1
