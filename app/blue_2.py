@@ -8,6 +8,7 @@ class AutonomousBlue2(Flag):
                 'this file, and write it to C:\\Users\\Public\\malicious_files.txt. The autonomous defender should ' \
                 'automatically find and delete the file.'
     extra_info = """"""
+    visible = False
 
     async def verify(self, services):
         def is_file_deleted(operation):

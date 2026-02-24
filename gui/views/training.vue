@@ -13,7 +13,7 @@ const flagList = ref([]);
 const completedCertificate = ref(false);
 const end = ref(0);
 const certificates = ref([
-  { name: "User Certificate" },
+  { name: "Red Certificate" },
   { name: "Blue Certificate" },
 ]);
 
