@@ -9,5 +9,4 @@
 1. Paste the copied command into the PowerShell session and execute it.
 1. Go back to Caldera and close the agent options window.
 1. Wait for the agent to appear in the `Agents` table.
-1. Change the group name from `blue` to `cert-win`, click save settings if needed.
 1. Task completed.
