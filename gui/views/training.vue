@@ -122,7 +122,9 @@ const restoreSelections = () => {
     try {
       const parsed = JSON.parse(savedState);
       selectedCert.value = parsed.selectedCert || "";
-      selectedBadge.value = parsed.selectedBadge || "";
+      selectedBadge.value = parsed.selectedBadgeName
+        ? { name: parsed.selectedBadgeName }
+        : "";
     } catch (err) {
       console.warn("Failed to parse saved training state:", err);
     }
@@ -134,7 +136,7 @@ const persistSelections = () => {
   if (!selectedCert.value) return;
   const state = {
     selectedCert: selectedCert.value,
-    selectedBadge: selectedBadge.value,
+    selectedBadgeName: selectedBadge.value?.name || "",
   };
   localStorage.setItem("trainingState", JSON.stringify(state));
 };
