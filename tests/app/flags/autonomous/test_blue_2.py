@@ -1,10 +1,12 @@
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
+from pathlib import Path
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 import yaml
 
 from plugins.training.app.flags.autonomous.blue_2 import AutonomousBlue2
+
+_PLUGIN_ROOT = Path(__file__).resolve().parents[4]
 
 
 class TestAutonomousBlue2:
@@ -17,7 +19,8 @@ class TestAutonomousBlue2:
 
     def test_flag_registered_in_blue_certificate_yaml(self):
         """The flag must be uncommented and listed in the Blue Certificate YAML."""
-        with open('plugins/training/data/certifications/8da8f0b3-194a-4eed-95b0-43c1f1b64091.yml') as f:
+        yaml_path = _PLUGIN_ROOT / 'data' / 'certifications' / '8da8f0b3-194a-4eed-95b0-43c1f1b64091.yml'
+        with open(yaml_path) as f:
             cert = yaml.safe_load(f)
         autonomous_flags = cert['badges']['autonomous']
         assert 'flags.autonomous.blue_2.AutonomousBlue2' in autonomous_flags
