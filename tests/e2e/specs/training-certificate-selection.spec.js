@@ -12,9 +12,10 @@ test.describe("Training plugin - certificate / badge selection", () => {
   test("should list available certificates from the API", async ({ page }) => {
     const select = page.locator("#select-certificate select").first();
     await expect(select).toBeVisible();
+    // Wait for the certs API before checking options
+    await page.waitForResponse((resp) => resp.url().includes('/plugin/training/certs') && resp.status() === 200, { timeout: 15_000 });
     // There should be at least 1 real option beyond the placeholder
     const options = select.locator("option:not([disabled])");
-    await expect(options.first()).toBeVisible({ timeout: 15_000 });
     const count = await options.count();
     expect(count).toBeGreaterThanOrEqual(1);
   });
@@ -22,19 +23,27 @@ test.describe("Training plugin - certificate / badge selection", () => {
   test("should show Red Certificate option", async ({ page }) => {
     const select = page.locator("#select-certificate select").first();
     await expect(select).toBeVisible();
+    await page.waitForResponse((resp) => resp.url().includes('/plugin/training/certs') && resp.status() === 200, { timeout: 15_000 });
     const redOption = select.locator('option:has-text("Red")');
-    // Red cert may or may not exist depending on server data - check at least one cert
-    const allOptions = select.locator("option:not([disabled])");
-    const count = await allOptions.count();
-    expect(count).toBeGreaterThanOrEqual(1);
+    const redCount = await redOption.count();
+    if (redCount === 0) {
+      test.skip(true, "No Red Certificate option available on this server");
+      return;
+    }
+    expect(redCount).toBeGreaterThanOrEqual(1);
   });
 
   test("should show Blue Certificate option", async ({ page }) => {
     const select = page.locator("#select-certificate select").first();
     await expect(select).toBeVisible();
-    const allOptions = select.locator("option:not([disabled])");
-    const count = await allOptions.count();
-    expect(count).toBeGreaterThanOrEqual(1);
+    await page.waitForResponse((resp) => resp.url().includes('/plugin/training/certs') && resp.status() === 200, { timeout: 15_000 });
+    const blueOption = select.locator('option:has-text("Blue")');
+    const blueCount = await blueOption.count();
+    if (blueCount === 0) {
+      test.skip(true, "No Blue Certificate option available on this server");
+      return;
+    }
+    expect(blueCount).toBeGreaterThanOrEqual(1);
   });
 
   test("selecting a certificate should load badges", async ({ page }) => {

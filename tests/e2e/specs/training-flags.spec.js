@@ -9,6 +9,8 @@ const { navigateToTraining } = require("../helpers/navigation");
 async function selectFirstCertificate(page) {
   const select = page.locator("#select-certificate select").first();
   await expect(select).toBeVisible();
+  // Wait for the certs API to populate the dropdown before selecting
+  await page.waitForResponse((resp) => resp.url().includes('/plugin/training/certs') && resp.status() === 200, { timeout: 15_000 });
   const firstOption = select.locator("option:not([disabled])").first();
   const optionValue = await firstOption.getAttribute("value");
   if (!optionValue) throw new Error("No certificate options found");

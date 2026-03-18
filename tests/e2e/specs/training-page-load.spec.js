@@ -34,7 +34,7 @@ test.describe("Training plugin - page load", () => {
     const select = page.locator("#select-certificate select").first();
     await expect(select).toBeVisible();
     // The default option should be disabled / placeholder
-    const defaultOption = select.locator("option[disabled], option[value='']").first();
-    await expect(defaultOption).toBeDefined();
+    const defaultOption = select.locator("option[disabled], option[value='']");
+    await expect(defaultOption).toHaveCount(1);
   });
 });

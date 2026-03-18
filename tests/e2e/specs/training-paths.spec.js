@@ -131,5 +131,11 @@ test.describe("Training plugin - Red vs Blue training paths", () => {
     // Both should have badges loaded
     expect(names1.length).toBeGreaterThanOrEqual(1);
     expect(names2.length).toBeGreaterThanOrEqual(1);
+
+    // The two certificate paths should have different badge sets
+    const areDifferent =
+      names1.length !== names2.length ||
+      names1.some((name, i) => name !== names2[i]);
+    expect(areDifferent).toBe(true);
   });
 });
