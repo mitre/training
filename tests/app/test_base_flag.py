@@ -48,15 +48,16 @@ class TestStartOperation:
 class TestIsOperationSuccessful:
     @pytest.mark.asyncio
     async def test_correct_chain_length(self):
-        """Verifies the chain-length check independently."""
+        """Returns True when chain length matches num_links and all traits present."""
         op = MagicMock()
         op.chain = [MagicMock()]
+        mock_fact = MagicMock()
+        mock_fact.trait = 'host.user.name'
+        op.all_facts = AsyncMock(return_value=[mock_fact])
         services = {'data_svc': AsyncMock()}
         services['data_svc'].locate = AsyncMock(return_value=[op])
-        # Patch the function to isolate the chain-length logic
-        with patch.object(BaseFlag, 'is_operation_successful', wraps=None) as mock_fn:
-            # Just test the underlying logic: chain length == num_links
-            assert len(op.chain) == 1
+        result = await BaseFlag.is_operation_successful(services, 'op1', traits=['host.user.name'], num_links=1)
+        assert result is True
 
     @pytest.mark.asyncio
     async def test_not_enough_links(self):
