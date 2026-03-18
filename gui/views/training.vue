@@ -17,7 +17,9 @@ const certificates = ref([
   { name: "Blue Certificate" },
 ]);
 
-const learnerName = ref(localStorage.getItem('trainingCertName') || '');
+let _savedCertName = '';
+try { _savedCertName = localStorage.getItem('trainingCertName') || ''; } catch (e) { /* storage unavailable */ }
+const learnerName = ref(_savedCertName);
 const showIssueModal = ref(false);
 const skipSelectionWatcher = ref(false);
 
@@ -67,7 +69,9 @@ watch(
 
 function saveNameLocally() {
   const n = learnerName.value.trim();
-  if (n) localStorage.setItem('trainingCertName', n);
+  if (n) {
+    try { localStorage.setItem('trainingCertName', n); } catch (e) { /* storage unavailable */ }
+  }
 }
 
 async function issueCertificate() {
@@ -117,12 +121,15 @@ async function issueCertificate() {
 }
   
 const restoreSelections = () => {
-  const savedState = localStorage.getItem("trainingState");
+  let savedState = null;
+  try { savedState = localStorage.getItem("trainingState"); } catch (e) { /* storage unavailable */ }
   if (savedState) {
     try {
       const parsed = JSON.parse(savedState);
       selectedCert.value = parsed.selectedCert || "";
-      selectedBadge.value = parsed.selectedBadge || "";
+      // Support both new key (selectedBadgeName) and old key (selectedBadge) for migration
+      const badgeName = parsed.selectedBadgeName || parsed.selectedBadge?.name || "";
+      selectedBadge.value = badgeName ? { name: badgeName } : null;
     } catch (err) {
       console.warn("Failed to parse saved training state:", err);
     }
@@ -134,9 +141,9 @@ const persistSelections = () => {
   if (!selectedCert.value) return;
   const state = {
     selectedCert: selectedCert.value,
-    selectedBadge: selectedBadge.value,
+    selectedBadgeName: selectedBadge.value?.name || "",
   };
-  localStorage.setItem("trainingState", JSON.stringify(state));
+  try { localStorage.setItem("trainingState", JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
 };
 
 const getTraining = () => {
