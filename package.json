@@ -2,9 +2,9 @@
   "name": "caldera-training",
   "description": "Caldera training plugin",
   "devDependencies": {
-    "eslint": "^7.20.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint": "^10.8.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.32.0"
   },
   "scripts": {
     "lint": "eslint ./static/js/*.js"
