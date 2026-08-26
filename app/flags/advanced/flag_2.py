@@ -1,3 +1,4 @@
+from app.utility.config_util import verify_hash
 from plugins.training.app.c_flag import Flag
 
 
@@ -12,4 +13,4 @@ class AdvancedFlag2(Flag):
 
     async def verify(self, services):
         user = services.get('auth_svc').user_map.get('test')
-        return user and user.password == 'test' and 'red' in user.permissions
+        return user and verify_hash(user.password, 'test') and 'red' in user.permissions

@@ -46,6 +46,14 @@ sys.modules['app'] = types.ModuleType('app')
 sys.modules['app.utility'] = types.ModuleType('app.utility')
 sys.modules['app.utility.base_object'] = _base_object_mod
 
+def _verify_hash(hash_val, target):
+    return False
+
+
+_config_util_mod = types.ModuleType('app.utility.config_util')
+_config_util_mod.verify_hash = _verify_hash
+sys.modules['app.utility.config_util'] = _config_util_mod
+
 _base_world_mod = types.ModuleType('app.utility.base_world')
 
 class _Access:
